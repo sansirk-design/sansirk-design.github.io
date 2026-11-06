@@ -143,6 +143,28 @@ a{color:inherit}
 .face .cov img{transition:transform .9s var(--out)}
 .card.center:hover .cov img{transform:scale(1.05)}
 .face .meta{display:flex;justify-content:flex-end;font:500 12px "JetBrains Mono";opacity:.9}
+/* Poster card: the artwork fills the card (Aranyo). The logo is in the art, so the title is for screen readers only. */
+.face.art{background:#FBF3E2;color:#2B261D}
+.face.art::before{display:none}
+.face.art .cov{position:absolute;inset:0;z-index:0;margin:0;border-radius:0;box-shadow:none;background:none}
+.face.art .cov img{object-position:50% 68%}
+.face.art::after{content:"";position:absolute;left:0;right:0;bottom:0;height:27%;z-index:1;pointer-events:none;
+  background:linear-gradient(to top,#FBF3E2 40%,rgba(251,243,226,0))}
+.face.art .hd,.face.art .desc,.face.art .meta{z-index:2}
+.face.art .hd{justify-content:flex-end}
+.face.art .ttl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.face.art .cap{background:rgba(43,38,29,.78);color:#FBF3E2}
+.face.art .desc{margin-top:auto;font-size:clamp(13px,1vw,14px);opacity:1;color:#45413b}
+.face.art .meta{position:relative;margin-top:10px;opacity:1}
+/* Dark poster cards: the cover fills the card, with fades behind the text at the top and bottom. */
+.face.art.dark{background:#111;color:#fff}
+.face.art.dark .cov img{object-position:50% 50%}
+.face.art.dark::after{height:55%;background:linear-gradient(to top,rgba(10,10,12,.92) 30%,rgba(10,10,12,0))}
+.face.art.dark .cov::after{content:"";position:absolute;inset:0 0 auto 0;height:42%;background:linear-gradient(to bottom,rgba(10,10,12,.8),rgba(10,10,12,0))}
+.face.art.dark .hd{justify-content:space-between}
+.face.art.dark .ttl{position:static;width:auto;height:auto;overflow:visible;clip:auto;white-space:normal;font-size:clamp(34px,3.2vw,46px);line-height:.98;letter-spacing:-.04em}
+.face.art.dark .cap{background:rgba(255,255,255,.22);color:#fff;backdrop-filter:blur(6px)}
+.face.art.dark .desc{color:rgba(255,255,255,.9)}
 .face .meta i{font-style:normal;display:inline-block;margin-left:6px;transition:transform .4s var(--spring)}
 .card.center:hover .meta i{transform:translateX(4px)}
 .dots{display:flex;gap:6px}
@@ -807,13 +829,13 @@ const PROJECTS = [
     id: "aranyo", ux: true,
     title: "Aranyo", line: "A bonsai care app for beginners in India that checks in instead of giving orders.",
     caps: ["UX UI", "Prototype"], cta: "Read case study", category: "UX case study", year: "2026",
-    color: "linear-gradient(160deg,#6f9a45,#27401a)", cover: "assets/aranyo/hero.jpg"
+    color: "linear-gradient(160deg,#6f9a45,#27401a)", cover: "assets/aranyo/card.webp", art: true
   },
   {
     id: "nook", ux: true,
     title: "Nook", line: "A desktop companion that brings tasks, notes and ideas into one focused workspace.",
     caps: ["Case study", "Shipped product"], cta: "Read case study", category: "UX case study", year: "2026",
-    color: "linear-gradient(160deg,#f0a640,#c95c17)", cover: FRAMER("kyQhnntCGxwmP4AlAGTmPt32Wg0"),
+    color: "linear-gradient(160deg,#f0a640,#c95c17)", cover: FRAMER("kyQhnntCGxwmP4AlAGTmPt32Wg0"), art: "dark",
     summary: "A desktop companion for my day, my notes and my reference images. Designed end to end, then built and shipped for Linux and macOS.",
     facts: [["ROLE", "Designer and developer"], ["TIMELINE", "2026"], ["TOOLS", "Figma, HTML/CSS/JS, Electron"]],
     links: [
@@ -844,28 +866,28 @@ const PROJECTS = [
     id: "cue", ux: true,
     title: "Cue", line: "A transit app that makes route planning and the daily commute easier to handle.",
     caps: ["UX UI"], cta: "Read case study", category: "UX case study", year: "2026",
-    color: "linear-gradient(160deg,#2fb57a,#0d5e3d)", cover: FRAMER("ug8cAUPKP0VupitkgVjOccuPrlM"),
+    color: "linear-gradient(160deg,#2fb57a,#0d5e3d)", cover: FRAMER("ug8cAUPKP0VupitkgVjOccuPrlM"), art: "dark",
     href: "https://www.behance.net/gallery/250206149/Cue-Commute-Companion-App"
   },
   {
     id: "adverts",
     title: "Generative AI Adverts", line: "Speculative ad campaigns for global brands, built with AI image generation and art direction.",
     caps: ["Advertising"], cta: "View project", category: "Advertising", year: "2026",
-    color: "linear-gradient(160deg,#8b4dff,#4316a3)", cover: FRAMER("BrruHrEa92AVasiFavBVkenI7B8"),
+    color: "linear-gradient(160deg,#8b4dff,#4316a3)", cover: FRAMER("BrruHrEa92AVasiFavBVkenI7B8"), art: "dark",
     href: "https://www.behance.net/gallery/257152441/AI-Advertising-Concepts"
   },
   {
     id: "posters",
     title: "Posters", line: "Character posters with bold type and cinematic layouts, mixing anime, games and bikes.",
     caps: ["Visual design"], cta: "View project", category: "Visual design", year: "2026",
-    color: "linear-gradient(160deg,#3d6bff,#1a2b9e)", cover: FRAMER("DKIAON6iX9kUBJCohpyTae0If4"),
+    color: "linear-gradient(160deg,#3d6bff,#1a2b9e)", cover: FRAMER("DKIAON6iX9kUBJCohpyTae0If4"), art: "dark",
     href: "https://www.behance.net/gallery/244230619/Persona-3-Reload-Visual-Designs"
   },
   {
     id: "worlds",
     title: "3D Worlds", line: "Cyberpunk environments built around moody lighting and cinematic world-building.",
     caps: ["3D environments"], cta: "View project", category: "3D environments", year: "Older work",
-    color: "linear-gradient(160deg,#2a2f5c,#0c0e22)", cover: FRAMER("VtbQA5NsoGLjmvPZM7JEYbruuAI"),
+    color: "linear-gradient(160deg,#2a2f5c,#0c0e22)", cover: FRAMER("VtbQA5NsoGLjmvPZM7JEYbruuAI"), art: "dark",
     href: "https://www.behance.net/gallery/192585787/Neurosynthesis-(Environment-Design)"
   },
   {
@@ -896,7 +918,7 @@ const cardsEl = $('cards'), dotsEl = $('dots');
 document.querySelector('.work').style.setProperty('--n', PROJECTS.length);
 cardsEl.innerHTML = PROJECTS.map((p, i) => `
   <button class="card" data-i="${i}" style="--bgc:${p.color}" aria-label="${esc(p.title)}. ${esc(p.cta)}${p.external ? ' (opens in a new tab)' : ''}">
-    <span class="face">
+    <span class="face${p.art ? ' art' : ''}${p.art === 'dark' ? ' dark' : ''}">
       <span class="hd"><span class="ttl">${esc(p.title)}</span><span class="caps">${p.caps.map(c => `<span class="cap">${esc(c.toUpperCase())}</span>`).join('')}</span></span>
       <span class="desc">${esc(p.line)}</span>
       <span class="cov" aria-hidden="true">${coverImg(p, i < 3)}</span>
