@@ -148,13 +148,14 @@ a{color:inherit}
 .face.art::before{display:none}
 .face.art .cov{position:absolute;inset:0;z-index:0;margin:0;border-radius:0;box-shadow:none;background:none}
 .face.art .cov img{object-position:50% 68%}
-.face.art::after{content:"";position:absolute;left:0;right:0;bottom:0;height:27%;z-index:1;pointer-events:none;
-  background:linear-gradient(to top,#FBF3E2 40%,rgba(251,243,226,0))}
+.face.art::after{content:"";position:absolute;left:0;right:0;bottom:0;height:28%;z-index:1;pointer-events:none;
+  background:linear-gradient(to top,#FBF3E2 57%,rgba(251,243,226,.85) 79%,rgba(251,243,226,0))}
+.face.art:not(.dark)::before{display:block;z-index:3;background:none;border:1px solid rgba(43,38,29,.16);border-radius:inherit}
 .face.art .hd,.face.art .desc,.face.art .meta{z-index:2}
 .face.art .hd{justify-content:flex-end}
 .face.art .ttl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.face.art .cap{background:rgba(43,38,29,.78);color:#FBF3E2}
-.face.art .desc{margin-top:auto;font-size:clamp(13px,1vw,14px);opacity:1;color:#45413b}
+.face.art .cap{background:rgba(28,24,18,.92);color:#FFFAEF}
+.face.art .desc{margin-top:auto;font-size:clamp(13px,1vw,14px);opacity:1;color:#2B261D;font-weight:500}
 .face.art .meta{position:relative;margin-top:10px;opacity:1}
 /* Dark poster cards: the cover fills the card, with fades behind the text at the top and bottom. */
 .face.art.dark{background:#111;color:#fff}
