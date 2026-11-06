@@ -27,7 +27,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@400;500&family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@400;500&family=DM+Sans:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#f3f2ef;
@@ -588,6 +588,68 @@ img.adp{height:auto}
   .logo svg{width:28px;height:28px}
   .foot{flex-direction:column;gap:6px;align-items:center}
 }
+/* ---- Aranyo case study ---- */
+.ar-sub{font-size:13px;font-weight:400;color:var(--muted)}
+.ar-list{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.ar-list li{position:relative;padding-left:22px;font-size:17px;color:var(--txt2)}
+.ar-list li::before{content:"";position:absolute;left:0;top:.55em;width:9px;height:9px;border-radius:50%;background:var(--acc)}
+.ar-steps{list-style:none;counter-reset:s;margin:12px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.ar-steps li{counter-increment:s;font-size:14px;font-weight:600;color:var(--txt);background:var(--tint);border-radius:999px;padding:7px 13px}
+.ar-steps li::before{content:counter(s);display:inline-grid;place-items:center;width:18px;height:18px;margin-right:7px;border-radius:50%;background:var(--acc-ink);color:#fff;font:500 11px "JetBrains Mono"}
+.ar-wf{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px 18px}
+.ar-wf figure,.ar-pair figure{margin:0}
+.ar-wf img,.ar-pair img{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--edge);background:#fff}
+.ar-wf figcaption,.ar-pair figcaption{margin-top:10px;font-size:14px;color:var(--muted);text-align:center}
+.ar-pair{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:18px;max-width:760px;margin:18px auto 0}
+.ar-arrow{color:var(--acc-ink);display:grid;place-items:center}
+.ar-h3{color:#fff;margin:48px 0 22px}
+.cs-dark .ar-h3:first-of-type{margin-top:36px}
+.ar-strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:20px 14px}
+.ar-strip figure,.cs-screens figure{margin:0;text-align:center}
+.ar-strip img{display:block;width:100%;height:auto;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,.1),0 16px 36px rgba(0,0,0,.45)}
+.case .ar-strip figcaption{margin-top:12px;font-size:14px;line-height:1.4;color:#d2cec6}
+.ar-strip figcaption b,.ar-note figcaption b{display:block;color:#fff;font-weight:600;margin-bottom:2px;font-size:15px}
+.ar-tall .ar-scroll{width:min(100%,250px);max-height:548px;overflow-y:auto;margin:0 auto;border-radius:22px;box-shadow:0 0 0 1px rgba(255,255,255,.1),0 20px 44px rgba(0,0,0,.45);overscroll-behavior:contain;scrollbar-width:thin}
+.ar-tall .ar-scroll img{width:100%;height:auto;border-radius:0;box-shadow:none;display:block}
+.ar-tall .ar-scroll:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+.ar-note{margin:44px auto 0;max-width:420px;text-align:center}
+.ar-note img{display:block;width:100%;height:auto;border-radius:18px}
+.case .ar-note figcaption{margin-top:12px;font-size:14px;color:#d2cec6}
+.ar-sw{grid-template-columns:repeat(4,minmax(0,1fr))}
+.ar-use{display:block;margin:6px 4px 0;font:400 13px/1.35 "Instrument Sans";color:var(--muted);font-style:normal}
+.ar-type{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:16px;background:#FFFAEF;border:1px solid #E3D5B8;border-radius:20px;overflow:hidden;color:#2B261D}
+.ar-type>div{padding:28px}
+.ar-type>div+div{border-left:1px solid #E3D5B8;font-family:"Nunito Sans",system-ui,sans-serif}
+.ar-lbl{display:block;font:500 11px/1.3 "JetBrains Mono";letter-spacing:.06em;color:#6b6350;text-transform:uppercase;margin-bottom:14px}
+.ar-type p{margin:0}
+.ar-type .t1{font:600 clamp(26px,3vw,34px)/1.15 Lora,serif;color:#2B261D}
+.ar-type .t2{font:italic 400 19px Lora,serif;color:#687A51;margin-top:8px}
+.ar-type .t3{font:700 20px "Nunito Sans",sans-serif;color:#2B261D}
+.ar-type .t4{font:600 14px "Nunito Sans",sans-serif;color:#A24B25;margin-top:8px}
+.ar-ui{margin-top:16px;background:#FBF3E2;border:1px solid #E3D5B8;border-radius:20px;padding:10px 28px;font-family:"Nunito Sans",system-ui,sans-serif;color:#2B261D}
+.ar-ui-row{display:flex;align-items:center;flex-wrap:wrap;gap:12px;padding:18px 0;border-bottom:1px solid #E3D5B8}
+.ar-ui-row:last-child{border-bottom:0}
+.ar-ui .ar-lbl{margin:0;width:130px;flex:none}
+.ar-btn{display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 26px;border-radius:999px;font-weight:700;font-size:16px}
+.ar-btn.p{background:#44622F;color:#FBF3E2}.ar-btn.o{border:1.5px solid #44622F;color:#44622F;background:#FFFAEF}
+.ar-chip{display:inline-flex;align-items:center;height:32px;padding:0 16px;border-radius:999px;border:1px solid #E3D5B8;background:#FFFAEF;font-weight:700;font-size:13px}
+.ar-chip.on{background:#E8EBCF;border-color:#a9b98a;color:#44622F}
+.ar-tag{display:inline-flex;align-items:center;height:22px;padding:0 10px;border-radius:999px;background:#F3E8D0;border:1px solid #E3D5B8;font-weight:700;font-size:11px;color:#5a4f37}
+.ar-card{display:flex;align-items:center;gap:14px;width:min(100%,340px);padding:12px 16px 12px 12px;border:1px solid #E3D5B8;border-radius:10px;background:#FFFAEF}
+.ar-card i{width:54px;height:54px;border-radius:6px;background:#D9CDB4}
+.ar-card span{flex:1;display:grid;gap:2px}.ar-card b{font:600 18px Lora,serif}.ar-card em{font:italic 400 14px Lora,serif;color:#687A51}.ar-card s{color:#6B9A3E;text-decoration:none;display:grid}
+.ar-sw-demo{position:relative;width:34px;height:19px;border-radius:10px;background:#44622F}
+.ar-sw-demo i{position:absolute;left:17px;top:2px;width:15px;height:15px;border-radius:50%;background:#FFFAEF}
+.ar-time{display:inline-flex;align-items:center;justify-content:center;height:28px;width:81px;border-radius:4px;background:#F3E8D0;font-weight:600;font-size:14px}
+.ar-tabs{display:flex;width:min(100%,360px);background:#FFFAEF;border-radius:14px;padding:10px 6px;color:#687A51}
+.ar-tabs b{flex:1;display:grid;justify-items:center;gap:3px;font-size:12px;font-weight:700}
+.ar-tabs b.on svg{background:#E8EBCF;border-radius:999px;padding:5px 15px;width:58px;height:32px;box-sizing:border-box}
+.ar-logo{margin:24px 0 0;display:grid;justify-items:center;gap:14px;background:#FBF3E2;border:1px solid #E3D5B8;border-radius:24px;padding:36px 20px 28px}
+.ar-logo img{display:block;width:min(100%,560px);height:auto}
+.ar-proto{margin-top:24px;border-radius:24px;overflow:hidden;border:1px solid var(--edge);background:#FBF3E2;box-shadow:0 30px 70px -30px rgba(40,30,10,.4)}
+.ar-proto iframe{display:block;width:100%;height:min(86vh,900px);min-height:640px;border:0}
+@media (max-width:900px){.ar-wf{grid-template-columns:repeat(3,minmax(0,1fr))}.ar-strip{grid-template-columns:repeat(3,minmax(0,1fr))}.ar-sw{grid-template-columns:repeat(2,minmax(0,1fr))}.ar-type{grid-template-columns:1fr}.ar-type>div+div{border-left:0;border-top:1px solid #E3D5B8}}
+@media (max-width:560px){.ar-wf{grid-template-columns:repeat(2,minmax(0,1fr))}.ar-strip{grid-template-columns:repeat(2,minmax(0,1fr))}.ar-ui{padding:6px 16px}.ar-ui .ar-lbl{width:100%}.ar-pair{gap:8px}}
 </style>
 </head>
 <body>
@@ -741,6 +803,12 @@ const FRAMER = id => `https://framerusercontent.com/images/${id}.png?scale-down-
    and the copies built into this page instead. */
 const ON_SERVER = /^https?:$/.test(location.protocol);
 const PROJECTS = [
+  {
+    id: "aranyo", ux: true,
+    title: "Aranyo", line: "A bonsai care app for beginners in India that checks in instead of giving orders.",
+    caps: ["UX UI", "Prototype"], cta: "Read case study", category: "UX case study", year: "2026",
+    color: "linear-gradient(160deg,#6f9a45,#27401a)", cover: "assets/aranyo/hero.jpg"
+  },
   {
     id: "nook", ux: true,
     title: "Nook", line: "A desktop companion that brings tasks, notes and ideas into one focused workspace.",
@@ -1448,6 +1516,220 @@ function cuePage(p) {
   </div>`;
 }
 /* =====================================================================
+   ARANYO CASE STUDY
+   Images live in assets/aranyo/. The prototype is hosted in /aranyo-prototype/.
+===================================================================== */
+const ARANYO_SECTIONS = [['cs-overview', 'Overview'], ['cs-problem', 'Problem'], ['cs-research', 'Research'], ['cs-define', 'Define'],
+  ['cs-scope', 'Scope'], ['cs-structure', 'Structure'], ['cs-wireframes', 'Wireframes'], ['cs-screens', 'Hi-fi screens'],
+  ['cs-system', 'Design system'], ['cs-motion', 'Brand and motion'], ['cs-prototype', 'Prototype'], ['cs-outcome', 'Outcome']];
+function aranyoPage(p) {
+  const img = (f, w, h, alt, lazy) => `<img src="${caseSrc('aranyo/' + f)}" width="${w}" height="${h}" alt="${alt}" decoding="async"${lazy ? ' loading="lazy"' : ''}>`;
+  const head = (n, k, h, lead) => `<header class="cs-head"><p class="cs-k">${n} · ${k}</p><h2 class="cs-h">${h}</h2>${lead ? `<p class="cs-lead">${lead}</p>` : ''}</header>`;
+  const sw = (name, hex, use) => `<div class="cs-sw cs-rv" style="--c:${hex}"><i></i><b>${name}</b><span>${hex}</span><em class="ar-use">${use}</em></div>`;
+  const shot = (f, h, name, cap, alt) => `<figure class="cs-rv">${img('hf-' + f + '.png', 393, h || 852, 'Aranyo ' + alt, true)}<figcaption><b>${name}</b>${cap}</figcaption></figure>`;
+  const tall = (f, name, cap, alt) => `<figure class="cs-rv ar-tall"><div class="ar-scroll" tabindex="0" aria-label="${name}, scrollable">${img('hf-' + f + '.png', 393, f === 'tree' ? 1272 : 2003, 'Aranyo ' + alt, true)}</div><figcaption><b>${name}</b>${cap}</figcaption></figure>`;
+  const wf = (f, h, name) => `<figure class="cs-rv">${img('wf-' + f + '.png', 393, h || 852, 'Wireframe: ' + name, true)}<figcaption>${name}</figcaption></figure>`;
+  const steps = arr => `<ol class="ar-steps">${arr.map(s => `<li>${s}</li>`).join('')}</ol>`;
+  const tick = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  return `<button class="x" aria-label="Close case study">&times;</button>
+  <div style="--acc:#8fb35f;--acc-ink:#44622f;--tint:#f2f5e1;--hero-bg:#2b3d23;--dark-bg:#1f2c1a">
+  <header class="cs-cover" style="--bgc:${p.color}">
+    <div class="col inner">
+      <p class="mono kick">UX / UI case study · 2026</p>
+      <h1 id="case-title">Aranyo</h1>
+      <p class="sum">A quieter way to grow. A bonsai care app for beginners in India that checks in with you instead of giving orders.</p>
+      <div class="cs-tags"><span>MOBILE APP</span><span>UX RESEARCH</span><span>UI DESIGN</span><span>PROTOTYPE</span></div>
+      <div class="cs-hero" style="max-width:980px">${img('hero.jpg', 1500, 860, 'Aranyo on three phones: the welcome screen, the Today screen with two bonsai, and the tree detail screen with care actions')}</div>
+    </div>
+  </header>
+
+  <div class="cs">
+    <nav class="cs-nav" aria-label="Case study sections">${ARANYO_SECTIONS.map(([id, t]) => `<a href="#${id}">${t}</a>`).join('')}</nav>
+    <div class="cs-main">
+      <div class="cs-facts">
+        <div><b>ROLE</b><span>Sole designer, research to hi-fi</span></div>
+        <div><b>TOOLS</b><span>Figma, HTML prototype</span></div>
+        <div><b>TIMELINE</b><span>Oct to Nov 2026</span></div>
+        <div><b>DELIVERED</b><span>Research, IA, design system, prototype</span></div>
+      </div>
+
+      <section class="cs-sec" id="cs-overview">
+        ${head('01', 'Overview', 'Check, don’t command', 'Aranyo is a bonsai care app for first-time owners in India. It tells you what your tree needs today and leaves the decision to you.')}
+        <div class="cs-grid3">
+          <div class="cs-card cs-rv"><p class="cs-k">The problem</p><p>Care advice is scattered across forums and videos, and most of it is written for other climates.</p></div>
+          <div class="cs-card cs-rv"><p class="cs-k">What I did</p><p>Research, information architecture, a design system, hi-fi screens and a clickable prototype with motion.</p></div>
+          <div class="cs-card cs-rv"><p class="cs-k">The idea</p><p>Reminders that ask you to check the soil first. No sign-up. Care advice that shows where it comes from.</p></div>
+        </div>
+      </section>
+
+      <section class="cs-sec" id="cs-problem">
+        ${head('02', 'Problem', 'Plenty of advice, little that fits')}
+        <div class="cs-two cs-rv">
+          <div><p class="cs-p">Beginners buy a bonsai and go looking for care advice, but <strong>most of it is written for other climates.</strong> In India, guidance is spread across forums and videos, and most plant apps assume you already know your species.</p></div>
+          <div class="cs-pains">
+            <div class="cs-card"><h3>Advice from elsewhere</h3><p>Seasons, humidity and watering needs differ from the climates most guides describe.</p></div>
+            <div class="cs-card"><h3>Scattered sources</h3><p>Forums, videos and group chats, each saying something slightly different.</p></div>
+            <div class="cs-card"><h3>Species assumed</h3><p>Apps expect you to know what you own before they can help.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cs-sec" id="cs-research">
+        ${head('03', 'Research', 'Four sources, four design decisions', 'Each source gave one finding that changed what I designed.')}
+        <div class="cs-scroll cs-rv"><table class="cs-table">
+          <thead><tr><th>Source</th><th>What I found</th><th class="me">What it shaped</th></tr></thead>
+          <tbody>
+            <tr><td>Community survey<br><span class="ar-sub">Shared on r/GardeningIndia2 and r/bonsaicommunity</span></td><td>Watering is the top worry, and overwatering was named as a cause of decline. Most people learn from YouTube and none used a care app.</td><td class="me">Reminders that ask you to check the soil first, sourced care advice, and placement guidance per species.</td></tr>
+            <tr><td>Interview<br><span class="ar-sub">A bonsai keeper of about 10 years, my father</span></td><td>Watering by touch works better than a fixed schedule. Care changes with the season. Ficus, Elephant Bush and Bougainvillea suit beginners.</td><td class="me">Check, don’t command reminders, a Through the year section on every species, and Ficus first in the species list.</td></tr>
+            <tr><td>App review analysis<br><span class="ar-sub">Planta’s Google Play reviews</span></td><td>People value care reminders and plant sitter features. Recurring themes were limited free features, subscription cost and paid plant identification.</td><td class="me">Core care guidance stays free, with no sign-up, and the species guide is built in rather than behind a scan.</td></tr>
+            <tr><td>Competitors<br><span class="ar-sub">General plant apps such as Planta</span></td><td>Reminder-led and built for houseplants, with no bonsai-specific care or climate tuning for Indian cities.</td><td class="me">A bonsai-only species guide with seasonal care for Indian cities.</td></tr>
+          </tbody>
+        </table></div>
+        <p class="cs-p cs-rv" style="margin-top:22px">Survey respondents came from Indian and international bonsai communities, which gave a useful mix of beginner and experienced voices.</p>
+      </section>
+
+      <section class="cs-sec" id="cs-define">
+        ${head('04', 'Define', 'How might we help a first-time owner know what their tree needs today, without telling them what to do?')}
+        <div class="cs-grid2">
+          <div class="cs-card cs-rv"><p class="cs-k">01</p><h3>Check, don’t command</h3><p>Suggest, never nag. Every reminder is a question.</p></div>
+          <div class="cs-card cs-rv"><p class="cs-k">02</p><h3>No sign-up</h3><p>Value before commitment. You meet your tree before you meet a form.</p></div>
+          <div class="cs-card cs-rv"><p class="cs-k">03</p><h3>Quiet by default</h3><p>Few reminders, plain language, nothing that competes for attention.</p></div>
+          <div class="cs-card cs-rv"><p class="cs-k">04</p><h3>Sourced advice</h3><p>Care tips show where they come from, so beginners can trust them.</p></div>
+        </div>
+      </section>
+
+      <section class="cs-sec" id="cs-scope">
+        ${head('05', 'Scope', 'A focused first version', 'Version one does a few things well. The rest is lined up for what comes next.')}
+        <div class="cs-two cs-rv">
+          <div class="cs-card"><p class="cs-k">In version one</p><ul class="ar-list"><li>Today view with tree cards</li><li>Tree detail and care notes</li><li>Species guide with sources</li><li>Daily check reminders</li></ul></div>
+          <div class="cs-card"><p class="cs-k">Next</p><ul class="ar-list"><li>Community and sharing</li><li>Growth journal</li><li>Photo-based diagnosis</li><li>Sign-up and account sync</li></ul></div>
+        </div>
+      </section>
+
+      <section class="cs-sec" id="cs-structure">
+        ${head('06', 'Structure', 'Three tabs, one job each')}
+        <div class="cs-ia cs-rv" role="img" aria-label="Aranyo has three tabs at one level: Today, Species and More">
+          <span class="root">Aranyo</span><span class="stem"></span>
+          <div class="kids">
+            <div class="kid"><b>Today</b><span>Tree cards, tree detail</span></div>
+            <div class="kid"><b>Species</b><span>Search, guide, add your own</span></div>
+            <div class="kid"><b>More</b><span>Reminders, archived trees</span></div>
+          </div>
+        </div>
+        <p class="cs-p cs-rv" style="margin-top:24px">Species has its own tab so a new owner can learn about a tree before, during or after adding it. Tree detail sits under Today because that is where you check in.</p>
+        <div class="cs-grid2 cs-rv" style="margin-top:12px">
+          <div class="cs-card"><h3>Onboarding</h3>${steps(['Open', 'Pick a species', 'Name it', 'Meet your tree', 'Today'])}</div>
+          <div class="cs-card"><h3>Daily check</h3>${steps(['Open Today', 'Open a tree', 'Check the soil', 'Log what you found'])}</div>
+          <div class="cs-card"><h3>Species</h3>${steps(['Search', 'Read the guide', 'Add the tree'])}</div>
+          <div class="cs-card"><h3>Reminders</h3>${steps(['More', 'Reminders', 'Set your time'])}</div>
+        </div>
+      </section>
+
+      <section class="cs-sec" id="cs-wireframes">
+        ${head('07', 'Wireframes', 'Structure before colour', 'Low-fidelity layouts for the main screens, used to settle hierarchy and flow first.')}
+        <div class="ar-wf">
+          ${wf('o1', 852, 'Welcome')}${wf('o2', 852, 'Do you have a bonsai?')}${wf('o3', 852, 'Choose a species')}${wf('o4', 852, 'Name it')}${wf('o5', 852, 'Meet your tree')}${wf('today', 852, 'Today')}${wf('empty', 852, 'Empty state')}${wf('species', 852, 'Species')}${wf('results', 852, 'Search results')}${wf('more', 852, 'More')}${wf('reminders', 852, 'Reminders')}
+        </div>
+        <div class="cs-sub cs-rv">
+          <h3 class="cs-h3">From wireframe to hi-fi</h3>
+          <div class="ar-pair">
+            <figure>${img('wf-today.png', 393, 852, 'Today wireframe', true)}<figcaption>Wireframe</figcaption></figure>
+            <span class="ar-arrow" aria-hidden="true">${tick}</span>
+            <figure>${img('hf-today.png', 393, 852, 'Today hi-fi screen', true)}<figcaption>Hi-fi</figcaption></figure>
+          </div>
+          <p class="cs-p" style="margin-top:20px">The Today card lost its buttons. Checking happens on the tree page, so this list stays calm and easy to scan: a photo, a name, what to check and what is next.</p>
+        </div>
+      </section>
+
+      <section class="cs-dark" id="cs-screens">
+        ${head('08', 'Hi-fi screens', 'From first open to daily check', 'Every screen follows the same idea: say what matters now, and leave the choice to the person.')}
+        <h3 class="cs-h3 ar-h3">Onboarding</h3>
+        <div class="ar-strip">
+          ${shot('welcome', 852, 'Welcome', 'One button and no account wall.', 'welcome screen with the logo and a Get Started button')}
+          ${shot('have', 852, 'Do you have a bonsai?', 'Two clear paths: add yours now or look around first.', 'screen asking whether you have a bonsai')}
+          ${shot('pick', 852, 'Choose a species', 'Beginner-friendly species first, plus a way to add your own.', 'species picker with Chinese banyan, Elephant bush and Bougainvillea')}
+          ${shot('name', 852, 'Name it', 'A name makes it yours. Suggestions help, and it can wait.', 'name screen with suggested names Mori, Kuro, Hana and Bodhi')}
+          ${shot('hello', 852, 'Meet your tree', 'A short hello from the bonsai sets the tone.', 'screen where a flowering bonsai says: water me wisely, admire me often')}
+        </div>
+        <h3 class="cs-h3 ar-h3">Daily use</h3>
+        <div class="cs-screens">
+          ${shot('today', 852, 'Today', 'Each tree shows what to check and what is next, nothing more.', 'Today screen with two bonsai cards')}
+          ${shot('empty', 852, 'A quiet garden', 'The empty state offers one clear action: add a tree.', 'empty state with the message it’s a quiet garden')}
+          ${tall('tree', 'Tree detail', 'Care comes first, with I watered it and Still damp right under the check. Details fold into boxes.', 'tree detail screen with care, plant information and status boxes')}
+        </div>
+        <h3 class="cs-h3 ar-h3">Species and settings</h3>
+        <div class="cs-screens">
+          ${shot('species', 852, 'Species', 'A search field and a beginner shortlist.', 'Species tab with a search field and three beginner species')}
+          ${shot('results', 852, 'Search results', 'Results show the species name, Latin name and a Beginner friendly tag.', 'search results for Ficus')}
+          ${tall('guide', 'Species guide', 'Care requirements, a Through the year section and the sources behind the advice.', 'species guide for the Chinese banyan with collapsible sections')}
+          ${shot('more', 852, 'More', 'Reminders, archived trees and feedback in one place.', 'More screen with Reminders, Archived Trees and Send Feedback')}
+          ${shot('reminders', 852, 'Reminders', 'One switch and a time. A daily check, not a stream of alerts.', 'Reminders screen with a daily check toggle and a time of 8:00 am')}
+        </div>
+        <figure class="ar-note cs-rv">${img('hf-notification.png', 363, 69, 'Aranyo notification reading Mori, a good time to check the soil?', true)}<figcaption><b>The reminder</b>It asks instead of instructing: “A good time to check the soil?”</figcaption></figure>
+      </section>
+
+      <section class="cs-sec" id="cs-system">
+        ${head('09', 'Design system', 'Warm, calm and readable outdoors', 'Ivory and sand surfaces, a moss green primary and terracotta used only for emphasis. The same few parts repeat on every screen.')}
+        <div class="cs-swatches ar-sw">
+          ${sw('Ivory', '#FBF3E2', 'Background')}${sw('Cream', '#FFFAEF', 'Cards and tab bar')}${sw('Sand', '#F3E8D0', 'Tiles and fields')}${sw('Sage', '#E8EBCF', 'Active states')}
+          ${sw('Moss', '#44622F', 'Primary actions')}${sw('Olive', '#687A51', 'Navigation')}${sw('Terracotta', '#A24B25', 'Emphasis, overdue')}${sw('Ink', '#2B261D', 'Text')}
+        </div>
+        <div class="ar-type cs-rv" aria-label="Type scale in Lora and Nunito Sans">
+          <div><span class="ar-lbl">Lora SemiBold · headings and species names</span><p class="t1">What shall we call it?</p><p class="t2">Ficus microcarpa</p></div>
+          <div><span class="ar-lbl">Nunito Sans · interface, 12px minimum</span><p class="t3">Check soil today</p><p class="t4">Watered 2 days ago</p></div>
+        </div>
+        <div class="ar-ui cs-rv" aria-label="Interface components">
+          <div class="ar-ui-row"><span class="ar-lbl">Buttons</span><span class="ar-btn p">I watered it</span><span class="ar-btn o">Still damp</span></div>
+          <div class="ar-ui-row"><span class="ar-lbl">Chips and tags</span><span class="ar-chip on">Mori</span><span class="ar-chip">Kuro</span><span class="ar-chip">Hana</span><span class="ar-tag">Beginner friendly</span></div>
+          <div class="ar-ui-row"><span class="ar-lbl">Card</span><span class="ar-card"><i></i><span><b>Chinese banyan</b><em>Ficus microcarpa</em></span><s>${tick}</s></span></div>
+          <div class="ar-ui-row"><span class="ar-lbl">Switch</span><span class="ar-sw-demo"><i></i></span><span class="ar-time">8:00 am</span></div>
+          <div class="ar-ui-row"><span class="ar-lbl">Tab bar</span><span class="ar-tabs"><b class="on"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="4.6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Today</b><b><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M15.2 15.2l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Species</b><b><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="4.5" cy="12" r="2.3" fill="currentColor"/><circle cx="12" cy="12" r="2.3" fill="currentColor"/><circle cx="19.5" cy="12" r="2.3" fill="currentColor"/></svg>More</b></span></div>
+        </div>
+        <div class="cs-grid3 cs-rv" style="margin-top:16px">
+          <div class="cs-card"><p class="cs-k">Spacing</p><p>4, 8, 12, 16, 24 and 32, with a 16px margin on every screen.</p></div>
+          <div class="cs-card"><p class="cs-k">Touch</p><p>48px pill buttons and a 44px minimum for anything you tap.</p></div>
+          <div class="cs-card"><p class="cs-k">Legibility</p><p>Nothing smaller than 12px, with strong contrast for use outdoors.</p></div>
+        </div>
+      </section>
+
+      <section class="cs-sec" id="cs-motion">
+        ${head('10', 'Brand and motion', 'A logo that grows', 'The A doubles as a bonsai trunk under a terracotta sun. In motion the sun rises, the tree grows up from its base and the wordmark follows.')}
+        <figure class="ar-logo cs-rv">
+          <img id="arLogo" src="${caseSrc('aranyo/logo-animated.svg')}" width="560" height="526" alt="Aranyo logo animating in: the sun rises, the tree grows, then the wordmark and tagline appear">
+          <button type="button" class="chip" data-replay>Replay &#8635;</button>
+        </figure>
+        <div class="cs-grid3 cs-rv" style="margin-top:16px">
+          <div class="cs-card"><h3>Opening</h3><p>The same reveal plays when the app opens, so the first second already feels calm.</p></div>
+          <div class="cs-card"><h3>Tabs</h3><p>Each tab icon moves a little when you switch: the sun turns, the magnifier tilts, the dots hop.</p></div>
+          <div class="cs-card"><h3>Your tree speaks</h3><p>Its first hello types out in a speech bubble, so meeting it feels like meeting someone.</p></div>
+        </div>
+      </section>
+
+      <section class="cs-sec" id="cs-prototype">
+        ${head('11', 'Prototype', 'Try it', 'Add your first bonsai, check today’s care or find the species guide. Tap anywhere that looks tappable.')}
+        <div class="ar-proto cs-rv"><iframe src="aranyo-prototype/" title="Aranyo clickable prototype" loading="lazy"></iframe></div>
+        <div class="links" style="margin-top:18px"><a class="chip dark" href="aranyo-prototype/" target="_blank" rel="noopener">Open full screen &nearr;</a></div>
+      </section>
+
+      <section class="cs-sec" id="cs-outcome">
+        ${head('12', 'Outcome', 'What worked and what is next')}
+        <div class="cs-grid3">
+          <div class="cs-card cs-rv"><p class="cs-k">What worked</p><p>Check, don’t command held across every screen: reminders ask, species pages explain and nothing nags.</p></div>
+          <div class="cs-card cs-rv"><p class="cs-k">What I learned</p><p>Care has to follow the season, not only the species. That insight became the Through the year section on every species page.</p></div>
+          <div class="cs-card cs-rv"><p class="cs-k">Next</p><p>A community feature, more species and a wider group of beginners.</p></div>
+        </div>
+        <div class="cs-cta cs-rv">
+          <div><p class="cs-k" style="margin:0">Clickable prototype</p><h3>Take Aranyo for a walk</h3><p>Onboarding, Today, tree detail, species and reminders, with the motion in place.</p></div>
+          <div class="links"><a class="chip dark" href="aranyo-prototype/" target="_blank" rel="noopener">Open prototype &nearr;</a></div>
+        </div>
+      </section>
+
+      ${nextBlock(p)}
+    </div>
+  </div>
+  </div>`;
+}
+/* =====================================================================
    GENERATIVE AI ADVERTS (gallery page, not a case study)
    Laid out like the Behance presentation: one panel per brand.
    Images: full-quality crops in assets/adverts/. Inside the app's file
@@ -1829,6 +2111,7 @@ function swapCase(p) {
 function caseHTML(p) {
   if (p.id === 'nook') return nookPage(p);
   if (p.id === 'cue') return cuePage(p);
+  if (p.id === 'aranyo') return aranyoPage(p);
   if (p.id === 'adverts') return adsPage(p);
   if (p.id === 'posters') return postersPage(p);
   if (p.id === 'worlds') return worldsPage(p);
@@ -1922,6 +2205,8 @@ caseEl.addEventListener('click', e => {
     else if (!e.target.closest('img')) closeZoom();
     return;
   }
+  const rp = e.target.closest('[data-replay]');
+  if (rp) { e.stopPropagation(); const im = caseEl.querySelector('#arLogo'); if (im) im.src = im.src.split('?')[0] + '?r=' + Date.now(); return; }
   const z = e.target.closest('[data-zoom]');
   if (z) { e.stopPropagation(); openZoom(z); return; }
   if (e.target.closest('.x') || e.target.closest('[data-close]')) { e.preventDefault(); e.stopPropagation(); requestClose(); return; }
