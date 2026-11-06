@@ -1,0 +1,439 @@
+<title>Aranyo Prototype</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Nunito+Sans:wght@400;600;700&display=swap">
+<style>
+/* Layout: one phone scaled to fit, task list beside it on wide screens.
+   The screens are the exported Figma frames; everything else is a neutral green-grey shell. */
+:root{--bg:#E8EBE0;--panel:#F5F6EF;--ink:#26301F;--ink2:#556049;--line:#CBD1BE;--accent:#44622F;--accent-ink:#FBF3E2;--shadow:0 18px 48px rgba(38,48,31,.18)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171B14;--panel:#20261C;--ink:#E7EBDD;--ink2:#A3AE95;--line:#374030;--accent:#9DBB73;--accent-ink:#171B14;--shadow:0 18px 48px rgba(0,0,0,.5);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#171B14;--panel:#20261C;--ink:#E7EBDD;--ink2:#A3AE95;--line:#374030;--accent:#9DBB73;--accent-ink:#171B14;--shadow:0 18px 48px rgba(0,0,0,.5);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Nunito Sans',system-ui,sans-serif;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:16px;min-height:100vh}
+.wrap{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+header{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;justify-content:space-between}
+h1{font-family:Lora,Georgia,serif;font-size:22px;margin:0;font-weight:700}
+h1 small{display:block;font-family:'Nunito Sans',system-ui,sans-serif;font-size:13px;font-weight:600;color:var(--ink2);margin-top:2px}
+.nav{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.nav button,.nav label{font:inherit;font-size:13px;font-weight:700;min-height:36px;padding:0 14px;border-radius:18px;border:1.5px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.nav button:hover,.nav label:hover{border-color:var(--accent)}
+.nav input{accent-color:var(--accent);width:16px;height:16px;margin:0}
+button:focus-visible,input:focus-visible,.spot:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.stage{display:flex;flex-wrap:wrap;gap:24px;justify-content:center;align-items:flex-start}
+.frame{position:relative;flex:none;border:1.5px solid var(--line);box-shadow:var(--shadow);overflow:hidden;background:#FBF3E2}
+.phone{position:absolute;left:0;top:0;width:393px;height:852px;transform-origin:0 0}
+.scr{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;background:#FBF3E2}
+.scr::-webkit-scrollbar{display:none}
+.page{position:relative;width:393px}
+.page>img{display:block;width:393px;height:auto;user-select:none;-webkit-user-drag:none}
+.spot{position:absolute;cursor:pointer;border-radius:10px;overflow:hidden;-webkit-tap-highlight-color:transparent;transition:transform .12s ease}
+.spot:active{transform:scale(.98)}
+.rip{position:absolute;width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;background:rgba(68,98,47,.26);transform:scale(0);opacity:1;animation:rip .55s ease-out forwards;pointer-events:none}
+@keyframes rip{to{transform:scale(1.6);opacity:0}}
+.spot:active{background:rgba(68,98,47,.14)}
+body.show .spot{outline:2px dashed #CF6F3A;background:rgba(207,111,58,.14)}
+.sl{position:relative;width:393px;background-repeat:no-repeat;background-size:393px auto;margin-bottom:-1px}
+.bx{position:relative}
+.bx .hd{cursor:pointer;position:relative;-webkit-tap-highlight-color:transparent}
+.bx .hd:active{filter:brightness(.97)}
+.bx .bd{position:relative;overflow:hidden;transition:height .32s cubic-bezier(.22,.8,.24,1)}
+.bx .bd[inert]{visibility:hidden;transition:height .32s cubic-bezier(.22,.8,.24,1),visibility 0s .32s}
+.tri{position:absolute;width:15px;height:13px;background:#FFFAEF;display:flex;align-items:center;justify-content:center}
+.tri svg{display:block;transition:transform .32s cubic-bezier(.22,.8,.24,1)}
+.bx.shut .tri svg{transform:rotate(180deg)}
+.nm-cv{position:absolute;left:26px;top:206px;width:260px;height:40px;background:#FBF3E2;z-index:1}
+.nm-bg,.nm-sel,.nm-chip{position:absolute;top:211px;width:55px;height:30px;border-radius:15px;box-sizing:border-box}
+.nm-bg{background:#FFFAEF;border:1px solid #E5D8BD;z-index:1}
+.nm-sel{background:#E8EBCF;border:1.5px solid #A6B984;z-index:2;transition:left .42s cubic-bezier(.34,1.45,.64,1)}
+.nm-chip{z-index:3;display:flex;align-items:center;justify-content:center;border:0;background:transparent;padding:0;cursor:pointer;font:700 12px 'Nunito Sans',system-ui,sans-serif;color:#2B261D;transition:color .25s;-webkit-tap-highlight-color:transparent}
+.nm-chip.on{color:#44622F}
+.nm-in{position:absolute;left:56px;top:158px;width:290px;height:30px;background:#FFFAEF;z-index:2;overflow:hidden;pointer-events:none}
+.nm-in span{position:absolute;left:6px;top:0;line-height:30px;font:600 16px/30px 'Nunito Sans',system-ui,sans-serif;color:#4A5739}
+@media (prefers-reduced-motion:reduce){.nm-sel,.nm-chip{transition:none}}
+.hl{position:absolute;left:0;top:0;width:393px;height:852px}
+.hl>div{position:absolute}
+.hl img{display:block;width:100%;height:100%;user-select:none;-webkit-user-drag:none}
+.hl .bw,.hl .bb,.hl .bt{opacity:0}
+.hl .bw{transform-origin:50% 100%}
+.hl .bb{transform-origin:144px 100%}
+.hl .tx{position:absolute;left:0;top:22px;width:340px;text-align:center;font:400 17px/22px Lora,Georgia,serif;color:#3d3d3d}
+.hl .tx div{white-space:pre}
+.hl .ch{opacity:0}
+.hl.go .bw{animation:hl-rise .65s cubic-bezier(.22,.8,.24,1) both}
+.hl.go .bw img{transform-origin:50% 100%;animation:hl-breathe 3.8s ease-in-out .9s infinite}
+.hl.go .bb{animation:hl-pop .55s cubic-bezier(.3,1.3,.5,1) .5s both}
+.hl.go .bb img{animation:hl-bob 3.2s ease-in-out 1.2s infinite}
+.hl.go .ch{animation:hl-ch .01s linear forwards}
+.hl.go .bt{animation:hl-lift .5s cubic-bezier(.22,.8,.24,1) 2.45s both}
+@keyframes hl-rise{from{opacity:0;transform:translateY(24px) scale(.95)}to{opacity:1;transform:none}}
+@keyframes hl-pop{0%{opacity:0;transform:scale(.35) translateY(10px)}55%{opacity:1;transform:scale(1.06)}100%{opacity:1;transform:none}}
+@keyframes hl-ch{to{opacity:1}}
+@keyframes hl-lift{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes hl-breathe{0%,100%{transform:none}50%{transform:scale(1.012,1.02)}}
+@keyframes hl-bob{0%,100%{transform:none}50%{transform:translateY(-2px)}}
+@media (prefers-reduced-motion:reduce){.hl .bw,.hl .bb,.hl .bt,.hl .ch{opacity:1!important;animation:none!important}.hl img{animation:none!important}}
+.tb{position:absolute;left:0;top:762px;width:393px;height:90px;background:#FFFAEF;z-index:20;color:#687A51;transition:transform .32s cubic-bezier(.22,.8,.24,1)}
+.tb.off{transform:translateY(100%);pointer-events:none}
+.tb-pill{position:absolute;top:18px;left:18.5px;width:58px;height:32px;border-radius:16px;background:#E8EBCF;transition:left .5s cubic-bezier(.34,1.45,.64,1)}
+.tb-it{position:absolute;top:0;width:84px;height:90px;border:0;background:transparent;padding:0;cursor:pointer;color:inherit;font:700 12px 'Nunito Sans',system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
+.tb-it .ico{position:absolute;left:50%;top:17px;width:32px;height:32px;margin-left:-16px;display:flex;align-items:center;justify-content:center;transition:transform .12s}
+.tb-it:active .ico{transform:scale(.88)}
+.tb-it .lb{position:absolute;left:0;right:0;top:53px;line-height:18px;text-align:center}
+.dts{display:flex;gap:1px}.dts i{display:block;width:12px;height:12px;border-radius:50%;background:currentColor}
+.rm-p{position:absolute;background:#FFFAEF}
+.sw{position:absolute;left:329px;top:123px;width:34px;height:19px;border-radius:10px;background:#D9CDB0;cursor:pointer;touch-action:none;transition:background .25s;-webkit-tap-highlight-color:transparent}
+.sw.on{background:#44622F}
+.sw i{position:absolute;left:2px;top:2px;width:15px;height:15px;border-radius:50%;background:#FFFAEF;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .32s cubic-bezier(.34,1.56,.64,1)}
+.sw.on i{transform:translateX(15px)}
+.sw.drag,.sw.drag i{transition:none}
+.tm{position:absolute;left:281px;top:167px;width:81px;height:28px;border-radius:4px;background:#F3E8D0;color:#2B261D;font:600 14px 'Nunito Sans',system-ui,sans-serif;display:flex;align-items:center;justify-content:center;transition:color .25s}
+.tm.off{color:#A89F8C}
+
+.lg{position:relative;width:225px;height:233px}
+.lg>div{position:absolute}
+.lg img{display:block;width:100%;height:100%}
+.lg .sn{left:139px;top:2px;width:60px;height:60px;opacity:0}
+.lg .mk{left:0;top:0;width:225px;height:160px;clip-path:inset(100% 0 0 0);transform-origin:50% 100%}
+.lg .wd{left:0;top:172px;width:225px;height:47px;opacity:0;clip-path:inset(0 100% 0 0)}
+.lg .tg{left:0;top:221px;width:225px;height:11px;opacity:0}
+.lg.go .sn{animation:lg-sun 1.3s cubic-bezier(.22,.8,.24,1) .1s forwards,lg-glow 4.5s ease-in-out 1.6s infinite}
+.lg.go .mk{animation:lg-grow 1.5s cubic-bezier(.45,.05,.2,1) .35s forwards,lg-sway 7s ease-in-out 2.2s infinite alternate}
+.lg.go .wd{animation:lg-word 1s cubic-bezier(.22,.8,.24,1) 1.45s forwards}
+.lg.go .tg{animation:lg-tag .9s ease-out 2.1s forwards}
+@keyframes lg-sun{from{opacity:0;transform:translateY(22px) scale(.55)}to{opacity:1;transform:none}}
+@keyframes lg-glow{0%,100%{filter:drop-shadow(0 0 0 rgba(200,110,60,0));transform:scale(1)}50%{filter:drop-shadow(0 0 9px rgba(200,110,60,.38));transform:scale(1.035)}}
+@keyframes lg-grow{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes lg-sway{from{transform:rotate(-.55deg)}to{transform:rotate(.55deg)}}
+@keyframes lg-word{from{opacity:0;clip-path:inset(0 100% 0 0);transform:translateY(8px)}60%{opacity:1}to{opacity:1;clip-path:inset(0 0 0 0);transform:none}}
+@keyframes lg-tag{from{opacity:0;transform:translateY(5px)}to{opacity:.95;transform:none}}
+@media (prefers-reduced-motion:reduce){.lg.go .sn,.lg.go .mk,.lg.go .wd,.lg.go .tg{animation:none;opacity:1;clip-path:none}}
+.lgw{position:absolute;left:95px;top:312px;width:225px;height:233px}
+.lgw .vs,.lgw .vm,.lgw .vw,.lgw .vt{transform-box:fill-box}
+.lgw .vs{opacity:0;transform-origin:50% 100%}.lgw .vm{clip-path:inset(100% 0 0 0);transform-origin:50% 100%}.lgw .vw{opacity:0;clip-path:inset(0 100% 0 0)}.lgw .vt{opacity:0}
+.lgw.go .vs{animation:vs 1.3s cubic-bezier(.22,.8,.24,1) .1s forwards,vg 4.5s ease-in-out 1.6s infinite}
+.lgw.go .vm{animation:vgrow 1.5s cubic-bezier(.45,.05,.2,1) .35s forwards,vsway 7s ease-in-out 2.2s infinite alternate}
+.lgw.go .vw{animation:vw 1s cubic-bezier(.22,.8,.24,1) 1.45s forwards}
+.lgw.go .vt{animation:vt .9s ease-out 2.1s forwards}
+@keyframes vs{from{opacity:0;transform:translateY(22px) scale(.55)}to{opacity:1;transform:none}}
+@keyframes vg{0%,100%{filter:drop-shadow(0 0 0 rgba(200,110,60,0));transform:scale(1)}50%{filter:drop-shadow(0 0 6px rgba(200,110,60,.4));transform:scale(1.035)}}
+@keyframes vgrow{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes vsway{from{transform:rotate(-.55deg)}to{transform:rotate(.55deg)}}
+@keyframes vw{from{opacity:0;clip-path:inset(0 100% 0 0)}60%{opacity:1}to{opacity:1;clip-path:inset(0 0 0 0)}}
+@keyframes vt{from{opacity:0}to{opacity:.95}}
+@media (prefers-reduced-motion:reduce){.lgw .vs,.lgw .vm,.lgw .vw,.lgw .vt{animation:none!important;opacity:1;clip-path:none}}
+
+@media (prefers-reduced-motion:reduce){.sw,.sw i,.tm{transition:none}.tb,.tb-pill,.tb-it .ico{transition:none}}
+.cta{position:absolute;left:30px;width:333px;height:49px;border-radius:8px;background:#44622F;color:#FBF3E2;font:600 16px 'Nunito Sans',system-ui,sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.cta:active{opacity:.85}
+.lock{background:linear-gradient(170deg,#7A9A52,#2B3F26)}
+.lock .t{padding-top:100px;text-align:center;color:#FBF3E2;font-family:'Nunito Sans',system-ui,sans-serif}
+.lock .t b{display:block;font-size:64px;line-height:64px;font-weight:600}
+.lock .t span{display:block;font-size:16px;margin-top:6px;opacity:.9}
+.lock .n{position:absolute;left:15px;bottom:150px;width:363px}
+.lock .n img{display:block;width:363px;cursor:pointer;border-radius:18px}
+.lock .h{position:absolute;left:0;right:0;bottom:118px;text-align:center;color:#FBF3E2;opacity:.85;font:400 12px 'Nunito Sans',system-ui,sans-serif}
+.toast{position:absolute;left:24px;right:24px;bottom:100px;z-index:50;background:#2B3F26;color:#FBF3E2;font-size:14px;font-weight:700;padding:12px 16px;border-radius:16px;text-align:center;opacity:0;transform:translateY(8px);transition:opacity .2s,transform .35s cubic-bezier(.34,1.56,.64,1);pointer-events:none;font-family:'Nunito Sans',system-ui,sans-serif}
+.toast.on{opacity:1;transform:none}
+aside{flex:1 1 260px;max-width:340px;min-width:240px;background:var(--panel);border:1.5px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:12px}
+aside h2{font-family:Lora,Georgia,serif;font-size:18px;margin:0}
+aside p{margin:0;font-size:14px;line-height:21px;color:var(--ink2)}
+.task{display:flex;flex-direction:column;gap:6px;padding-top:12px;border-top:1px solid var(--line)}
+.task b{font-size:14px}
+.task span{font-size:13px;line-height:19px;color:var(--ink2)}
+.task button{align-self:flex-start;font:inherit;font-size:13px;font-weight:700;min-height:36px;padding:0 16px;border-radius:18px;border:0;background:var(--accent);color:var(--accent-ink);cursor:pointer}
+@media (prefers-reduced-motion:reduce){.toast,.spot,.bx .bd,.tri svg{transition:none}.rip{display:none}}
+</style>
+<div class="wrap">
+  <header>
+    <h1>Aranyo<small>A quieter way to grow. Tap through the app.</small></h1>
+    <nav class="nav" aria-label="Jump to">
+      <button type="button" data-jump="welcome">Onboarding</button>
+      <button type="button" data-jump="today">Today</button>
+      <button type="button" data-jump="species-tab">Species</button>
+      <button type="button" data-jump="more">More</button>
+      <button type="button" id="back">Back</button>
+      <label><input type="checkbox" id="show"> Show tap areas</label>
+    </nav>
+  </header>
+  <div class="stage">
+    <div class="frame" id="frame"><div class="phone" id="phone"><div id="screens"></div><div class="toast" id="toast" role="status"></div></div></div>
+    <aside>
+      <h2>Try three tasks</h2>
+      <p>Each one starts in the right place. Switch on "Show tap areas" if you are not sure what to tap.</p>
+      <div class="task"><b>1. Add your first bonsai</b><span>Say you have one, pick a species and name it.</span><button type="button" data-jump="welcome">Start</button></div>
+      <div class="task"><b>2. Check today's care</b><span>Open Mori and log that you checked the soil.</span><button type="button" data-jump="today">Start</button></div>
+      <div class="task"><b>3. Find a species guide</b><span>Open the Chinese banyan from the Species tab.</span><button type="button" data-jump="species-tab">Start</button></div>
+    </aside>
+  </div>
+</div>
+<script>
+(function(){
+  var $=function(s){return document.querySelector(s)};
+  var W=393,H=852;
+  var state={tree:false,hello:false},stack=[],cur=null,toastT;
+  // spot: [x,y,w,h,action,label]. Actions: go:id | back | tab:today|species-tab|more | toast:text | fn:name
+  var TAB=[];
+  var BACK=[8,12,44,44,'back','Back'];
+  var SOON='Only Mori and the Chinese banyan are open in this prototype';
+  var S={
+    'welcome':{img:'01b-welcome-bare',logo:true,spots:[[30,773,333,49,'go:have','Get Started']]},
+    'have':{img:'02-have',spots:[[30,380,333,49,'go:search','Yes, I do'],[30,444,333,49,'toast:Browse species comes in the next version','Not yet']]},
+    'search':{img:'03-search',spots:[BACK,[290,14,92,44,'fn:selectLater','Select later'],
+      [30,267,335,75,'fn:pick','Chinese banyan'],[30,358,335,75,'fn:pick','Elephant bush'],[30,448,335,75,'fn:pick','Bougainvillea'],
+      [105,596,190,40,'toast:Adding your own tree comes later',"Can't find it? Add it yourself"]]},
+    'name':{img:'04-name',spots:[BACK,[290,14,92,44,'fn:afterName','Select later'],
+      ],names:true,
+      cta:[773,'Save','fn:afterName']},
+    'hello':{img:'05-hello',hello:true,spots:[[30,773,333,49,'fn:home','Continue']]},
+    'empty':{img:'06-empty',spots:[[107,541,180,42,'go:search','Add a tree']].concat(TAB)},
+    'today':{img:'07-today',spots:[[15,98,363,292,'go:detail','Open Mori'],[15,401,363,292,'toast:'+SOON,'Open Kuro'],[66,709,264,38,'go:search','Add a tree']].concat(TAB)},
+    'detail':{img:'08-detail',h:1272,boxes:[[342,630,361],[646,945,665],[960,1237,980]],spots:[BACK,[348,10,36,36,'toast:More options come in a later version','More options'],
+      [28,498,160,43,'toast:Logged. Next check in 2 days.','I watered it'],[207,498,155,43,'toast:Noted. Aranyo will ask again tomorrow.','Still damp'],
+      [262,902,110,28,'go:species','Full species guide'],[27,1176,157,43,'toast:Note saved','Save note'],[204,1176,157,43,'toast:Note cleared','Clear']]},
+    'species-tab':{img:'09-species-tab',spots:[[15,73,363,49,'go:species-results','Search species'],
+      [30,181,335,89,'go:species','Chinese banyan'],[30,285,335,90,'toast:'+SOON,'Elephant bush'],[30,389,335,76,'toast:'+SOON,'Bougainvillea']].concat(TAB)},
+    'species-results':{img:'14-species-results',spots:[[322,80,48,34,'back','Clear search'],[30,181,335,89,'go:species','Chinese banyan'],[30,285,335,75,'toast:'+SOON,'Weeping fig'],[30,376,335,75,'toast:'+SOON,'Creeping fig'],[30,467,335,75,'toast:'+SOON,'Peepal']].concat(TAB)},
+    'species':{img:'10-species',h:2003,boxes:[[383,510,409],[526,999,551,13],[1015,1281,1047],[1297,1488,1329],[1504,1626,1530],[1642,1764,1668],[1780,1902,1806]],spots:[BACK,[15,1930,362,45,'go:name','Add tree']]},
+    'more':{img:'11-more',spots:[[15,77,363,66,'go:reminders','Reminders'],[15,145,363,60,'toast:Coming in a later version','Archived trees'],[15,207,363,68,'toast:Coming in a later version','Send feedback']].concat(TAB)},
+    'reminders':{img:'12-reminders',rem:true,spots:[[8,10,44,44,'back','Back']].concat(TAB)}
+  };
+  var HEADH=50,FOOTH=15,resets=[],namesReset=null;
+  function spotEl(s,top){
+    var b=document.createElement('div');b.className='spot';b.setAttribute('role','button');b.tabIndex=0;b.setAttribute('aria-label',s[5]);
+    b.style.cssText='left:'+s[0]+'px;top:'+top+'px;width:'+s[2]+'px;height:'+s[3]+'px';
+    var f=function(){act(s[4])};
+    b.addEventListener('click',f);b.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();f()}});
+    return b;
+  }
+  // Cuts the exported page into slices so each information box can fold: header, body, footer.
+  function buildBoxes(pg,d){
+    var url='img/'+d.img+'.png',pos=0,spots=d.spots.slice();
+    function slice(y0,y1,cls){
+      var e=document.createElement('div');e.className='sl '+(cls||'');e.style.height=(y1-y0+1)+'px';
+      e.style.backgroundImage='url('+url+')';e.style.backgroundPosition='0 -'+y0+'px';e.start=y0;e.end=y1;return e;
+    }
+    function fill(host,y0,y1){
+      spots=spots.filter(function(s){var c=s[1]+s[3]/2;if(c>=y0&&c<y1){host.appendChild(spotEl(s,s[1]-y0));return false}return true});
+    }
+    d.boxes.forEach(function(bx,i){
+      var top=bx[0],bot=bx[1],ty=bx[2];
+      if(top>pos){var g=slice(pos,top-1);fill(g,pos,top);pg.appendChild(g)}
+      var box=document.createElement('div');box.className='bx';
+      var hd=slice(top,top+HEADH-1,'hd');hd.setAttribute('role','button');hd.tabIndex=0;hd.setAttribute('aria-expanded','true');
+      hd.setAttribute('aria-label','Show or hide this section');
+      var tri=document.createElement('div');tri.className='tri';tri.style.left='349px';tri.style.top=(ty-top-2)+'px';
+      tri.innerHTML='<svg width="9" height="8" viewBox="0 0 9 8" aria-hidden="true"><path d="M0 8 4.5 0 9 8Z" fill="#44622F"/></svg>';
+      hd.appendChild(tri);
+      var bd=document.createElement('div');bd.className='bd';
+      var FT=bx[3]||FOOTH,by0=top+HEADH,by1=bot-FT,bh=by1-by0;
+      var inner=slice(by0,by1-1);inner.style.height=bh+'px';inner.style.marginBottom='0';bd.appendChild(inner);bd.style.height=bh+'px';fill(inner,by0,by1);
+      var ft=slice(bot-FT,bot);
+      box.appendChild(hd);box.appendChild(bd);box.appendChild(ft);pg.appendChild(box);
+      var shut=false;
+      function flip(){
+        shut=!shut;box.classList.toggle('shut',shut);hd.setAttribute('aria-expanded',String(!shut));
+        if(shut)bd.setAttribute('inert','');else bd.removeAttribute('inert');
+        bd.style.height=(shut?0:bh)+'px';
+      }
+      resets.push(function(){if(shut)flip()});
+      hd.addEventListener('click',flip);
+      hd.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();flip()}});
+      pos=bot+1;
+    });
+    var last=slice(pos,d.h-1);last.style.marginBottom='0';fill(last,pos,d.h+1);pg.appendChild(last);
+  }
+  // Live tab bar: sits above the screens so the pill can slide and the icons can react.
+  var TABOF={today:0,empty:0,'species-tab':1,'species-results':1,more:2,reminders:2},TC=[47.5,190,339],tbEl=null,pill=null,tbIt=[],tbAt=-1,tbOn=false;
+  function buildTabs(){
+    var L=['Today','Species','More'],G=['today','species-tab','more'];
+    var I=['<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.6"/><path d="M12 2.6v2.4M12 19v2.4M2.6 12H5M19 12h2.4M5.4 5.4l1.7 1.7M16.9 16.9l1.7 1.7M18.6 5.4l-1.7 1.7M7.1 16.9l-1.7 1.7"/></svg>',
+      '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.3"/><path d="M15.2 15.2 20 20"/></svg>',
+      '<span class="dts" aria-hidden="true"><i></i><i></i><i></i></span>'];
+    tbEl=document.createElement('div');tbEl.className='tb off';tbEl.setAttribute('role','navigation');tbEl.setAttribute('aria-label','Main');
+    pill=document.createElement('div');pill.className='tb-pill';tbEl.appendChild(pill);
+    L.forEach(function(n,i){
+      var b=document.createElement('button');b.type='button';b.className='tb-it';b.style.left=(TC[i]-42)+'px';b.setAttribute('aria-label',n);
+      b.innerHTML='<span class="ico">'+I[i]+'</span><span class="lb">'+n+'</span>';
+      b.addEventListener('click',function(){
+        var root=i===0?home():G[i];
+        if(cur===root){tabIcon(i);return}
+        act('tab:'+G[i]);
+      });
+      tbIt.push(b);tbEl.appendChild(b);
+    });
+    $('#phone').appendChild(tbEl);
+  }
+  function tabIcon(i){
+    if(RM)return;
+    var ico=tbIt[i].querySelector('.ico');if(!ico.animate)return;
+    if(i===0)ico.animate([{transform:'rotate(0) scale(1)'},{transform:'rotate(120deg) scale(1.22)',offset:.55},{transform:'rotate(180deg) scale(1)'}],{duration:650,easing:'cubic-bezier(.3,1.2,.5,1)'});
+    else if(i===1)ico.animate([{transform:'rotate(0) scale(1)'},{transform:'rotate(-22deg) scale(1.2)',offset:.3},{transform:'rotate(12deg) scale(1.1)',offset:.62},{transform:'rotate(0) scale(1)'}],{duration:600,easing:'ease-in-out'});
+    else Array.prototype.forEach.call(ico.querySelectorAll('i'),function(d,j){d.animate([{transform:'translateY(0)'},{transform:'translateY(-7px) scale(1.12)',offset:.4},{transform:'translateY(0)'}],{duration:480,delay:j*70,easing:'cubic-bezier(.3,1.3,.5,1)'})});
+  }
+  function tabSync(id){
+    if(!tbEl)return;
+    var k=TABOF[id];
+    if(k===undefined){tbEl.classList.add('off');tbOn=false;return}
+    tbIt.forEach(function(b,j){if(j===k)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+    if(!tbOn){
+      tbOn=true;tbAt=k;pill.style.transition='none';pill.style.left=(TC[k]-29)+'px';void pill.offsetWidth;pill.style.transition='';tbEl.classList.remove('off');return;
+    }
+    if(k!==tbAt){tbAt=k;pill.style.left=(TC[k]-29)+'px';tabIcon(k)}
+  }
+  // Hello screen: bonsai, speech bubble and button are separate layers so the greeting can play out.
+  var helloRun=null;
+  function buildHello(pg){
+    pg.style.height='852px';
+    var r=document.createElement('div');r.className='hl';
+    function layer(cls,src,x,y,w,h){var d=document.createElement('div');d.className=cls;d.style.cssText='left:'+x+'px;top:'+y+'px;width:'+w+'px;height:'+h+'px';var i=new Image();i.src='img/'+src;i.alt='';i.draggable=false;d.appendChild(i);r.appendChild(d);return d}
+    layer('bw','05a-bonsai.png',42,303,314,349);
+    var bb=layer('bb','05b-bubble.png',26,195,340,106);
+    layer('bt','05c-button.png',30,773,333,49);
+    var tx=document.createElement('div');tx.className='tx';tx.setAttribute('aria-label','Water me wisely, admire me often. Deal?');
+    var n=0;
+    ['Water me wisely, admire me often.','Deal?'].forEach(function(t,li){
+      var line=document.createElement('div');line.setAttribute('aria-hidden','true');
+      t.split('').forEach(function(c){var s=document.createElement('span');s.className='ch';s.textContent=c;s.style.animationDelay=(1000+n*30+(li?220:0))+'ms';n++;line.appendChild(s)});
+      tx.appendChild(line);
+    });
+    bb.appendChild(tx);pg.appendChild(r);
+    helloRun=function(){r.classList.remove('go');void r.offsetWidth;r.classList.add('go')};
+  }
+  // Name chips: the exported chips are covered with live ones so the choice can animate.
+  function buildNames(pg){
+    var N=['Mori','Kuro','Hana','Bodhi'],X=[30,95,160,225],at=0;
+    var cv=document.createElement('div');cv.className='nm-cv';pg.appendChild(cv);
+    X.forEach(function(x){var b=document.createElement('div');b.className='nm-bg';b.style.left=x+'px';pg.appendChild(b)});
+    var sel=document.createElement('div');sel.className='nm-sel';sel.style.left=X[0]+'px';pg.appendChild(sel);
+    var box=document.createElement('div');box.className='nm-in';var v=document.createElement('span');v.textContent=N[0];box.appendChild(v);pg.appendChild(box);
+    var chips=[];
+    function pick(i){
+      if(i===at)return;
+      var old=v;at=i;sel.style.left=X[i]+'px';
+      chips.forEach(function(c,j){c.classList.toggle('on',j===i);c.setAttribute('aria-checked',String(j===i))});
+      v=document.createElement('span');v.textContent=N[i];box.appendChild(v);
+      if(!RM&&v.animate){
+        sel.animate([{transform:'scale(1)'},{transform:'scale(1.14,1.22)'},{transform:'scale(1)'}],{duration:420,easing:'ease-out'});
+        var e={duration:260,easing:'cubic-bezier(.22,.8,.24,1)',fill:'both'};
+        v.animate([{transform:'translateY(14px)',opacity:0},{transform:'none',opacity:1}],e);
+        old.animate([{transform:'none',opacity:1},{transform:'translateY(-14px)',opacity:0}],e).onfinish=function(){old.remove()};
+      }else old.remove();
+    }
+    N.forEach(function(n,i){
+      var c=document.createElement('button');c.type='button';c.className='nm-chip'+(i===0?' on':'');c.textContent=n;c.style.left=X[i]+'px';
+      c.setAttribute('role','radio');c.setAttribute('aria-checked',String(i===0));
+      c.addEventListener('click',function(){pick(i)});chips.push(c);pg.appendChild(c);
+    });
+    namesReset=function(){at=0;sel.style.left=X[0]+'px';chips.forEach(function(c,j){c.classList.toggle('on',j===0);c.setAttribute('aria-checked',String(j===0))});box.innerHTML='';v=document.createElement('span');v.textContent=N[0];box.appendChild(v)};
+  }
+  var host=$('#screens');
+  function mk(id){
+    var d=S[id],sec=document.createElement('section');sec.className='scr';sec.id='s-'+id;sec.hidden=true;if(d.boxes)sec.style.background='#F3E8D0';
+    var pg=document.createElement('div');pg.className='page';
+    if(d.boxes){buildBoxes(pg,d)}else if(d.hello){buildHello(pg)}else{var im=new Image();im.src='img/'+d.img+'.png';im.alt='';im.draggable=false;pg.appendChild(im)}
+    (d.boxes?[]:d.spots).forEach(function(s){
+      var b=document.createElement('div');b.className='spot';b.setAttribute('role','button');b.tabIndex=0;b.setAttribute('aria-label',s[5]);
+      b.style.cssText='left:'+s[0]+'px;top:'+s[1]+'px;width:'+s[2]+'px;height:'+s[3]+'px';
+      var f=function(){act(s[4])};
+      b.addEventListener('click',f);b.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();f()}});
+      pg.appendChild(b);
+    });
+    if(d.cta){
+      var c=document.createElement('div');c.className='cta';c.style.top=d.cta[0]+'px';c.textContent=d.cta[1];c.setAttribute('role','button');c.tabIndex=0;
+      c.addEventListener('click',function(){act(d.cta[2])});c.addEventListener('keydown',function(e){if(e.key==='Enter'){act(d.cta[2])}});
+      pg.appendChild(c);
+    }
+    if(d.names)buildNames(pg);
+    if(d.rem)buildRem(pg);
+    if(d.logo)buildLogo(pg);
+    sec.appendChild(pg);host.appendChild(sec);
+  }
+  var logoRun=null;
+  function buildLogo(pg){var w=document.createElement('div');w.className='lgw';w.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 225 233" width="225" height="233" style="overflow:visible;display:block" role="img" aria-label="Aranyo, a quieter way to grow"><defs><linearGradient id="lgsg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D49C75"/><stop offset=".5" stop-color="#C98B62"/><stop offset="1" stop-color="#D19B74"/></linearGradient></defs><g class="vs"><circle cx="169.2" cy="32.1" r="26.8" fill="url(#lgsg)"/></g><path class="vm" fill="#1E2420" fill-rule="evenodd" d="M127.11 156.64C126.72 156.32 126.88 156.00 128.00 154.83C130.98 151.71 130.98 150.69 128.01 145.00C127.59 144.21 127.13 143.20 126.99 142.75C126.84 142.30 126.63 141.77 126.53 141.58C126.43 141.38 126.24 140.63 126.11 139.91C125.98 139.19 125.74 138.15 125.56 137.61C125.39 137.06 125.19 136.10 125.12 135.46C124.90 133.42 124.25 131.09 123.58 129.95C123.41 129.67 123.18 129.10 123.06 128.69C122.94 128.27 122.69 127.63 122.50 127.25C122.31 126.87 122.09 126.34 122.00 126.06C121.75 125.28 120.91 123.66 120.18 122.56C119.82 122.01 119.38 121.25 119.21 120.88C119.04 120.50 118.50 119.71 118.01 119.12C117.52 118.54 116.76 117.64 116.32 117.12C114.00 114.37 109.20 109.81 107.55 108.77C105.17 107.28 104.59 106.94 103.38 106.35C102.65 106.00 101.92 105.61 101.75 105.49C101.58 105.38 101.07 105.17 100.62 105.03C100.18 104.89 99.33 104.57 98.75 104.31C98.17 104.06 97.37 103.72 96.99 103.56C96.61 103.39 95.71 103.17 94.99 103.07C94.14 102.95 93.37 102.75 92.76 102.49C92.21 102.26 91.35 102.03 90.65 101.92C90.01 101.83 89.25 101.69 88.96 101.62C87.96 101.37 80.54 101.32 78.25 101.55C75.18 101.86 73.81 102.09 72.56 102.50C71.94 102.70 70.90 102.95 70.23 103.06C69.57 103.16 68.77 103.36 68.46 103.49C68.15 103.63 67.48 103.86 66.98 104.01C66.47 104.16 65.87 104.38 65.62 104.50C65.38 104.62 64.82 104.84 64.38 104.99C63.93 105.14 63.37 105.39 63.13 105.54C62.89 105.70 61.97 106.18 61.10 106.61C58.65 107.80 58.47 107.99 57.23 110.40C56.65 111.52 56.08 112.72 55.95 113.06C55.82 113.40 55.03 115.00 54.19 116.62C53.36 118.24 52.60 119.76 52.50 120.00C52.28 120.54 49.77 125.52 49.63 125.69C49.57 125.76 49.35 126.25 49.13 126.79C48.92 127.33 48.44 128.34 48.07 129.04C47.69 129.74 47.30 130.57 47.19 130.88C47.08 131.18 46.80 131.80 46.57 132.25C46.34 132.70 45.89 133.79 45.57 134.67C45.25 135.56 44.82 136.62 44.61 137.03C44.40 137.44 44.16 138.22 44.06 138.76C43.97 139.30 43.75 140.19 43.58 140.73C43.16 142.05 42.95 144.00 42.95 146.50C42.96 149.03 43.08 149.77 43.77 151.32C44.39 152.71 45.43 153.82 46.87 154.62C48.22 155.38 48.41 155.73 47.80 156.33C47.49 156.65 47.45 156.66 46.40 156.57C44.70 156.43 26.04 156.48 18.75 156.63C10.10 156.82 8.68 156.79 8.36 156.39C7.81 155.71 8.25 154.97 9.28 154.82C10.09 154.70 12.97 154.01 13.81 153.73C14.22 153.59 15.07 153.33 15.69 153.14C16.31 152.95 17.05 152.64 17.35 152.45C17.65 152.27 18.03 152.06 18.20 152.00C18.49 151.88 20.03 150.98 21.44 150.10C24.50 148.17 29.56 143.30 32.39 139.56C33.56 138.02 36.02 134.42 37.36 132.29C37.84 131.54 39.46 128.60 40.44 126.73C40.92 125.79 41.39 124.95 41.46 124.86C41.59 124.70 42.25 123.47 42.96 122.06C43.14 121.72 43.38 121.29 43.51 121.11C43.63 120.94 43.86 120.49 44.00 120.11C44.15 119.74 44.40 119.26 44.56 119.05C44.72 118.84 45.22 117.94 45.67 117.05C46.13 116.16 46.60 115.24 46.74 115.00C46.87 114.76 47.17 114.17 47.40 113.69C48.06 112.32 49.61 109.37 49.88 108.99C50.01 108.81 50.48 107.93 50.91 107.05C52.31 104.22 54.70 99.76 55.27 98.92C55.46 98.64 55.73 98.13 55.86 97.80C56.13 97.13 58.21 93.02 58.39 92.80C58.45 92.72 58.90 91.88 59.39 90.92C59.88 89.97 60.35 89.10 60.43 89.00C60.52 88.90 61.16 87.63 61.86 86.19C62.57 84.74 63.23 83.42 63.33 83.25C63.43 83.08 63.91 82.12 64.40 81.12C64.90 80.13 65.42 79.14 65.58 78.94C65.73 78.73 65.97 78.27 66.11 77.91C66.48 76.96 67.24 75.50 67.59 75.04C67.76 74.82 68.00 74.30 68.13 73.88C68.25 73.45 68.49 72.93 68.65 72.71C69.07 72.16 69.98 70.46 70.20 69.83C70.30 69.55 70.58 69.04 70.81 68.69C71.05 68.34 71.38 67.61 71.56 67.06C71.73 66.51 72.04 65.81 72.25 65.50C72.46 65.19 73.19 63.78 73.89 62.38C75.50 59.09 76.27 57.59 78.04 54.31C78.15 54.11 78.88 52.63 79.68 51.03C80.47 49.42 81.23 47.96 81.36 47.77C81.50 47.57 81.72 47.13 81.86 46.78C82.00 46.43 82.39 45.64 82.74 45.02C83.08 44.40 83.53 43.52 83.74 43.07C83.94 42.62 84.22 42.09 84.35 41.90C84.49 41.72 84.74 41.23 84.91 40.81C85.09 40.40 85.52 39.53 85.88 38.88C86.24 38.22 86.95 36.87 87.47 35.88C87.98 34.88 88.45 34.01 88.50 33.94C88.56 33.87 88.72 33.51 88.87 33.13C89.02 32.76 89.24 32.31 89.37 32.14C89.49 31.96 89.95 31.05 90.38 30.12C90.81 29.20 91.32 28.21 91.50 27.94C91.68 27.66 91.91 27.24 92.00 27.00C92.09 26.76 92.52 25.92 92.94 25.12C93.37 24.33 93.90 23.32 94.12 22.88C94.34 22.43 94.79 21.56 95.13 20.94C95.47 20.32 95.87 19.56 96.01 19.25C96.15 18.94 96.43 18.43 96.63 18.12C96.83 17.80 97.06 17.36 97.14 17.13C97.22 16.90 97.64 16.04 98.08 15.21C98.52 14.38 98.97 13.46 99.08 13.16C99.19 12.87 99.42 12.45 99.59 12.22C99.75 12.00 100.24 11.08 100.68 10.19C102.40 6.63 104.44 4.41 107.00 3.29C108.03 2.84 108.67 2.77 109.10 3.07C109.44 3.31 110.45 5.28 110.75 6.31C110.88 6.72 111.30 7.82 111.69 8.75C112.08 9.68 112.51 10.78 112.65 11.19C112.78 11.60 113.09 12.36 113.32 12.88C113.55 13.39 114.00 14.52 114.32 15.38C114.63 16.23 115.08 17.28 115.31 17.69C115.54 18.11 115.80 18.73 115.89 19.07C115.97 19.41 116.19 20.00 116.38 20.38C116.57 20.76 116.79 21.32 116.88 21.63C116.96 21.93 117.14 22.41 117.28 22.68C117.59 23.29 118.24 25.34 118.25 25.70C118.25 26.41 117.31 27.01 115.60 27.39C113.84 27.77 112.93 28.31 109.92 30.77C107.86 32.44 106.22 34.14 105.84 35.01C105.14 36.61 104.45 36.56 104.05 34.88C103.97 34.50 103.60 33.57 103.25 32.81C102.89 32.06 102.46 31.05 102.29 30.58C102.12 30.10 101.82 29.45 101.62 29.14C101.43 28.82 101.19 28.26 101.08 27.90C100.72 26.69 100.09 26.00 99.50 26.19C99.22 26.28 98.15 28.17 96.20 32.06C95.37 33.71 94.57 35.23 94.43 35.44C94.29 35.64 93.82 36.52 93.38 37.38C92.95 38.23 92.50 39.08 92.38 39.25C92.26 39.42 92.07 39.82 91.95 40.12C91.83 40.43 91.58 40.94 91.39 41.25C90.88 42.07 90.06 43.74 89.88 44.29C89.70 44.86 88.29 47.62 86.38 51.19C85.60 52.63 84.89 54.04 84.79 54.31C84.69 54.59 84.38 55.21 84.10 55.69C83.23 57.14 81.62 60.65 81.62 61.08C81.62 61.93 82.47 62.30 83.47 61.89C84.08 61.63 84.27 61.18 84.17 60.16C84.08 59.12 84.24 58.69 85.06 57.78C85.81 56.95 86.50 56.55 87.38 56.43C88.17 56.33 88.37 56.24 89.08 55.67C90.14 54.80 92.26 54.32 94.62 54.40C96.59 54.48 98.10 55.02 99.37 56.12C100.28 56.91 100.79 57.11 101.88 57.12C102.89 57.13 103.53 57.41 104.38 58.21C105.24 59.01 105.38 59.31 105.38 60.43C105.38 61.66 105.60 61.95 106.48 61.82C108.20 61.58 108.22 61.58 108.93 61.93C109.72 62.32 110.29 62.94 110.58 63.75C110.88 64.55 111.08 64.74 111.91 64.97C112.65 65.17 113.38 65.78 113.38 66.20C113.38 66.75 112.50 67.72 111.69 68.05C111.46 68.15 110.84 68.30 110.32 68.37C109.79 68.45 108.96 68.68 108.47 68.89C107.70 69.20 107.43 69.25 106.57 69.23C105.80 69.22 105.46 69.26 105.12 69.44C104.88 69.56 103.98 69.93 103.12 70.26C101.92 70.71 101.53 70.91 101.42 71.14C101.35 71.30 101.11 71.78 100.89 72.20C100.68 72.62 100.50 73.16 100.50 73.39C100.51 74.48 101.58 75.76 103.15 76.55C104.11 77.04 104.11 77.04 105.34 76.97C106.19 76.92 106.89 76.79 107.62 76.55C109.34 75.99 109.99 76.04 111.77 76.91C113.31 77.66 114.70 78.67 115.88 79.89C116.25 80.29 116.78 80.78 117.05 81.00C117.32 81.21 118.24 82.06 119.09 82.88C120.74 84.48 121.27 84.84 121.80 84.70C122.25 84.59 124.14 83.13 124.37 82.72C124.59 82.33 124.29 81.28 123.62 80.06C123.43 79.72 123.18 79.11 123.07 78.70C122.95 78.30 122.70 77.68 122.50 77.33C122.31 76.98 122.06 76.40 121.96 76.05C121.86 75.70 121.66 75.19 121.53 74.93C121.39 74.66 121.18 74.13 121.06 73.75C120.94 73.37 120.65 72.72 120.43 72.31C120.21 71.90 119.98 71.37 119.93 71.13C119.79 70.44 119.02 68.52 118.56 67.68C118.33 67.27 118.07 66.65 117.99 66.31C117.91 65.97 117.68 65.38 117.49 65.00C116.95 63.96 116.17 62.14 115.96 61.43C115.86 61.08 115.61 60.46 115.39 60.04C115.18 59.62 114.78 58.58 114.50 57.73C114.22 56.88 113.71 55.61 113.37 54.90C112.68 53.48 112.56 52.71 112.98 52.33C113.30 52.04 116.72 51.95 118.49 52.20C120.78 52.51 121.50 52.41 121.50 51.76C121.50 51.45 121.28 51.29 120.49 51.02C120.12 50.89 119.39 50.57 118.88 50.31C117.42 49.56 116.74 49.65 114.81 50.81C114.13 51.21 112.78 51.46 110.67 51.57C108.91 51.65 108.89 51.65 108.17 51.31C107.02 50.77 106.72 50.74 105.77 51.03C105.14 51.22 104.57 51.28 103.43 51.29C101.82 51.29 101.82 51.29 100.00 50.30C99.53 50.04 99.28 50.00 98.31 50.00C95.41 50.00 94.36 48.75 95.91 47.15C96.64 46.39 96.99 46.24 98.29 46.12C99.63 46.00 99.95 45.81 100.31 44.92C101.22 42.69 103.17 41.54 106.62 41.18C108.83 40.95 109.24 40.88 109.66 40.67C110.18 40.40 110.09 40.08 109.36 39.61C108.15 38.84 108.00 38.20 108.68 36.78C109.21 35.67 110.06 34.74 110.99 34.24C111.38 34.04 112.31 33.31 113.07 32.63C114.72 31.13 115.30 30.80 116.65 30.56C117.97 30.33 118.68 30.33 119.45 30.56C120.49 30.88 120.55 30.85 121.87 29.55C123.31 28.14 123.39 28.08 125.26 27.14C127.10 26.21 128.37 26.02 132.00 26.12C134.31 26.19 134.31 26.19 134.94 26.58C135.50 26.94 135.69 26.98 136.78 27.04C138.30 27.12 138.70 27.33 140.31 28.89C140.93 29.49 141.59 30.02 141.77 30.06C141.96 30.11 142.40 30.34 142.77 30.57C143.43 31.00 143.43 31.00 145.06 31.00C147.14 31.00 147.36 31.07 148.52 32.11C149.27 32.78 149.58 32.98 150.00 33.05C150.44 33.12 150.70 33.31 151.72 34.30C152.92 35.46 152.92 35.46 152.97 36.23C153.05 37.22 152.87 37.62 152.10 38.27C151.55 38.73 151.40 38.79 150.58 38.87C149.64 38.97 149.25 39.11 148.77 39.55C147.56 40.64 148.60 41.54 150.02 40.64C150.33 40.44 150.72 40.24 150.88 40.19C151.28 40.06 158.74 40.01 159.17 40.14C159.36 40.19 159.94 40.61 160.45 41.07C161.13 41.68 161.53 41.94 161.91 42.02C162.20 42.08 162.65 42.31 162.91 42.52C163.17 42.72 163.63 42.98 163.93 43.08C164.59 43.31 164.66 43.38 164.93 44.21C165.34 45.47 166.29 46.12 167.72 46.12C168.35 46.12 168.41 46.15 169.36 47.00C170.58 48.07 170.88 48.44 170.88 48.88C170.88 49.78 170.25 49.98 167.26 49.99C165.46 50.00 165.46 50.00 164.77 50.47C164.09 50.94 164.09 50.94 160.87 50.94C157.71 50.94 157.64 50.94 157.29 51.22C156.35 51.97 156.53 51.94 153.69 51.94C150.82 51.93 150.57 51.90 150.02 51.44C149.82 51.26 149.42 51.04 149.13 50.94C148.85 50.84 148.43 50.62 148.20 50.44C147.67 50.03 147.30 50.05 146.70 50.50C146.07 50.98 145.63 50.98 145.09 50.50C144.50 49.99 144.25 49.92 142.75 49.82C141.47 49.74 141.43 49.74 141.01 50.05C140.77 50.23 140.56 50.38 140.54 50.38C140.37 50.37 140.19 49.61 140.12 48.64C140.05 47.62 140.01 47.43 139.76 47.23C139.31 46.87 138.63 46.93 137.99 47.41C137.45 47.80 137.41 47.81 135.81 47.87C133.98 47.95 133.98 47.94 133.49 48.73C133.13 49.29 133.12 49.33 133.12 51.09C133.12 53.59 133.31 53.95 134.72 54.27C135.49 54.44 136.84 54.28 137.51 53.93C137.71 53.83 138.48 53.15 139.21 52.43C140.55 51.11 140.55 51.11 140.80 51.46C140.93 51.65 141.41 52.16 141.86 52.59C142.67 53.35 142.67 53.36 142.44 53.62C142.27 53.80 142.05 53.88 141.64 53.88C140.31 53.89 139.41 54.09 138.92 54.48C138.65 54.69 138.22 54.90 137.96 54.94C136.59 55.19 137.13 56.50 138.84 57.05C139.19 57.17 139.63 57.38 139.81 57.52C139.99 57.66 140.42 57.89 140.77 58.02C141.12 58.15 141.58 58.39 141.80 58.55C142.01 58.71 142.41 58.91 142.69 59.00C143.48 59.24 144.09 59.70 145.65 61.22C147.64 63.17 147.77 63.56 146.53 63.87C145.02 64.25 143.61 65.17 141.92 66.87C141.05 67.76 140.19 68.70 140.01 68.96C139.83 69.22 139.45 69.75 139.17 70.12C138.44 71.10 138.37 71.27 138.24 72.41C138.18 72.98 138.05 74.14 137.95 75.00C137.86 75.86 137.71 76.72 137.64 76.91C137.24 77.93 137.72 78.54 139.03 78.68C139.46 78.73 140.43 78.84 141.19 78.94C141.94 79.03 143.24 79.14 144.06 79.18C147.05 79.33 148.43 79.86 152.69 82.49C157.45 85.43 158.80 85.76 161.14 84.57C163.05 83.59 163.78 82.93 164.38 81.64C164.66 81.05 165.04 80.25 165.24 79.88C166.26 77.92 165.87 76.82 163.81 75.87C163.15 75.57 162.53 75.16 162.03 74.70C161.14 73.87 160.75 73.76 159.59 74.01C158.42 74.27 157.42 74.22 156.69 73.87C156.19 73.64 155.83 73.58 154.94 73.56C153.32 73.53 150.65 73.29 150.06 73.12C149.79 73.04 149.20 72.77 148.75 72.50C148.26 72.22 147.69 71.99 147.31 71.94C146.43 71.81 146.06 71.58 145.76 70.96C145.44 70.29 145.43 70.05 145.75 69.54C146.35 68.54 147.35 67.88 148.24 67.88C148.74 67.87 149.55 67.41 149.81 66.97C150.43 65.91 152.09 64.54 153.07 64.26C153.34 64.19 154.20 64.13 154.97 64.13C156.21 64.13 156.40 64.10 156.62 63.88C156.92 63.58 156.93 63.55 156.70 62.90C156.48 62.28 156.61 61.97 157.54 61.02C158.46 60.08 158.65 60.00 160.13 60.00C161.67 60.00 161.65 60.01 163.14 58.49C164.22 57.39 164.42 57.24 165.08 57.05C165.48 56.94 166.00 56.69 166.24 56.51C166.67 56.19 166.67 56.19 170.27 56.15C174.16 56.11 173.98 56.09 175.25 56.80C175.42 56.90 175.81 57.05 176.11 57.12C176.55 57.24 176.89 57.51 177.94 58.57C179.33 59.98 179.45 60.04 180.15 59.56C180.77 59.14 181.30 59.16 181.99 59.63C182.29 59.83 182.67 60.00 182.84 60.00C183.63 60.00 184.81 61.13 185.01 62.09C185.26 63.32 186.11 64.00 187.38 64.00C188.35 64.00 188.60 64.14 189.84 65.40C190.97 66.55 191.19 66.94 190.99 67.47C190.69 68.26 189.93 68.70 188.67 68.82C187.24 68.96 186.95 69.29 187.67 69.98C187.90 70.21 188.16 70.61 188.24 70.89C188.47 71.65 188.80 71.74 189.85 71.33C191.41 70.72 192.41 70.49 194.06 70.37C194.96 70.31 196.03 70.22 196.45 70.17C197.10 70.11 197.41 70.15 198.45 70.48C199.13 70.69 199.88 70.89 200.12 70.93C200.82 71.04 201.32 71.42 202.05 72.41C203.12 73.86 203.26 73.95 204.67 74.04C206.52 74.16 207.57 74.78 208.26 76.14C209.02 77.65 209.42 77.91 211.28 78.10C213.42 78.33 214.81 79.69 213.83 80.61C213.55 80.87 211.63 81.52 210.47 81.75C209.96 81.85 209.30 81.76 208.17 81.43C207.15 81.13 206.28 81.23 204.95 81.80C203.84 82.28 203.82 82.28 202.60 82.22C201.36 82.15 200.50 82.27 200.50 82.52C200.50 82.59 200.64 82.82 200.81 83.02C201.78 84.17 200.51 84.84 197.62 84.71C196.09 84.64 194.12 84.13 193.49 83.65C192.80 83.11 192.34 83.04 188.38 82.80C187.19 82.73 187.26 82.71 185.93 83.72C183.88 85.27 182.71 85.53 180.71 84.89C179.64 84.55 179.33 84.50 178.06 84.50C176.63 84.50 176.63 84.50 175.45 83.88C173.25 82.73 171.27 82.39 169.19 82.82C167.72 83.13 167.41 83.31 166.12 84.61C163.86 86.90 162.89 87.50 160.88 87.87C159.06 88.19 158.14 88.19 156.57 87.86C154.89 87.50 153.19 86.66 151.09 85.17C149.75 84.20 148.94 83.80 147.25 83.26C145.46 82.68 144.93 82.64 143.69 83.00C143.21 83.14 142.21 83.36 141.48 83.50C140.74 83.63 139.81 83.82 139.41 83.93C139.01 84.03 138.08 84.20 137.34 84.31C136.60 84.41 135.42 84.69 134.72 84.93C134.01 85.16 133.13 85.42 132.75 85.50C130.09 86.06 127.74 87.73 126.70 89.78C125.57 92.03 126.14 93.70 128.53 95.14C129.83 95.92 129.95 95.95 135.01 96.82C136.01 96.99 137.18 97.27 137.61 97.44C138.04 97.61 138.73 97.84 139.16 97.94C140.20 98.18 143.98 100.06 145.69 101.20C148.29 102.92 150.24 104.92 150.93 106.57C151.05 106.84 151.30 107.32 151.50 107.63C151.70 107.94 151.95 108.45 152.06 108.76C152.16 109.06 152.42 109.65 152.62 110.06C153.16 111.15 153.95 112.98 154.13 113.56C154.21 113.84 154.47 114.40 154.69 114.81C154.92 115.22 155.37 116.21 155.69 117.00C156.01 117.79 156.41 118.67 156.57 118.95C156.73 119.24 157.00 119.83 157.17 120.27C157.34 120.70 157.79 121.77 158.19 122.62C158.58 123.48 159.04 124.58 159.20 125.05C159.36 125.53 159.70 126.28 159.95 126.73C160.19 127.18 160.56 127.97 160.77 128.49C160.98 129.01 161.39 129.92 161.69 130.50C162.19 131.47 162.73 132.63 163.97 135.44C164.21 135.99 164.73 136.97 165.12 137.62C165.51 138.28 165.90 138.99 165.99 139.21C166.21 139.76 168.38 142.77 169.49 144.06C171.34 146.22 174.69 149.24 176.38 150.27C177.96 151.25 181.28 152.88 181.94 153.02C182.28 153.09 183.21 153.36 184.00 153.63C185.80 154.23 188.00 154.72 189.58 154.87C191.19 155.02 191.66 155.35 191.45 156.19C191.30 156.78 191.39 156.78 181.01 156.84C170.96 156.90 168.46 156.83 166.56 156.43C166.08 156.32 165.22 156.16 164.65 156.07C164.08 155.97 163.26 155.73 162.83 155.53C162.40 155.33 161.74 155.09 161.37 155.00C158.49 154.32 153.80 150.72 151.85 147.69C151.20 146.68 148.88 142.17 148.88 141.91C148.88 141.82 148.71 141.42 148.52 141.03C148.32 140.63 148.09 140.09 148.00 139.81C147.91 139.54 147.65 138.92 147.42 138.44C147.19 137.96 147.00 137.45 147.00 137.30C147.00 137.14 146.80 136.64 146.55 136.17C146.03 135.20 145.50 133.96 145.06 132.73C144.90 132.27 144.62 131.64 144.44 131.33C144.26 131.03 143.98 130.39 143.82 129.92C143.45 128.84 142.74 127.09 142.41 126.44C142.27 126.16 142.06 125.62 141.95 125.23C141.84 124.83 141.53 124.10 141.26 123.60C140.99 123.10 140.51 122.07 140.20 121.31C139.89 120.56 139.47 119.62 139.26 119.24C139.05 118.85 138.79 118.30 138.69 118.00C138.58 117.70 138.16 116.78 137.76 115.95C137.35 115.12 136.76 113.90 136.45 113.25C135.01 110.23 133.31 108.33 130.56 106.68C128.45 105.42 128.17 105.27 127.56 105.09C126.69 104.83 123.53 103.09 122.60 102.35C121.10 101.16 120.38 100.34 119.76 99.14C117.73 95.16 117.35 91.99 118.62 89.38C119.21 88.15 119.33 87.62 119.14 87.15C119.06 86.97 118.04 85.92 116.87 84.83C115.70 83.74 114.36 82.39 113.89 81.83C111.48 78.95 110.25 78.41 106.86 78.77C104.07 79.05 103.21 79.01 102.27 78.53C101.14 77.94 100.88 77.72 99.90 76.52C98.69 75.02 97.89 74.30 97.25 74.13C96.59 73.95 94.95 74.08 93.94 74.39C92.92 74.70 92.35 74.68 91.40 74.30C89.55 73.56 88.04 73.61 86.52 74.46C85.03 75.29 83.25 75.15 83.25 74.20C83.25 73.60 83.38 73.55 85.56 73.38C87.69 73.20 88.20 73.05 88.33 72.55C88.44 72.11 88.28 71.87 87.71 71.58C86.91 71.18 84.31 71.73 83.34 72.51C82.84 72.92 82.83 72.92 80.92 73.02C77.94 73.17 77.63 73.17 76.62 73.07C75.79 72.98 75.66 73.00 75.48 73.20C75.17 73.55 71.45 80.85 71.00 82.00C70.91 82.24 70.73 82.58 70.61 82.75C70.40 83.06 69.60 84.82 69.11 86.04C68.98 86.36 68.73 86.84 68.57 87.10C68.40 87.35 68.19 87.76 68.12 88.00C68.04 88.24 67.55 89.29 67.04 90.34C66.53 91.39 66.04 92.47 65.94 92.75C65.84 93.04 65.65 93.42 65.52 93.60C64.80 94.63 63.53 97.82 63.68 98.21C63.81 98.54 66.42 98.06 67.79 97.45C68.46 97.15 69.91 96.76 72.06 96.30C72.54 96.20 73.72 96.04 74.69 95.94C75.65 95.84 76.69 95.67 77.00 95.56C78.34 95.09 79.79 94.97 84.38 94.96C89.16 94.94 90.51 95.05 92.12 95.56C92.64 95.72 93.55 95.91 94.14 95.98C95.63 96.16 99.45 97.05 100.43 97.44C100.87 97.62 101.64 97.84 102.15 97.95C102.65 98.05 103.43 98.30 103.88 98.50C104.32 98.70 105.03 99.00 105.44 99.17C106.99 99.80 108.28 100.37 108.42 100.48C108.50 100.55 109.35 101.01 110.31 101.50C111.27 101.99 112.12 102.45 112.21 102.52C112.29 102.58 112.71 102.82 113.15 103.05C115.27 104.15 116.89 105.21 118.62 106.62C119.35 107.21 120.19 107.89 120.50 108.12C121.84 109.14 124.85 112.28 126.25 114.12C126.48 114.43 127.55 115.59 128.62 116.69C129.70 117.79 130.80 118.97 131.08 119.31C132.27 120.78 134.49 124.25 135.02 125.46C135.16 125.79 135.50 126.44 135.77 126.89C136.04 127.35 136.46 128.22 136.70 128.82C136.93 129.43 137.20 130.04 137.30 130.19C137.65 130.72 138.51 132.89 138.69 133.71C138.80 134.18 139.08 135.04 139.31 135.62C139.54 136.21 139.77 136.91 139.82 137.19C140.07 138.60 141.59 142.01 142.37 142.92C142.55 143.14 143.06 143.82 143.50 144.44C146.59 148.79 152.22 153.73 155.58 155.04C156.35 155.35 157.75 156.28 157.75 156.50C157.75 156.79 156.88 156.83 150.38 156.82L143.44 156.81L141.85 156.08C140.05 155.25 139.88 155.24 139.68 155.92C139.48 156.66 139.23 156.78 138.06 156.71C137.51 156.68 136.69 156.58 136.24 156.49C135.52 156.35 135.28 156.36 134.49 156.53C133.03 156.85 127.48 156.93 127.11 156.64ZM129.92 136.05C130.19 135.37 129.84 133.73 129.16 132.51C128.92 132.06 128.53 131.32 128.31 130.87C128.09 130.42 127.81 129.98 127.69 129.88C127.58 129.78 127.32 129.39 127.13 129.01C126.94 128.63 126.66 128.21 126.52 128.08C126.38 127.95 126.17 127.55 126.07 127.19C125.86 126.47 125.63 126.20 125.29 126.28C124.87 126.36 125.04 127.09 125.60 127.67C125.99 128.08 126.11 128.31 126.17 128.80C126.21 129.13 126.36 129.59 126.50 129.81C126.63 130.03 126.85 130.55 126.98 130.97C127.11 131.38 127.34 131.90 127.48 132.10C127.63 132.31 127.87 132.86 128.01 133.33C128.16 133.80 128.40 134.36 128.56 134.56C128.71 134.77 128.99 135.23 129.17 135.59C129.51 136.25 129.78 136.42 129.92 136.05ZM131.75 127.20C131.75 126.56 131.31 125.27 130.81 124.44C130.56 124.03 130.15 123.30 129.91 122.82C129.67 122.34 129.23 121.54 128.93 121.06C128.63 120.57 128.29 119.92 128.17 119.61C127.86 118.83 127.33 118.07 126.31 117.00C125.82 116.48 125.31 115.89 125.18 115.69C124.39 114.44 120.91 110.62 119.39 109.33C116.24 106.64 110.82 103.43 108.71 103.00C108.31 102.92 107.43 102.66 106.77 102.43C104.88 101.77 103.50 101.70 103.50 102.25C103.50 102.55 103.87 102.80 104.79 103.12C105.18 103.25 106.25 103.73 107.16 104.17C108.07 104.61 109.04 105.04 109.31 105.13C109.59 105.21 109.95 105.38 110.12 105.50C110.30 105.62 111.10 106.05 111.91 106.47C113.48 107.29 115.08 108.30 116.34 109.27C116.77 109.60 117.41 110.07 117.78 110.30C119.16 111.20 124.60 116.62 124.95 117.45C125.20 118.06 125.17 118.59 124.88 118.78C124.74 118.86 124.62 119.01 124.62 119.09C124.62 119.31 125.97 120.95 126.76 121.70C127.73 122.62 129.47 124.84 129.83 125.62C130.16 126.33 131.30 127.62 131.59 127.62C131.69 127.62 131.75 127.46 131.75 127.20ZM122.23 116.98C120.25 114.59 116.53 111.88 115.25 111.88C114.49 111.88 115.62 112.88 118.72 114.95C119.15 115.23 119.88 115.76 120.35 116.12C121.16 116.75 122.46 117.59 122.66 117.61C122.72 117.62 122.52 117.33 122.23 116.98ZM145.13 97.43C144.89 97.26 143.90 96.87 142.94 96.56C141.84 96.20 141.02 95.86 140.75 95.64C140.12 95.14 139.62 94.90 138.72 94.69C137.43 94.38 135.53 93.68 134.99 93.31C134.37 92.88 133.43 92.62 132.45 92.62C130.87 92.62 129.52 91.35 129.91 90.22C130.15 89.50 132.80 88.04 134.50 87.68C135.02 87.58 136.03 87.30 136.75 87.07C137.47 86.84 138.34 86.62 138.69 86.57C139.03 86.52 139.59 86.40 139.93 86.30C140.78 86.06 141.41 86.08 141.77 86.37C142.08 86.61 142.88 87.97 142.88 88.25C142.88 88.34 143.05 88.75 143.27 89.17C143.48 89.59 143.79 90.32 143.95 90.78C144.11 91.25 144.35 91.79 144.49 91.98C144.62 92.17 144.86 92.64 145.00 93.01C145.50 94.30 146.14 95.76 146.44 96.28C147.16 97.53 146.31 98.27 145.13 97.43ZM184.74 83.16C186.11 82.78 186.67 82.37 186.60 81.79C186.54 81.30 186.07 81.03 184.78 80.77C183.66 80.54 183.29 80.36 182.36 79.61C181.94 79.28 181.31 79.28 180.65 79.61C179.92 79.98 179.50 79.95 179.06 79.50C178.83 79.26 178.43 79.04 178.00 78.92C176.04 78.35 174.96 77.19 175.70 76.44C175.95 76.20 177.23 75.60 178.48 75.16C179.70 74.73 179.71 74.41 178.50 74.10C176.87 73.68 175.27 73.84 174.28 74.52C173.72 74.91 172.00 75.73 171.22 75.99C170.26 76.31 168.30 77.81 167.93 78.53C167.61 79.13 167.70 79.97 168.12 80.39C168.50 80.77 168.50 80.77 170.78 80.74C173.06 80.71 173.06 80.71 174.38 81.18C175.10 81.43 176.14 81.71 176.70 81.81C177.26 81.90 177.95 82.10 178.24 82.24C178.53 82.39 179.18 82.56 179.69 82.62C180.28 82.68 180.79 82.83 181.09 83.00C182.24 83.69 182.72 83.72 184.74 83.16ZM196.62 82.78C197.23 82.48 197.26 82.11 196.71 81.56C196.04 80.89 195.50 80.96 194.41 81.84C193.48 82.59 193.80 82.97 195.38 82.99C195.92 83.00 196.33 82.93 196.62 82.78ZM168.23 75.59C168.64 75.14 168.69 74.62 168.39 73.65C167.93 72.12 167.34 71.76 166.43 72.45C166.07 72.73 165.82 72.79 164.82 72.87C163.62 72.96 163.25 73.11 163.25 73.50C163.25 73.80 163.97 74.41 164.64 74.70C164.94 74.83 165.58 75.14 166.06 75.40C167.13 75.96 167.82 76.02 168.23 75.59ZM171.63 74.87C172.22 74.56 172.43 73.52 171.97 73.19C171.26 72.70 170.25 73.34 170.25 74.30C170.25 74.85 171.05 75.18 171.63 74.87ZM94.53 72.86C95.60 72.59 95.61 71.70 94.55 70.61C94.31 70.36 93.93 69.89 93.71 69.55C93.31 68.94 93.30 68.94 92.57 68.90C91.61 68.85 91.23 69.02 90.87 69.66C90.71 69.95 90.42 70.37 90.23 70.60C89.60 71.33 89.81 71.84 91.06 72.57C91.94 73.08 93.22 73.19 94.53 72.86ZM64.60 72.44C63.55 71.93 61.29 71.74 59.39 72.01C57.57 72.27 56.50 71.91 56.50 71.05C56.50 70.23 57.49 69.75 58.69 70.00C60.40 70.36 61.29 70.04 61.88 68.86C62.34 67.95 62.82 67.55 63.71 67.37C64.31 67.25 64.53 67.12 65.06 66.60C65.40 66.25 66.30 65.58 67.05 65.11C68.41 64.25 68.41 64.25 69.38 64.25C70.55 64.25 70.71 64.30 70.94 64.76C71.27 65.39 71.18 65.95 70.65 66.53C70.13 67.10 69.31 68.55 68.94 69.56C68.81 69.91 68.57 70.38 68.41 70.62C68.25 70.87 68.03 71.36 67.92 71.73C67.56 72.97 66.25 73.26 64.60 72.44ZM98.94 71.48C99.39 71.07 99.61 70.96 100.09 70.91C101.27 70.81 101.29 70.80 101.21 70.24C101.04 68.90 99.87 68.37 98.90 69.19C98.44 69.58 98.19 69.58 96.94 69.19C95.67 68.79 95.41 68.79 95.23 69.18C95.01 69.67 95.31 70.18 96.30 70.99C97.82 72.22 98.08 72.27 98.94 71.48ZM166.47 71.18C166.78 70.97 166.85 70.40 166.60 70.15C166.52 70.07 166.24 70.00 165.98 70.00C165.03 70.00 164.82 70.82 165.67 71.20C166.17 71.41 166.14 71.41 166.47 71.18ZM136.62 69.00C136.75 68.93 137.17 68.42 137.56 67.87C137.95 67.31 138.76 66.34 139.36 65.71C139.96 65.08 140.65 64.25 140.90 63.88C141.15 63.50 141.53 63.09 141.73 62.97C142.67 62.42 142.20 61.54 140.19 60.10C138.24 58.69 138.20 58.67 133.67 57.20C131.95 56.64 131.25 56.82 131.25 57.81C131.26 58.53 133.24 63.78 134.10 65.38C134.31 65.75 134.65 66.55 134.86 67.15C135.31 68.44 135.56 68.95 135.78 69.04C136.04 69.15 136.38 69.13 136.62 69.00ZM145.93 53.22C145.63 52.99 145.40 52.93 144.59 52.92C143.53 52.90 143.23 52.76 143.45 52.40C143.63 52.12 148.93 52.02 149.30 52.29C149.67 52.56 149.27 52.82 148.36 52.92C147.93 52.96 147.39 53.11 147.16 53.25C146.61 53.57 146.37 53.56 145.93 53.22ZM130.74 53.05C131.14 52.54 131.29 51.81 131.30 50.29C131.31 48.92 131.31 48.89 130.93 48.43C130.10 47.40 129.91 47.36 127.06 47.50C126.65 47.52 125.78 47.49 125.12 47.44C123.96 47.35 123.90 47.35 122.99 47.74C122.48 47.96 121.86 48.23 121.60 48.33C120.31 48.88 120.22 49.66 121.40 50.10C121.77 50.24 122.32 50.48 122.63 50.64C123.62 51.17 124.97 51.13 126.17 50.56C127.18 50.07 127.54 50.05 127.95 50.47C128.25 50.77 129.10 52.09 129.20 52.42C129.49 53.36 130.25 53.67 130.74 53.05ZM142.81 47.50C142.81 47.27 142.74 47.18 142.53 47.15C142.22 47.10 142.05 47.37 142.17 47.70C142.30 48.03 142.81 47.87 142.81 47.50ZM131.27 46.38C131.54 46.01 131.35 44.96 130.93 44.49C130.65 44.19 130.03 44.21 129.83 44.53C129.68 44.77 130.00 46.26 130.27 46.59C130.48 46.84 131.00 46.73 131.27 46.38ZM134.15 45.53C134.75 44.90 134.92 44.56 134.76 44.27C134.47 43.72 133.38 43.90 133.08 44.55C132.48 45.80 133.23 46.49 134.15 45.53Z"/><path class="vw" fill="#1E2420" fill-rule="evenodd" transform="translate(0 172)" d="M142.48 44.05C141.70 43.81 140.66 42.87 140.55 42.31C140.44 41.69 140.98 40.58 141.77 39.85C142.62 39.04 142.97 39.00 144.14 39.51C145.02 39.91 145.14 39.92 146.63 39.93C148.16 39.94 148.22 39.93 148.75 39.58C149.85 38.85 151.12 37.22 151.89 35.56C152.02 35.29 152.25 34.84 152.39 34.56C154.09 31.34 154.09 31.35 153.55 30.55C153.36 30.28 152.91 29.42 152.54 28.63C152.16 27.83 151.77 27.05 151.67 26.88C151.40 26.42 150.39 24.29 150.10 23.56C149.97 23.22 149.70 22.68 149.51 22.37C149.32 22.06 149.09 21.59 149.00 21.31C148.91 21.04 148.46 20.08 148.00 19.18C147.54 18.28 147.07 17.27 146.95 16.93C146.84 16.59 146.58 16.06 146.38 15.75C146.17 15.44 146.00 15.15 146.00 15.10C146.00 15.05 145.78 14.55 145.51 13.98C145.25 13.40 144.99 12.80 144.94 12.62C144.89 12.45 144.66 11.97 144.44 11.56C144.21 11.15 143.99 10.67 143.94 10.50C143.52 8.98 141.62 5.66 140.84 5.06C140.37 4.71 140.25 4.54 140.25 4.25C140.25 3.66 140.46 3.63 144.10 3.63C148.32 3.63 148.13 3.54 148.09 5.35C148.06 6.45 148.09 6.62 148.39 7.19C148.57 7.53 148.84 8.21 148.98 8.69C149.13 9.17 149.38 9.77 149.55 10.02C149.73 10.27 149.97 10.75 150.11 11.08C150.68 12.52 151.24 13.73 151.60 14.29C151.81 14.63 152.02 15.08 152.07 15.29C152.12 15.51 152.33 16.02 152.53 16.44C152.95 17.26 153.49 18.52 153.94 19.69C154.10 20.10 154.47 20.92 154.77 21.50C155.07 22.08 155.50 22.97 155.73 23.48C156.22 24.55 156.58 24.81 157.02 24.43C157.33 24.15 158.94 20.87 159.21 19.94C159.32 19.59 159.62 18.89 159.88 18.38C160.15 17.86 160.57 16.90 160.82 16.25C161.07 15.60 161.48 14.65 161.74 14.13C162.00 13.61 162.28 12.99 162.37 12.75C162.46 12.51 162.87 11.59 163.28 10.70C164.28 8.53 164.50 7.86 164.58 6.69C164.65 5.72 164.64 5.67 164.27 5.12C163.81 4.46 163.77 4.07 164.16 3.83C164.56 3.56 169.37 3.48 169.67 3.73C170.10 4.09 169.92 4.52 169.02 5.34C168.23 6.05 168.07 6.28 167.12 8.15C166.56 9.27 165.99 10.49 165.86 10.87C165.73 11.24 165.45 11.85 165.25 12.21C165.04 12.58 164.70 13.31 164.49 13.85C164.28 14.38 163.78 15.49 163.38 16.31C162.98 17.14 162.28 18.57 161.84 19.50C161.39 20.43 160.88 21.55 160.71 22.00C160.55 22.45 160.15 23.33 159.83 23.97C159.51 24.60 159.25 25.18 159.25 25.25C159.25 25.37 158.58 26.78 156.56 30.94C156.26 31.56 155.77 32.60 155.48 33.25C155.20 33.90 154.80 34.67 154.61 34.95C154.42 35.23 154.15 35.75 154.02 36.11C153.67 37.01 152.00 39.50 150.97 40.64C148.44 43.45 145.01 44.83 142.48 44.05ZM14.23 31.75C13.13 31.61 10.75 30.81 10.14 30.37C6.80 27.95 5.87 24.64 7.59 21.27C8.44 19.60 10.65 17.63 12.22 17.12C12.48 17.03 13.01 16.80 13.41 16.61C13.80 16.41 14.53 16.16 15.03 16.06C15.53 15.95 16.30 15.75 16.75 15.61C17.20 15.48 18.22 15.25 19.02 15.12C19.82 14.98 20.79 14.73 21.18 14.56C21.73 14.32 23.72 13.88 24.28 13.88C24.63 13.87 25.25 13.06 25.38 12.43C25.55 11.57 25.36 9.81 24.98 8.78C23.42 4.57 17.60 3.58 13.52 6.83C12.80 7.41 12.38 7.86 12.05 8.41C11.22 9.81 10.71 10.17 9.97 9.86C8.37 9.20 9.59 6.42 12.18 4.86C13.54 4.05 13.95 3.89 15.62 3.49C18.80 2.74 22.72 2.88 25.41 3.82C26.76 4.30 29.12 6.30 29.75 7.51C29.88 7.75 30.14 8.45 30.33 9.07C30.67 10.19 30.67 10.19 30.74 18.69C30.81 27.02 30.82 27.20 31.08 27.76C31.40 28.45 31.95 28.89 32.85 29.18C33.75 29.48 33.95 30.04 33.36 30.57C33.00 30.90 30.70 31.50 29.80 31.50C28.18 31.50 26.82 30.65 26.12 29.19C25.47 27.82 25.05 27.75 23.77 28.79C20.98 31.08 17.50 32.16 14.23 31.75ZM76.60 31.74C73.40 31.32 70.83 29.61 69.73 27.16C68.82 25.10 68.96 23.41 70.25 20.88C70.82 19.76 73.50 17.50 74.72 17.12C74.98 17.04 75.53 16.81 75.94 16.62C76.35 16.42 77.11 16.17 77.62 16.06C78.14 15.95 78.92 15.76 79.35 15.62C79.78 15.49 80.81 15.27 81.63 15.13C82.45 14.99 83.45 14.74 83.85 14.57C84.25 14.40 85.11 14.17 85.75 14.06C87.56 13.75 87.90 13.47 88.06 12.18C88.41 9.42 87.07 6.85 84.65 5.66C83.44 5.06 83.44 5.06 81.44 5.06C79.44 5.06 79.44 5.06 78.31 5.54C76.35 6.38 75.03 7.56 74.21 9.19C73.77 10.09 73.14 10.33 72.36 9.93C71.49 9.48 71.63 8.42 72.79 6.84C74.26 4.82 76.61 3.65 80.22 3.13C83.15 2.70 87.86 3.41 89.22 4.47C89.47 4.67 89.86 4.93 90.08 5.04C91.35 5.69 92.61 7.56 93.17 9.64C93.50 10.85 93.50 10.85 93.50 18.84C93.50 25.64 93.53 26.93 93.69 27.47C93.95 28.35 94.39 28.83 95.12 29.05C96.32 29.40 96.53 29.74 95.99 30.42C95.72 30.76 95.52 30.83 93.63 31.26C91.28 31.78 89.41 30.97 88.74 29.12C88.29 27.88 87.72 27.71 86.78 28.54C83.93 31.05 80.25 32.21 76.60 31.74ZM186.55 31.62C186.07 31.56 185.12 31.37 184.45 31.19C183.77 31.02 183.13 30.88 183.03 30.88C182.80 30.88 181.54 30.15 180.06 29.18C175.75 26.34 173.56 22.45 173.59 17.69C173.60 15.95 174.02 13.44 174.45 12.51C174.63 12.12 174.85 11.61 174.94 11.35C175.41 10.05 178.27 6.80 179.78 5.84C183.00 3.80 186.77 2.70 189.75 2.92C191.22 3.04 194.44 3.72 195.12 4.06C198.03 5.51 199.75 6.80 201.21 8.65C203.53 11.58 204.13 13.72 203.95 18.28C203.86 20.45 203.68 21.12 202.70 23.04C201.19 25.98 199.41 27.85 196.50 29.53C195.85 29.91 195.10 30.34 194.84 30.50C194.57 30.66 194.04 30.86 193.65 30.94C193.26 31.03 192.49 31.22 191.94 31.37C190.80 31.69 188.06 31.81 186.55 31.62ZM46.70 30.91C42.73 30.86 42.64 30.82 43.62 29.52C44.51 28.33 44.49 28.69 44.51 18.28C44.53 7.60 44.50 7.16 43.67 6.06C42.88 5.02 43.28 4.61 45.58 4.07C46.40 3.88 47.41 3.64 47.84 3.53C49.39 3.15 49.79 3.67 49.73 6.00C49.66 8.35 49.97 8.43 51.69 6.56C54.74 3.24 58.69 2.13 61.87 3.72C62.79 4.18 63.04 4.56 63.10 5.57C63.17 6.66 62.91 7.34 62.16 8.00C61.19 8.85 60.82 8.83 59.61 7.86C58.64 7.08 58.31 6.93 57.16 6.77C55.36 6.52 53.96 6.85 52.66 7.83C51.35 8.83 51.00 9.28 50.31 10.88L49.69 12.31L49.72 19.98C49.73 24.77 49.79 27.82 49.87 28.12C49.95 28.39 50.25 28.87 50.54 29.21C51.20 29.94 51.40 30.29 51.30 30.55C51.16 30.93 50.74 30.96 46.70 30.91ZM106.15 30.87C105.58 30.64 105.66 30.15 106.43 29.20C107.16 28.31 107.14 28.57 107.10 17.62C107.06 6.35 107.13 7.16 106.12 6.07C105.09 4.96 105.65 4.55 109.23 3.81C111.13 3.41 111.55 3.41 111.93 3.81C112.27 4.19 112.39 4.80 112.30 5.74C112.12 7.52 112.82 7.61 114.54 6.04C114.94 5.67 115.50 5.25 115.79 5.11C116.08 4.96 116.55 4.68 116.83 4.48C117.55 4.00 117.77 3.92 120.02 3.43C123.79 2.60 126.70 3.01 129.04 4.68C130.91 6.01 131.85 7.34 132.58 9.69C132.93 10.81 132.93 10.81 133.00 19.56C133.06 28.31 133.06 28.31 133.40 28.88C133.58 29.18 133.90 29.60 134.11 29.80C134.52 30.19 134.60 30.51 134.34 30.73C134.09 30.93 127.07 30.96 126.82 30.76C126.50 30.49 126.59 30.08 127.16 29.30C127.69 28.56 127.69 28.56 127.77 25.81C127.82 24.30 127.84 20.76 127.82 17.94C127.77 12.81 127.77 12.81 127.33 11.27C126.57 8.63 125.73 7.62 123.42 6.56C122.06 5.94 122.06 5.94 120.44 5.94C118.89 5.94 118.77 5.96 117.94 6.34C117.46 6.55 116.75 6.87 116.38 7.03C114.70 7.77 113.10 9.22 112.62 10.44C112.33 11.19 112.33 11.19 112.32 19.81L112.31 28.44L112.92 29.33C113.99 30.92 113.84 31.00 109.62 30.99C107.87 30.99 106.31 30.93 106.15 30.87ZM192.41 29.27C197.37 27.27 199.59 20.41 197.68 12.94C196.82 9.54 194.96 7.05 192.22 5.66C190.89 4.97 190.10 4.84 187.91 4.90C186.14 4.95 186.14 4.95 185.06 5.51C182.90 6.62 182.09 7.55 180.36 10.88C179.50 12.54 179.17 17.05 179.72 19.75C179.86 20.47 180.02 21.29 180.06 21.56C180.10 21.84 180.33 22.46 180.56 22.94C180.79 23.42 181.18 24.25 181.43 24.78C182.24 26.49 184.36 28.48 186.10 29.13C188.13 29.90 190.72 29.95 192.41 29.27ZM81.98 28.94C83.85 28.66 85.74 27.64 87.14 26.17C88.14 25.12 88.14 25.13 88.16 20.31C88.19 16.11 88.19 16.11 87.84 15.80C87.43 15.45 87.22 15.43 86.48 15.70C86.18 15.80 85.52 15.97 85.00 16.07C84.48 16.17 83.71 16.42 83.27 16.63C82.84 16.83 82.02 17.08 81.45 17.18C79.48 17.52 76.92 18.95 75.89 20.30C74.74 21.79 74.46 24.19 75.24 25.95C75.58 26.72 76.91 27.99 77.88 28.47C79.14 29.10 80.16 29.22 81.98 28.94ZM19.58 28.87C21.49 28.56 24.40 26.63 25.15 25.19C25.40 24.72 25.41 24.43 25.46 20.62C25.52 16.30 25.49 16.04 24.94 15.68C24.63 15.48 24.57 15.48 23.71 15.73C23.22 15.87 22.49 16.05 22.08 16.13C21.68 16.21 21.00 16.44 20.57 16.64C20.14 16.84 19.43 17.07 18.99 17.14C17.93 17.33 15.75 18.26 14.79 18.95C12.31 20.72 11.66 23.82 13.16 26.70C13.56 27.46 15.05 28.51 16.15 28.81C16.94 29.02 18.51 29.05 19.58 28.87Z"/><text class="vt" x="18" y="229.6" textLength="171" lengthAdjust="spacing" fill="#1E2420" font-family="Nunito Sans,Helvetica Neue,Arial,sans-serif" font-weight="600" font-size="8.6">A QUIETER WAY TO GROW</text></svg>';pg.appendChild(w);logoRun=function(){w.classList.remove('go');void w.offsetWidth;w.classList.add('go')}}
+  function buildRem(pg){
+    var p=document.createElement('div');p.className='rm-p';p.style.cssText+='left:322px;top:116px;width:48px;height:34px';pg.appendChild(p);
+    var sw=document.createElement('div');sw.className='sw on';sw.setAttribute('role','switch');sw.setAttribute('aria-checked','true');sw.setAttribute('aria-label','Daily check reminders');sw.tabIndex=0;sw.innerHTML='<i></i>';
+    var tm=document.createElement('div');tm.className='tm';tm.textContent='8:00 am';
+    pg.appendChild(tm);pg.appendChild(sw);
+    var on=true;
+    function set(v){on=v;sw.classList.toggle('on',v);tm.classList.toggle('off',!v);sw.setAttribute('aria-checked',v?'true':'false')}
+    var sx=0,moved=false,down=false,base=0;
+    sw.addEventListener('pointerdown',function(e){down=true;moved=false;sx=e.clientX;base=on?15:0;try{sw.setPointerCapture(e.pointerId)}catch(_){}});
+    sw.addEventListener('pointermove',function(e){if(!down)return;var sc=sw.getBoundingClientRect().width/34||1,dx=(e.clientX-sx)/sc;if(Math.abs(dx)>3)moved=true;if(moved){sw.classList.add('drag');var x=Math.max(0,Math.min(15,base+dx));sw.firstChild.style.transform='translateX('+x+'px)';sw.style.background=x>7.5?'#44622F':'#D9CDB0'}});
+    function end(){if(!down)return;down=false;var i=sw.firstChild;if(moved){var m=/translateX\(([-\d.]+)px/.exec(i.style.transform);var x=m?parseFloat(m[1]):base;sw.classList.remove('drag');i.style.transform='';sw.style.background='';set(x>7.5)}else{sw.classList.remove('drag');set(!on)}}
+    sw.addEventListener('pointerup',end);sw.addEventListener('pointercancel',function(){down=false;moved=false;sw.classList.remove('drag');sw.firstChild.style.transform='';sw.style.background=''});
+    sw.addEventListener('keydown',function(e){if(e.key===' '||e.key==='Enter'){e.preventDefault();set(!on)}});
+  }
+  Object.keys(S).forEach(mk);
+  // lock screen built from the notification export
+  (function(){
+    var sec=document.createElement('section');sec.className='scr lock';sec.id='s-lock';sec.hidden=true;
+    sec.innerHTML='<div class="t"><b id="lk">8:00</b><span>Wednesday, 4 November</span></div><div class="n"><img src="img/13-notification.png" alt="Aranyo notification: Mori, a good time to check the soil?" id="nimg"></div><div class="h">Tap the notification to open Today</div>';
+    host.appendChild(sec);
+    $('#nimg').addEventListener('click',function(){stack=[];state.tree=true;show('today','fade')});
+    sec.querySelector('.t').addEventListener('click',back);
+  })();
+
+  function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove('on')},1900)}
+  var RM=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var running=[],seq=0;
+  // kind: push (slide in from right), pop (slide back), up/down (sheet-like), fade (tab switch)
+  function show(id,kind){
+    var next=$('#s-'+id),prev=cur?$('#s-'+cur):null;
+    seq++;document.getAnimations().forEach(function(a){var t=a.effect&&a.effect.target;if(t&&t.classList&&t.classList.contains('scr'))a.cancel()});running=[];
+    document.querySelectorAll('.scr').forEach(function(s){if(s!==prev)s.hidden=true;s.style.zIndex=''});
+    next.hidden=false;next.scrollTop=0;cur=id;if(id==='hello'&&helloRun)helloRun();if(id==='welcome'&&logoRun)logoRun();tabSync(id);
+    clearTimeout(toastT);$('#toast').classList.remove('on');
+    if(!prev||prev===next||RM||!kind||!next.animate){if(prev&&prev!==next)prev.hidden=true;return}
+    var o={duration:kind==='fade'?240:340,easing:'cubic-bezier(.22,.8,.24,1)',fill:'both'},inK,outK;
+    if(kind==='push'){next.style.zIndex=2;prev.style.zIndex=1;inK=[{transform:'translateX(100%)'},{transform:'none'}];outK=[{transform:'none',opacity:1},{transform:'translateX(-22%)',opacity:.55}]}
+    else if(kind==='pop'){next.style.zIndex=1;prev.style.zIndex=2;inK=[{transform:'translateX(-22%)',opacity:.55},{transform:'none',opacity:1}];outK=[{transform:'none'},{transform:'translateX(100%)'}]}
+    else if(kind==='up'){next.style.zIndex=2;prev.style.zIndex=1;inK=[{transform:'translateY(28px)',opacity:0},{transform:'none',opacity:1}];outK=[{opacity:1},{opacity:.5}]}
+    else if(kind==='down'){next.style.zIndex=1;prev.style.zIndex=2;inK=[{opacity:.5},{opacity:1}];outK=[{transform:'none',opacity:1},{transform:'translateY(28px)',opacity:0}]}
+    else{next.style.zIndex=2;prev.style.zIndex=1;inK=[{opacity:0,transform:'scale(.985)'},{opacity:1,transform:'none'}];outK=[{opacity:1},{opacity:0}]}
+    var a1=next.animate(inK,o),a2=prev.animate(outK,o);
+    running=[a1,a2];var my=seq;
+    var done=function(){if(my!==seq)return;if(prev!==$('#s-'+cur))prev.hidden=true;a1.cancel();a2.cancel();prev.style.zIndex='';next.style.zIndex=''};
+    a1.onfinish=done;a2.onfinish=done;
+  }
+  function go(id){var from=cur;if(cur)stack.push(cur);show(id,id==='lock'?'up':'push')}
+  function back(){var from=cur,p=stack.pop();show(p||(state.tree?'today':'welcome'),from==='lock'?'down':'pop')}
+  function home(){return state.tree?'today':'empty'}
+  function act(a){
+    var i=a.indexOf(':'),k=i<0?a:a.slice(0,i),v=i<0?'':a.slice(i+1);
+    if(k==='go')go(v);
+    else if(k==='back')back();
+    else if(k==='toast')toast(v);
+    else if(k==='tab'){stack=[];show(v==='today'?home():v,'fade')}
+    else if(k==='fn'){
+      if(v==='pick'){state.tree=true;go('name')}
+      else if(v==='selectLater'){state.tree=false;go('hello')}
+      else if(v==='afterName'){state.tree=true;if(state.hello){stack=[];show('today','fade')}else{state.hello=true;go('hello')}}
+      else if(v==='home'){stack=[];show(home(),'fade')}
+    }
+  }
+  function jump(id){stack=[];if(id==='welcome'){state.tree=false;state.hello=false;if(namesReset)namesReset();resets.forEach(function(f){f()})}if(id==='today'){state.tree=true;state.hello=true}show(id,'fade')}
+  document.querySelectorAll('[data-jump]').forEach(function(b){b.addEventListener('click',function(){jump(b.getAttribute('data-jump'))})});
+  $('#back').addEventListener('click',back);
+  // soft ripple where a tap lands
+  document.addEventListener('pointerdown',function(e){
+    var t=e.target.closest&&e.target.closest('.spot,.cta');if(!t||RM)return;
+    var r=t.getBoundingClientRect(),sc=r.width/t.offsetWidth||1,i=document.createElement('i');
+    i.className='rip';i.style.left=((e.clientX-r.left)/sc)+'px';i.style.top=((e.clientY-r.top)/sc)+'px';
+    t.style.overflow='hidden';t.appendChild(i);setTimeout(function(){i.remove()},600);
+  });
+  $('#show').addEventListener('change',function(e){document.body.classList.toggle('show',e.target.checked)});
+
+  function fit(){
+    var f=$('#frame'),p=$('#phone');
+    var hh=document.querySelector('header').offsetHeight;
+    var s=Math.max(.5,Math.min(1,(window.innerWidth-32)/W,(window.innerHeight-hh-48)/H));
+    f.style.width=(W*s)+'px';f.style.height=(H*s)+'px';f.style.borderRadius=(34*s)+'px';
+    p.style.transform='scale('+s+')';
+  }
+  window.addEventListener('resize',fit);
+  buildTabs();
+  show('welcome');fit();
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+})();
+</script>
