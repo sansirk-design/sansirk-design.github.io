@@ -314,6 +314,7 @@ a{color:inherit}
 .cs-facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;padding:32px 0;border-bottom:1px solid var(--edge)}
 .cs-facts b{display:block;font:500 11px/1 "JetBrains Mono";color:var(--muted);letter-spacing:.08em;margin-bottom:10px}
 .cs-facts span{font-weight:600;font-size:17px}
+.cs-facts.ar-facts{grid-template-columns:repeat(3,minmax(0,1fr))}
 .cs-grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .cs-grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .cs-card{background:#fff;border:1px solid var(--edge);border-radius:20px;padding:24px 24px 26px;box-shadow:0 12px 28px -18px rgba(40,30,10,.25)}
@@ -573,7 +574,7 @@ img.adp{height:auto}
   .cs-row.flip > .shot{order:0}
   .cs-row{gap:22px;margin-top:36px}
   .cs-ba > div + div{border-left:0;border-top:1px solid var(--line)}
-  .cs-facts{grid-template-columns:1fr 1fr}
+  .cs-facts,.cs-facts.ar-facts{grid-template-columns:1fr 1fr}
   .cs-themes{grid-template-columns:1fr 1fr;gap:20px 14px}
   .cs-hero{margin-top:36px}
   .cs-cover{padding:96px 0 48px}
@@ -669,6 +670,11 @@ img.adp{height:auto}
 .ar-tabs b.on svg{background:#E8EBCF;border-radius:999px;padding:5px 15px;width:58px;height:32px;box-sizing:border-box}
 .ar-logo{margin:24px 0 0;display:grid;justify-items:center;gap:14px;background:#FBF3E2;border:1px solid #E3D5B8;border-radius:24px;padding:28px 20px 22px}
 .ar-logo img{display:block;width:min(100%,380px);height:auto}
+.ar-play{display:inline-flex;align-items:center;gap:10px;margin-top:6px;padding:14px 30px 14px 24px;border:0;border-radius:999px;background:#44622F;color:#FFFAEF;
+  font:600 17px/1 "Instrument Sans";letter-spacing:-.01em;cursor:pointer;box-shadow:0 10px 24px -8px rgba(68,98,47,.55);transition:background .2s,transform .2s var(--out),box-shadow .2s}
+.ar-play:hover{background:#365026;transform:translateY(-2px);box-shadow:0 14px 28px -8px rgba(68,98,47,.6)}
+.ar-play:active{transform:translateY(0)}
+.ar-play:focus-visible{outline:3px solid #8fb35f;outline-offset:3px}
 .ar-proto{margin-top:24px;border-radius:24px;overflow:hidden;border:1px solid var(--edge);background:#FBF3E2;box-shadow:0 30px 70px -30px rgba(40,30,10,.4)}
 .ar-proto iframe{display:block;width:100%;height:min(86vh,900px);min-height:640px;border:0}
 @media (max-width:900px){.ar-wf{grid-template-columns:repeat(3,minmax(0,1fr))}.ar-strip{grid-template-columns:repeat(3,minmax(0,1fr))}.ar-sw{grid-template-columns:repeat(2,minmax(0,1fr))}.ar-type{grid-template-columns:1fr}.ar-type>div+div{border-left:0;border-top:1px solid #E3D5B8}}
@@ -1569,10 +1575,9 @@ function aranyoPage(p) {
   <div class="cs">
     <nav class="cs-nav" aria-label="Case study sections">${ARANYO_SECTIONS.map(([id, t]) => `<a href="#${id}">${t}</a>`).join('')}</nav>
     <div class="cs-main">
-      <div class="cs-facts">
-        <div><b>ROLE</b><span>Sole designer, research to hi-fi</span></div>
-        <div><b>TOOLS</b><span>Figma, HTML prototype</span></div>
-        <div><b>TIMELINE</b><span>Oct to Nov 2026</span></div>
+      <div class="cs-facts ar-facts">
+        <div><b>ROLE</b><span>Designer + Researcher</span></div>
+        <div><b>TOOLS</b><span>Figma, GPT and HTML prototype</span></div>
         <div><b>DELIVERED</b><span>Research, IA, design system, prototype</span></div>
       </div>
 
@@ -1609,6 +1614,19 @@ function aranyoPage(p) {
           </tbody>
         </table></div>
         <p class="cs-p cs-rv" style="margin-top:22px">Survey respondents came from Indian and international bonsai communities, which gave a useful mix of beginner and experienced voices.</p>
+        <div class="cs-sub cs-rv">
+          <h3 class="cs-h3">Aranyo vs Planta</h3>
+          <p class="cs-p">Planta is the closest well-known care app. It is strong for houseplants, so Aranyo focuses on what a first-time bonsai owner in India needs.</p>
+          <div class="cs-scroll"><table class="cs-table">
+            <thead><tr><th></th><th>Planta</th><th class="me">Aranyo</th></tr></thead>
+            <tbody>
+              <tr><td>Built for</td><td>Houseplants and gardens</td><td class="me">Beginner bonsai owners in India</td></tr>
+              <tr><td>Reminders</td><td>Scheduled tasks, adjusted to the plant and conditions</td><td class="me">A prompt to check the soil first, then you decide</td></tr>
+              <tr><td>Extras</td><td>Photo ID, light meter and plant doctor, mostly in Premium</td><td class="me">Sourced species guide with seasonal care</td></tr>
+              <tr><td>Cost</td><td>Free tier, paid Premium subscription</td><td class="me">Core care free, no sign-up</td></tr>
+            </tbody>
+          </table></div>
+        </div>
       </section>
 
       <section class="cs-sec" id="cs-define">
@@ -1719,7 +1737,7 @@ function aranyoPage(p) {
         ${head('10', 'Brand and motion', 'A logo that grows', 'The A doubles as a bonsai trunk under a terracotta sun. In motion the sun rises, the tree grows up from its base and the wordmark follows.')}
         <figure class="ar-logo cs-rv">
           <img id="arLogo" src="${caseSrc('aranyo/logo-animated.svg')}" width="560" height="526" alt="Aranyo logo animating in: the sun rises, the tree grows, then the wordmark and tagline appear">
-          <button type="button" class="chip" data-replay>Replay &#8635;</button>
+          <button type="button" class="ar-play" data-replay aria-label="Play the logo animation"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>Play</button>
         </figure>
         <div class="cs-grid3 cs-rv" style="margin-top:16px">
           <div class="cs-card"><h3>Opening</h3><p>The same reveal plays when the app opens, so the first second already feels calm.</p></div>
