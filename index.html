@@ -618,9 +618,23 @@ img.adp{height:auto}
 .ar-list{margin:0;padding:0;list-style:none;display:grid;gap:10px}
 .ar-list li{position:relative;padding-left:22px;font-size:17px;color:var(--txt2)}
 .ar-list li::before{content:"";position:absolute;left:0;top:.55em;width:9px;height:9px;border-radius:50%;background:var(--acc)}
-.ar-steps{list-style:none;counter-reset:s;margin:12px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
-.ar-steps li{counter-increment:s;font-size:14px;font-weight:600;color:var(--txt);background:var(--tint);border-radius:999px;padding:7px 13px}
-.ar-steps li::before{content:counter(s);display:inline-grid;place-items:center;width:18px;height:18px;margin-right:7px;border-radius:50%;background:var(--acc-ink);color:#fff;font:500 11px "JetBrains Mono"}
+.ar-flows{display:grid;gap:14px;margin-top:20px}
+.ar-flow{background:#fff;border:1px solid var(--edge);border-radius:20px;padding:22px 24px 24px;box-shadow:0 10px 30px -22px rgba(0,0,0,.25)}
+.ar-flow-hd{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:16px}
+.ar-flow-hd .cs-h3{margin:0}
+.ar-flow-hd span{font:500 11px/1 "JetBrains Mono";letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.ar-chain{list-style:none;margin:0;padding:0;display:flex;align-items:stretch;gap:36px}
+.ar-chain li{position:relative;flex:1 1 0;min-width:0;display:grid;place-items:center;text-align:center;padding:14px 10px;border-radius:14px;
+  background:var(--tint);border:1px solid #d6e0c0;font-size:15px;font-weight:600;line-height:1.3;color:var(--txt)}
+.ar-chain li:first-child{background:#fff;border:1.5px solid var(--acc-ink)}
+.ar-chain li:last-child{background:var(--acc-ink);border-color:var(--acc-ink);color:#fff}
+.ar-chain li:not(:last-child)::after{content:"";position:absolute;top:50%;right:-31px;width:26px;height:12px;transform:translateY(-50%);
+  background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 12'%3E%3Cpath d='M0 6h23M18 1l5 5-5 5' fill='none' stroke='%2344622f' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+@media (max-width:700px){
+  .ar-chain{flex-direction:column;gap:30px}
+  .ar-chain li{padding:12px 14px}
+  .ar-chain li:not(:last-child)::after{top:auto;right:auto;left:50%;bottom:-26px;transform:translateX(-50%) rotate(90deg)}
+}
 .ar-wf{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px 18px;background:#E4DCCB;border-radius:24px;padding:clamp(16px,2.4vw,32px)}
 .ar-wf figure,.ar-pair figure{margin:0}
 .ar-wf img,.ar-pair img{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--edge);background:#fff}
@@ -1561,7 +1575,7 @@ function aranyoPage(p) {
   const shot = (f, h, name, cap, alt) => `<figure class="cs-rv">${img('hf-' + f + '.png', 393, h || 852, 'Aranyo ' + alt, true)}<figcaption><b>${name}</b>${cap}</figcaption></figure>`;
   const tall = (f, name, cap, alt) => `<figure class="cs-rv ar-tall"><div class="ar-scroll" tabindex="0" aria-label="${name}, scrollable">${img('hf-' + f + '.png', 393, f === 'tree' ? 1272 : 2003, 'Aranyo ' + alt, true)}</div><figcaption><b>${name}</b>${cap}</figcaption></figure>`;
   const wf = (f, h, name) => `<figure class="cs-rv">${img('wf-' + f + '.png', 393, h || 852, 'Wireframe: ' + name, true)}<figcaption>${name}</figcaption></figure>`;
-  const steps = arr => `<ol class="ar-steps">${arr.map(s => `<li>${s}</li>`).join('')}</ol>`;
+  const flow = (name, from, arr) => `<div class="ar-flow"><div class="ar-flow-hd"><h3 class="cs-h3">${name}</h3><span>${from}</span></div><ol class="ar-chain" aria-label="${name} flow">${arr.map(s => `<li>${s}</li>`).join('')}</ol></div>`;
   const tick = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   return `<button class="x" aria-label="Close case study">&times;</button>
   <div style="--acc:#8fb35f;--acc-ink:#44622f;--tint:#f2f5e1;--hero-bg:#2b3d23;--dark-bg:#1f2c1a">
@@ -1661,11 +1675,11 @@ function aranyoPage(p) {
           </div>
         </div>
         <p class="cs-p cs-rv" style="margin-top:24px">Species has its own tab so a new owner can learn about a tree before, during or after adding it. Tree detail sits under Today because that is where you check in.</p>
-        <div class="cs-grid2 cs-rv" style="margin-top:12px">
-          <div class="cs-card"><h3>Onboarding</h3>${steps(['Open', 'Pick a species', 'Name it', 'Meet your tree', 'Today'])}</div>
-          <div class="cs-card"><h3>Daily check</h3>${steps(['Open Today', 'Open a tree', 'Check the soil', 'Log what you found'])}</div>
-          <div class="cs-card"><h3>Species</h3>${steps(['Search', 'Read the guide', 'Add the tree'])}</div>
-          <div class="cs-card"><h3>Reminders</h3>${steps(['More', 'Reminders', 'Set your time'])}</div>
+        <div class="ar-flows cs-rv">
+          ${flow('Onboarding', 'First open', ['Open', 'Pick a species', 'Name it', 'Meet your tree', 'Today'])}
+          ${flow('Daily check', 'Starts in Today', ['Open Today', 'Open a tree', 'Check the soil', 'Log what you found'])}
+          ${flow('Species', 'Starts in Species', ['Search', 'Read the guide', 'Add the tree'])}
+          ${flow('Reminders', 'Starts in More', ['More', 'Reminders', 'Set your time'])}
         </div>
       </section>
 
