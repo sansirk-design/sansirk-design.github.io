@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Divine Library</title>
+  <meta name="description" content="A private, endless library of every book you have finished. Walk its halls, shelve your books, keep a diary.">
+  <meta property="og:title" content="The Divine Library">
+  <meta property="og:description" content="A private, endless library of every book you have finished.">
+  <meta name="theme-color" content="#0b0806">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b0806'/%3E%3Cpath d='M12 18c8-3 14-2 20 3 6-5 12-6 20-3v30c-8-3-14-2-20 3-6-5-12-6-20-3z' fill='none' stroke='%23c9a45c' stroke-width='3' stroke-linejoin='round'/%3E%3Cpath d='M32 21v30' stroke='%23c9a45c' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">
+    { "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    } }
+  </script>
+</head>
+<body>
+  <canvas id="scene"></canvas>
+  <div id="vignette"></div>
+  <div id="crosshair"></div>
+  <div id="hover-label" hidden><div class="t"></div><div class="m"></div></div>
+
+  <div id="hud" hidden>
+    <div id="count"></div>
+    <div class="keys" id="keys">WASD walk · Shift hurry · Click a book · E shelve a book · J diary · Esc menu</div>
+  </div>
+  <div id="toast" hidden></div>
+
+  <!-- Title screen, also the Esc menu -->
+  <section id="intro" class="overlay">
+    <div class="intro-inner">
+      <p class="eyebrow" id="menu-eyebrow">Est. before memory</p>
+      <h1 class="script-title" id="title" aria-label="The Divine Library">
+        <svg viewBox="0 0 1200 250" aria-hidden="true"><text id="title-text" x="600" y="170" text-anchor="middle"></text></svg>
+      </h1>
+      <p class="tagline">It remembers every page you have ever turned</p>
+      <div class="pause-actions">
+        <button id="enter" class="btn primary">Enter the library</button>
+        <div id="menu-extra" class="pause-actions" hidden>
+          <button id="pause-add" class="btn ghost">Shelve a book</button>
+          <button id="pause-diary" class="btn ghost">Open your diary</button>
+          <button id="to-entrance" class="btn ghost">Walk back to the entrance</button>
+        </div>
+      </div>
+      <div id="find" hidden>
+        <p class="eyebrow small">Find a volume</p>
+        <input id="find-input" placeholder="Search your collection…" autocomplete="off">
+        <ul id="find-list"></ul>
+      </div>
+      <p class="hint">WASD to walk · Mouse to look · Click a book to take it down · E to shelve · J for your diary · Esc for this menu</p>
+      <p class="backup-links">
+        <button class="link" id="backup-save">Save a backup</button>
+        <span>·</span>
+        <button class="link" id="backup-restore">Restore from a backup</button>
+        <input type="file" id="backup-file" accept=".library" hidden>
+      </p>
+    </div>
+  </section>
+
+  <!-- Phones and tablets -->
+  <section id="device-note" class="overlay" hidden>
+    <div class="device-inner">
+      <p class="eyebrow">Before you enter</p>
+      <p>The Divine Library is walked with a keyboard and mouse. Open this link on a computer to step inside.</p>
+      <button class="link" id="device-anyway">Look anyway</button>
+    </div>
+  </section>
+
+  <!-- Add / edit a book -->
+  <section id="form-modal" class="modal" hidden>
+    <form id="book-form" class="card form-card" autocomplete="off">
+      <header>
+        <p class="eyebrow" id="form-eyebrow">A new volume</p>
+        <h2 id="form-heading">Shelve a book</h2>
+      </header>
+      <div class="form-grid">
+        <div class="cover-pick">
+          <label class="cover-drop" for="f-cover" id="cover-drop">
+            <img id="cover-preview" alt="">
+            <span id="cover-hint">Add a cover<br><small>click or drop an image</small></span>
+          </label>
+          <input type="file" id="f-cover" accept="image/*" hidden>
+          <button type="button" id="cover-clear" class="link" hidden>Remove cover</button>
+        </div>
+        <div class="fields">
+          <label>Title<input id="f-title" required maxlength="140"></label>
+          <label>Author<input id="f-author" maxlength="100"></label>
+          <div class="row">
+            <label>Type
+              <select id="f-type">
+                <option value="book">Book</option>
+                <option value="manga">Manga</option>
+                <option value="lightnovel">Light novel</option>
+                <option value="comic">Comic</option>
+                <option value="other">Other</option>
+              </select>
+            </label>
+            <label>Pages<input id="f-pages" type="number" min="1" max="5000" value="300" required></label>
+          </div>
+          <div class="row">
+            <label>Finished<input id="f-finished" type="date"></label>
+            <label>Spine colour<input id="f-color" type="color" value="#6b2a1f"></label>
+          </div>
+          <div class="field">
+            <span>Rating</span>
+            <div class="stars" id="f-rating">
+              <button type="button" data-v="1">★</button><button type="button" data-v="2">★</button><button type="button" data-v="3">★</button><button type="button" data-v="4">★</button><button type="button" data-v="5">★</button>
+            </div>
+          </div>
+          <label>Notes<textarea id="f-notes" rows="2" maxlength="2000" placeholder="What stayed with you?"></textarea></label>
+          <div class="field">
+            <span>PDF</span>
+            <div class="pdf-row">
+              <button type="button" class="btn ghost small" id="pdf-pick">Attach a PDF</button>
+              <span id="pdf-info">Attach one to read it on the lectern</span>
+              <button type="button" class="link" id="pdf-clear" hidden>Remove</button>
+            </div>
+            <input type="file" id="f-pdf" accept="application/pdf,.pdf" hidden>
+          </div>
+          <div class="thick">
+            <span>Spine</span>
+            <div class="thick-bar"><i id="thick-fill"></i></div>
+            <b id="thick-out"></b>
+          </div>
+        </div>
+      </div>
+      <footer>
+        <button type="button" class="btn ghost" data-close>Cancel</button>
+        <button type="submit" class="btn primary" id="form-submit">Place on the shelf</button>
+      </footer>
+    </form>
+  </section>
+
+  <!-- A book taken down from the shelf -->
+  <section id="book-modal" class="modal" hidden>
+    <div class="card book-card">
+      <img id="b-cover" alt="">
+      <div class="b-info">
+        <p class="eyebrow" id="b-type"></p>
+        <h2 id="b-title"></h2>
+        <p class="author" id="b-author"></p>
+        <dl id="b-meta"></dl>
+        <p id="b-notes"></p>
+        <button class="btn ghost read-btn" id="b-read" hidden>Read it on the lectern</button>
+        <button class="link" id="b-diary">Write about this book in your diary</button>
+        <footer>
+          <button class="btn ghost" id="b-edit">Edit</button>
+          <button class="btn ghost danger" id="b-remove">Remove</button>
+          <button class="btn primary" data-close>Return it to the shelf</button>
+        </footer>
+      </div>
+    </div>
+  </section>
+
+  <!-- Diary -->
+  <section id="diary-modal" class="modal" hidden>
+    <div class="card diary-card">
+      <aside class="diary-list">
+        <header>
+          <p class="eyebrow">Your diary</p>
+          <button id="d-new" class="btn ghost small">New entry</button>
+        </header>
+        <ul id="d-entries"></ul>
+        <div class="diary-export">
+          <span>Export all</span>
+          <button id="d-pdf" class="link">as PDF</button>
+          <button id="d-txt" class="link">as text</button>
+        </div>
+      </aside>
+      <div class="diary-page">
+        <div id="d-empty">
+          <p>The pages are blank.</p>
+          <button id="d-first" class="btn primary">Begin your first entry</button>
+        </div>
+        <div id="d-editor" hidden>
+          <input id="d-title" placeholder="Untitled entry" maxlength="140">
+          <div class="d-row">
+            <input type="date" id="d-date">
+            <select id="d-book"><option value="">Not about a particular book</option></select>
+          </div>
+          <textarea id="d-body" placeholder="Write by candlelight…"></textarea>
+          <footer>
+            <span id="d-saved"></span>
+            <button id="d-delete" class="btn ghost danger small">Delete entry</button>
+            <button class="btn primary small" data-close>Close diary</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Choosing a book at the lectern -->
+  <section id="lectern-modal" class="modal" hidden>
+    <div class="card picker-card">
+      <p class="eyebrow">The lectern</p>
+      <h2>Choose a book to read</h2>
+      <ul id="lectern-list"></ul>
+      <p id="lectern-empty" hidden>None of your books carry a PDF yet. Edit a book, attach its PDF, and it can be read here.</p>
+      <footer><button class="btn ghost" data-close>Step away</button></footer>
+    </div>
+  </section>
+
+  <!-- Reading at the lectern -->
+  <div id="reader" hidden>
+    <p class="reader-title" id="r-title"></p>
+    <div class="reader-bottom">
+      <p class="reader-status" id="r-status"></p>
+      <div class="reader-bar">
+        <button class="turn" id="r-prev" aria-label="Previous page">‹</button>
+        <span id="r-pages"></span>
+        <button class="turn" id="r-next" aria-label="Next page">›</button>
+        <span class="sep"></span>
+        <input id="r-goto" type="number" min="1" placeholder="Page">
+        <span class="sep"></span>
+        <button class="btn primary small" id="r-close">Close the book</button>
+      </div>
+      <p class="reader-hint">← → or click a page to turn · scroll to lean closer · Esc to close</p>
+    </div>
+  </div>
+
+  <!-- Fade used when the library takes you back to the start -->
+  <div id="fade"><p id="fade-text"></p></div>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>
