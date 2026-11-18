@@ -729,7 +729,9 @@ img.adp{height:auto}
 .in-playtest:hover{transform:scale(1.04);box-shadow:0 0 70px rgba(255,79,216,.6)}
 .in-playtest em{font:500 11px/1 "JetBrains Mono";font-style:normal;letter-spacing:.1em;color:#ffb4ee}
 .in-pt-icon{width:64px;height:40px;filter:drop-shadow(0 0 12px rgba(255,79,216,.6))}
-.in-fs-row{display:flex;justify-content:center;margin-top:18px}
+.in-fs-row{display:flex;justify-content:center;margin-top:14px}
+.in-device{display:flex;align-items:center;justify-content:center;gap:8px;margin:16px 0 0!important;font:500 12px/1.4 "JetBrains Mono";letter-spacing:.04em;color:#ffb84f!important;text-align:center}
+.in-device svg{width:15px;height:15px;flex:none}
 .chip.in-fs{gap:8px;background:rgba(255,255,255,.06);border-color:rgba(255,79,216,.45);color:#fff;font-weight:600;cursor:pointer}
 .chip.in-fs:hover{border-color:#ff4fd8;box-shadow:0 0 22px rgba(255,79,216,.35)}
 .chip.in-fs svg{width:15px;height:15px;color:#ff4fd8}
@@ -2504,6 +2506,7 @@ function inayraPage(p) {
           <img class="in-game-poster" src="${src('key/sitting.webp')}" width="1670" height="942" alt="" loading="lazy" decoding="async">
           <button class="in-playtest" data-playtest><svg class="in-pt-icon" viewBox="0 0 64 40" aria-hidden="true"><path d="M18 4h28c8 0 12 5 14 13l3 12c1 6-3 10-8 10-4 0-6-2-9-6l-3-3H21l-3 3c-3 4-5 6-9 6-5 0-9-4-8-10l3-12C6 9 10 4 18 4z" fill="#ff4fd8"/><path d="M16 14v10M11 19h10" stroke="#16061a" stroke-width="3.5" stroke-linecap="round"/><circle cx="44" cy="16" r="2.8" fill="#16061a"/><circle cx="50" cy="22" r="2.8" fill="#16061a"/></svg><span>Playtest</span><em>Starts the game and the music</em></button>
         </div>
+        <p class="in-device"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5 15 14H1z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 6v3.6M8 11.6v.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Playable on a laptop or desktop only. Phones are not supported for gameplay.</p>
         <div class="in-fs-row"><a class="chip in-fs" href="${INAYRA_GAME}/scene.html?embed=1" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Play Fullscreen</a></div>
       </section>
 
