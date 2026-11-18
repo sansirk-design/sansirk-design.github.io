@@ -27,7 +27,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@400;500&family=DM+Sans:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@400;500&family=DM+Sans:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Nunito+Sans:wght@400;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#f3f2ef;
@@ -696,6 +696,208 @@ img.adp{height:auto}
 .ar-proto iframe{display:block;width:100%;height:min(86vh,900px);min-height:640px;border:0}
 @media (max-width:900px){.ar-wf{grid-template-columns:repeat(3,minmax(0,1fr))}.ar-strip{grid-template-columns:repeat(3,minmax(0,1fr))}.ar-sw{grid-template-columns:repeat(2,minmax(0,1fr))}.ar-type{grid-template-columns:1fr}.ar-type>div+div{border-left:0;border-top:1px solid #E3D5B8}}
 @media (max-width:560px){.ar-wf{grid-template-columns:repeat(2,minmax(0,1fr))}.ar-strip{grid-template-columns:repeat(2,minmax(0,1fr))}.ar-ui{padding:6px 16px}.ar-ui .ar-lbl{width:100%}.ar-pair{gap:8px}}
+/* ---------- INAYRA case study (in-*) ---------- */
+.in-page{background:#0b0712;color:#ece9e4;--acc:#ff4fd8;--acc-ink:#ff4fd8;--edge:rgba(255,255,255,.1);--txt:#f2eefa;--txt2:#cfc8da;--muted:#8d84a0}
+.in-page .cs{width:min(1600px,calc(100vw - 40px));grid-template-columns:140px minmax(0,1fr);gap:56px}
+.in-page .cs-head{border-top-color:#f2eefa}
+.in-page .cs-h{max-width:20em}
+.in-page .cs-lead{max-width:42em}
+.in-cover{position:relative;overflow:hidden;color:#fff;padding:150px 0 84px;min-height:min(90vh,900px);display:flex;align-items:flex-end;background:#0b0712}
+.in-cover-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% 40%}
+.in-cover::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,7,18,.92) 0%,rgba(11,7,18,.6) 42%,rgba(11,7,18,0) 75%),linear-gradient(0deg,#0b0712 0%,rgba(11,7,18,0) 38%)}
+.in-cover .col{position:relative;z-index:1;width:min(1600px,calc(100vw - 40px));margin:0 auto}
+@media (min-width:901px){.in-cover .col{padding-left:196px}}
+.in-cover .kick{opacity:.9;margin:0 0 16px;color:#ffb4ee}
+.in-title{margin:0;font:700 clamp(64px,10vw,150px)/.9 "Rajdhani","Instrument Sans",sans-serif;letter-spacing:.06em;text-shadow:-3px 0 rgba(255,79,216,.55),3px 0 rgba(79,232,255,.45)}
+.in-title span{display:block;font-size:.28em;letter-spacing:.12em;margin-top:10px;color:#ffb4ee;text-shadow:none}
+.in-cover .sum{font-size:clamp(19px,1.9vw,24px);line-height:1.45;max-width:28em;margin:22px 0 0;color:#e9e3f2}
+.in-cover-links{margin-top:26px}
+.chip.in-play{background:#ff4fd8;border-color:#ff4fd8;color:#16061a;font-weight:600}
+.chip.in-play:hover{border-color:#fff}
+.chip.in-ghost{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.3);color:#fff}
+.in-cover .cs-tags span{background:rgba(255,255,255,.1)}
+.in-stats{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+.in-stats li{background:#16101f;border:1px solid var(--edge);border-radius:18px;padding:22px 18px}
+.in-stats b{display:block;font:700 44px/1 "Rajdhani","Instrument Sans";color:#4fe8ff}
+.in-stats span{display:block;margin-top:8px;font:500 11px/1.3 "JetBrains Mono";letter-spacing:.06em;text-transform:uppercase;color:#a99fbb}
+/* playtest */
+.in-game{position:relative;aspect-ratio:16/9;border-radius:22px;overflow:hidden;border:1px solid var(--edge);background:#000;box-shadow:0 40px 100px -40px rgba(255,79,216,.45)}
+.in-game-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.55) saturate(1.1);transition:transform 1.2s var(--out)}
+.in-game:hover .in-game-poster{transform:scale(1.03)}
+.in-game iframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:2}
+.in-playtest{position:absolute;inset:0;margin:auto;width:max-content;height:max-content;display:flex;flex-direction:column;align-items:center;gap:12px;padding:30px 54px;border:1px solid rgba(255,79,216,.6);border-radius:24px;background:rgba(11,7,18,.6);backdrop-filter:blur(8px);color:#fff;cursor:pointer;font:700 34px/1 "Rajdhani","Instrument Sans";letter-spacing:.2em;text-transform:uppercase;box-shadow:0 0 40px rgba(255,79,216,.35);transition:transform .35s var(--spring),box-shadow .3s}
+.in-playtest:hover{transform:scale(1.04);box-shadow:0 0 70px rgba(255,79,216,.6)}
+.in-playtest em{font:500 11px/1 "JetBrains Mono";font-style:normal;letter-spacing:.1em;color:#ffb4ee}
+.in-pt-icon{width:64px;height:40px;filter:drop-shadow(0 0 12px rgba(255,79,216,.6))}
+.in-fs-row{display:flex;justify-content:center;margin-top:18px}
+.chip.in-fs{gap:8px;background:rgba(255,255,255,.06);border-color:rgba(255,79,216,.45);color:#fff;font-weight:600;cursor:pointer}
+.chip.in-fs:hover{border-color:#ff4fd8;box-shadow:0 0 22px rgba(255,79,216,.35)}
+.chip.in-fs svg{width:15px;height:15px;color:#ff4fd8}
+.in-game:fullscreen{border-radius:0;border:0}
+.in-game.live{box-shadow:0 0 0 1px rgba(255,79,216,.4),0 40px 100px -40px rgba(255,79,216,.6)}
+/* shared */
+.in-two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.in-loop{margin:0;background:radial-gradient(circle at 50% 70%,#24163a,#120c1c 70%);border:1px solid var(--edge);border-radius:16px;padding:14px 10px 10px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+.in-loop img{display:block;max-width:100%;height:auto}
+.in-loop figcaption{margin-top:8px;font:500 10px/1 "JetBrains Mono";letter-spacing:.1em;text-transform:uppercase;color:#a99fbb}
+.in-note{font-size:14px;color:var(--muted)!important;margin:14px 0 0}
+/* Ekva */
+.in-hero-char{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:18px;align-items:start}
+.in-moves{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.in-moves .in-loop{min-height:190px}
+.in-moves .in-loop img{width:auto;max-width:100%;max-height:170px}
+/* cast */
+.in-foes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.in-foe{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:20px;background:#140e1d;border:1px solid var(--edge);border-radius:22px;padding:20px}
+.in-foe-main{display:flex;align-items:stretch}
+.in-foe-main .in-idle{flex:1;min-height:300px}
+.in-foe-main .in-idle img{width:100%;max-width:340px;max-height:300px;object-fit:contain}
+.in-foe h3{margin:4px 0 4px;font:600 28px/1.1 "Instrument Sans";color:#fff;letter-spacing:-.02em}
+.in-where{margin:0 0 10px!important;font:500 11px/1.4 "JetBrains Mono";letter-spacing:.06em;text-transform:uppercase;color:#ffb4ee!important}
+.in-foe-text>p:not(.in-where):not(.cs-k){margin:0;font-size:15px;line-height:1.55}
+.in-foe-moves{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px;margin-top:16px}
+.in-small{padding:8px 6px 6px;border-radius:12px;min-height:110px}
+.in-small img{max-height:90px;width:auto}
+.in-small figcaption{font-size:9px;margin-top:6px}
+.in-bosses{display:grid;gap:16px;margin-top:16px}
+.in-boss2{background:linear-gradient(120deg,#1f0f24,#120c1c);border:1px solid var(--edge);border-radius:24px;padding:30px}
+.in-boss2 h3{margin:4px 0 4px;font:600 40px/1.05 "Instrument Sans";color:#fff;letter-spacing:-.025em}
+.in-boss-t{margin:0 0 24px!important;max-width:46em;font-size:16px;line-height:1.6}
+.in-boss{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);background:linear-gradient(120deg,#1f0f24,#120c1c);padding:28px}
+.in-boss .in-foe-main{gap:14px}
+.in-boss-render{flex:1.1;background:radial-gradient(circle at 50% 60%,#2c1838,#120c1c 70%);border-radius:16px;padding:18px;display:flex;align-items:center;justify-content:center}
+.in-boss-render img{max-height:520px;width:auto;max-width:100%;object-fit:contain}
+.in-boss-render.has-render{padding:0;overflow:hidden}
+.in-boss-render.has-render img{max-height:640px;border-radius:16px}
+.in-boss .in-idle{flex:.9;min-height:420px}
+.in-boss .in-idle img{max-height:380px;max-width:100%}
+.in-boss h3{font-size:40px}
+/* spaces */
+.in-space{display:grid;grid-template-columns:minmax(0,1.9fr) minmax(0,1fr);gap:40px;align-items:center;margin-top:96px}
+.in-space:first-of-type{margin-top:40px}
+.in-space:nth-of-type(even){grid-template-columns:minmax(0,1fr) minmax(0,1.9fr)}
+.in-space:nth-of-type(even) .in-space-vid{order:2}
+.in-space-vid{border-radius:18px;overflow:hidden;border:1px solid var(--edge);aspect-ratio:16/9;background:#000;box-shadow:0 30px 70px -40px rgba(0,0,0,.8)}
+.in-space-vid video{display:block;width:100%;height:100%;object-fit:cover}
+.in-space h3{margin:0 0 12px;font:600 clamp(30px,2.6vw,42px)/1.05 "Instrument Sans";letter-spacing:-.03em;color:#fff}
+.in-space-text>p:not(.cs-k){font-size:17px;line-height:1.6;margin:0}
+.in-space dl{margin:18px 0 0;display:grid;gap:8px}
+.in-space dl div{display:grid;grid-template-columns:90px 1fr;gap:12px;padding-top:10px;border-top:1px solid var(--edge)}
+.in-space dt{font:500 11px/1.6 "JetBrains Mono";letter-spacing:.08em;text-transform:uppercase;color:#a99fbb}
+.in-space dd{margin:0;color:#fff}
+.in-ost{display:grid;grid-template-columns:44px minmax(0,1fr) auto;align-items:center;gap:6px 14px;margin-top:22px;padding:12px 16px 12px 12px;border:1px solid var(--edge);border-radius:16px;background:#140e1d}
+.in-ost-btn{width:44px;height:44px;border-radius:50%;border:0;background:#ff4fd8;cursor:pointer;display:grid;place-items:center;transition:transform .3s var(--spring),box-shadow .3s}
+.in-ost-btn:hover{transform:scale(1.06);box-shadow:0 0 22px rgba(255,79,216,.55)}
+.in-ost-btn i{display:block;width:0;height:0;border-left:13px solid #16061a;border-top:8px solid transparent;border-bottom:8px solid transparent;margin-left:4px}
+.in-ost.playing .in-ost-btn i{width:12px;height:14px;border:0;margin:0;background:linear-gradient(90deg,#16061a 0 4px,transparent 4px 8px,#16061a 8px 12px)}
+.in-ost-info b{display:block;font:500 11px/1.2 "JetBrains Mono";letter-spacing:.08em;text-transform:uppercase;color:#fff;margin-bottom:8px}
+.in-ost-bar{display:block;height:4px;border-radius:4px;background:rgba(255,255,255,.12);cursor:pointer;position:relative}
+.in-ost-bar i{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:4px;background:linear-gradient(90deg,#4fe8ff,#ff4fd8)}
+.in-ost-time{font:500 11px "JetBrains Mono";color:#a99fbb;white-space:nowrap}
+.in-ost-yt{grid-column:2/-1;font:500 11px "JetBrains Mono";letter-spacing:.06em;color:#ffb4ee;text-decoration:none}
+/* screenshots */
+.in-shots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px 14px}
+.in-shots figure{margin:0}
+.in-shots .in-shot-big{grid-column:span 3}
+.in-shots figcaption,.in-panels figcaption{margin-top:10px;font:500 11px/1.3 "JetBrains Mono";letter-spacing:.06em;text-transform:uppercase;color:#a99fbb}
+/* key art */
+.in-base{margin:0 0 8px!important;padding:18px 22px;border:1px solid var(--edge);border-radius:16px;background:#120c1a;font:400 13px/1.65 "JetBrains Mono";color:#9890a8!important}
+.in-base b,.in-key-prompt b{display:block;font:500 10px/1 "JetBrains Mono";letter-spacing:.12em;text-transform:uppercase;color:#4fe8ff;margin-bottom:8px}
+.in-key{margin-top:56px}
+.in-key .wd-zoom img{border-radius:16px}
+.in-key-text{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:12px 40px;margin-top:18px}
+.in-key-text .cs-k{grid-column:1/-1;margin:0}
+.in-key-cap{margin:0!important;font:600 22px/1.3 "Instrument Sans";color:#fff!important;letter-spacing:-.015em}
+.in-key-prompt{margin:0!important;font:400 12.5px/1.65 "JetBrains Mono";color:#9890a8!important}
+.in-key-tall{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1fr);gap:40px;align-items:end}
+.in-key-tall .in-key-text{grid-template-columns:1fr;margin-top:0}
+/* cutscenes */
+.in-panels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:34px 22px}
+.in-panels figure{margin:0}
+.in-panels .wd-zoom,.in-panels .wd-zoom img{border-radius:12px}
+/* UI */
+.in-ui-shots{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.in-decisions{list-style:none;margin:20px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.in-decisions li{background:#140e1d;border:1px solid var(--edge);border-radius:18px;padding:20px 22px}
+.in-decisions h3{margin:0 0 6px;font:600 19px/1.2 "Instrument Sans";color:#fff}
+.in-decisions p{margin:0;font-size:15px;line-height:1.5}
+.in-ui-step{margin-top:56px}
+.in-ui-step h3,.in-explore h3{margin:0 0 8px;font:600 28px/1.2 "Instrument Sans";color:#fff;letter-spacing:-.02em}
+.in-ui-step>p{max-width:46em;margin:0 0 20px}
+.in-boss-ui{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:16px;margin-bottom:16px;align-items:start}
+.in-explore{margin-top:72px;padding:30px;border:1px dashed rgba(255,255,255,.22);border-radius:24px;background:repeating-linear-gradient(135deg,rgba(255,255,255,.015) 0 12px,transparent 12px 24px)}
+.in-explore .cs-k{color:#ffb84f!important}
+.in-why{margin:6px 0 22px;padding:18px 22px;border-left:3px solid #ffb84f;background:rgba(255,184,79,.08);border-radius:0}
+.in-why b{display:block;font:500 11px/1 "JetBrains Mono";letter-spacing:.1em;text-transform:uppercase;color:#ffb84f;margin-bottom:10px}
+.in-why p{margin:0;font-size:16px;line-height:1.6;color:#f2e8d8!important}
+.in-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:start}
+.in-explore .in-three img{filter:saturate(.75)}
+/* type and colour */
+.in-type{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.in-spec{background:#140e1d;border:1px solid var(--edge);border-radius:22px;padding:36px 36px 30px;min-width:0}
+.in-aa{display:block;font:700 clamp(120px,13vw,200px)/.9 "Rajdhani","Kohinoor Devanagari",sans-serif;color:#4fe8ff;margin-bottom:18px}
+.in-face{margin:0 0 14px!important;font:700 34px/1.1 "Rajdhani","Kohinoor Devanagari",sans-serif;color:#fff!important;letter-spacing:.04em}
+.in-glyphs{margin:0 0 18px!important;font:500 20px/1.55 "Rajdhani","Kohinoor Devanagari",sans-serif;letter-spacing:.12em;color:#cfc8da!important;overflow-wrap:anywhere}
+.in-weights{display:flex;flex-wrap:wrap;gap:18px;margin:0!important;font:20px "Rajdhani","Kohinoor Devanagari",sans-serif;color:#a99fbb!important}
+.in-sample{display:flex;flex-wrap:wrap;justify-content:space-around;gap:24px 40px;margin-top:16px;padding:44px 30px;border-radius:22px;background:radial-gradient(circle at 50% 50%,#24163a,#0f0a17 75%);border:1px solid var(--edge);font:700 clamp(30px,3.6vw,56px)/1 "Rajdhani",sans-serif;letter-spacing:.18em;color:#f2eefa}
+.in-s-pink{color:#ff4fd8}.in-s-red{color:#ff4060;text-shadow:-2px 0 rgba(255,79,216,.6),2px 0 rgba(79,232,255,.5)}
+.in-swatches{list-style:none;margin:16px 0 0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+.in-swatches li{background:#140e1d;border:1px solid var(--edge);border-radius:20px;padding:14px 14px 18px;display:grid;gap:4px}
+.in-swatches i{display:block;height:140px;border-radius:12px;margin-bottom:10px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+.in-swatches b{color:#fff;font:600 17px "Instrument Sans"}
+.in-swatches span{font:500 12px "JetBrains Mono";color:#a99fbb}
+.in-swatches em{font-style:normal;font-size:13px;color:#cfc8da}
+/* process */
+.in-prompt{background:#120c1a;border:1px solid var(--edge);border-radius:20px;padding:26px 28px}
+.in-pt{font:400 15px/1.65 "JetBrains Mono";margin:0 0 12px!important;color:#cfc8da!important}
+.in-pt span{padding:1px 3px;border-radius:4px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+span.in-lock{background:rgba(79,232,255,.13);color:#bff6ff}
+span.in-slot{background:rgba(255,79,216,.2);color:#ffd2f5}
+span.in-fixed{color:#9890a8}
+.in-legend{list-style:none;display:flex;flex-wrap:wrap;gap:18px;margin:16px 0 0;padding:0;font:500 11px "JetBrains Mono";letter-spacing:.04em;color:#a99fbb}
+.in-legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:8px;vertical-align:-2px}
+.in-legend i.in-lock{background:#4fe8ff}.in-legend i.in-slot{background:#ff4fd8}.in-legend i.in-fixed{background:#5a536a}
+.in-slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}
+.in-slots>div{display:flex;flex-direction:column;gap:10px}
+.in-slots .in-pt{font-size:13px}
+.in-slots .in-loop{min-height:200px}
+.in-slots .in-loop img{max-height:none;width:auto;max-width:100%}
+.in-page .wd-flow li{background:#140e1d}
+.in-who{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}
+.in-who>div{background:#140e1d;border:1px solid var(--edge);border-radius:18px;padding:20px}
+.in-who p:last-child{margin:0;font-size:15px;line-height:1.5}
+/* then and now */
+.in-then{margin:0 0 28px}
+.in-then figcaption{margin-top:12px;font:500 12px/1 "JetBrains Mono";letter-spacing:.1em;text-transform:uppercase;color:var(--acc)}
+.in-then .wd-zoom img{border-radius:16px}
+.in-then .wd-zoom img[src*="v1/"]{image-rendering:pixelated}
+.in-cta{background:linear-gradient(120deg,#3a0b38,#160a26)!important;border-color:rgba(255,79,216,.3)!important;box-shadow:none!important}
+.in-cta h3{color:#fff!important}
+@media (max-width:1100px){
+  .in-foes{grid-template-columns:1fr}
+  .in-boss{grid-template-columns:1fr}
+  .in-stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:900px){
+  .in-page .cs{grid-template-columns:minmax(0,1fr);gap:0}
+  .in-hero-char,.in-two,.in-type,.in-space,.in-space:nth-of-type(even),.in-ui-shots,.in-boss-ui,.in-key-tall,.in-key-text{grid-template-columns:1fr}
+  .in-space:nth-of-type(even) .in-space-vid{order:0}
+  .in-decisions,.in-three,.in-who,.in-slots{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .in-shots{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .in-shots .in-shot-big{grid-column:span 2}
+  .in-panels{grid-template-columns:1fr}
+  .in-swatches{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .in-boss .in-foe-main{flex-direction:column}
+}
+@media (max-width:560px){
+  .in-foe{grid-template-columns:1fr}
+  .in-decisions,.in-three,.in-who,.in-slots,.in-stats{grid-template-columns:1fr 1fr}
+  .in-who,.in-slots,.in-decisions{grid-template-columns:1fr}
+  .in-moves{grid-template-columns:1fr 1fr}
+  .in-spec{padding:22px}
+  .in-playtest{padding:22px 34px;font-size:26px}
+  .in-swatches i{height:80px}
+}
 </style>
 </head>
 <body>
@@ -849,6 +1051,15 @@ const FRAMER = id => `https://framerusercontent.com/images/${id}.png?scale-down-
    and the copies built into this page instead. */
 const ON_SERVER = /^https?:$/.test(location.protocol);
 const PROJECTS = [
+  {
+    id: "inayra",
+    title: "INAYRA", line: "A pixel hack and slash game I made solo by directing AI. It is playable in the browser.",
+    caps: ["Game", "AI art direction", "Game UI"], cta: "Play and read", category: "Game · AI art direction", year: "2026",
+    color: "linear-gradient(160deg,#c2187a,#2a0b3d)", cover: "assets/inayra/card.webp", art: "dark",
+    summary: "A cyberpunk Indian hack-and-slash, playable in the browser. I designed and directed it; GPT made the art and Claude Code built and tested it.",
+    facts: [["ROLE", "Game designer, art director, prompt engineer, playtester"], ["TIMELINE", "2026"], ["TOOLS", "ChatGPT (images), Claude Code (build and test), Figma"]],
+    links: [{ label: "Play INAYRA", href: "https://inayra-game.github.io" }]
+  },
   {
     id: "aranyo", ux: true,
     title: "Aranyo", line: "A bonsai care app for beginners in India that checks in instead of giving orders.",
@@ -2166,7 +2377,299 @@ function swapCase(p) {
     caseEl.querySelector('.x').focus({ preventScroll: true });
   }, 320);
 }
+/* ---------- INAYRA: a game made by directing AI ----------
+   Dark page in the game's own palette, wider than the other case studies so the art can be shown big.
+   Images and loops live in assets/inayra/ (anim, cast, key, shots, spaces, ui, v1, vn).
+   All copy is a placeholder draft for Sanjan to rewrite. The game loads from inayra-game.github.io only after "Playtest" is clicked. */
+const INAYRA_SECTIONS = [['cs-in-overview', 'Overview'], ['cs-in-play', 'Playtest'], ['cs-in-story', 'Story'], ['cs-in-ekva', 'Ekva'], ['cs-in-cast', 'Cast'],
+  ['cs-in-spaces', 'Spaces'], ['cs-in-shots', 'Screenshots'], ['cs-in-key', 'Key art'], ['cs-in-scenes', 'Cutscenes'], ['cs-in-ui', 'UI'],
+  ['cs-in-type', 'Type and colour'], ['cs-in-process', 'Process'], ['cs-in-then', 'Then and now'], ['cs-in-reflect', 'Reflections']];
+const INAYRA_GAME = 'https://inayra-game.github.io';
+const INAYRA_RENDERS = { decimal: 'decimal-render', architect: 'architect-render' };   // high-fidelity boss renders; a boss without one shows its design sheet
+// each space's music, streamed from the game's own site; yt: the YouTube link, once it's uploaded
+const INAYRA_OST = { bridge: ['bazaar-bridge', 'Bazaar Bridge'], maglev: ['maglev-line', 'Maglev Line'], grid: ['naraknet-grid', 'Naraknet: Grid'],
+  temple: ['temple-courtyard', 'Temple Courtyard'], core: ['naraknet-core', 'Naraknet: Core'], summit: ['tower-summit', 'Tower Summit'] };
+const INAYRA_YT = {};
+const KEYART_BASE = 'Key art for a pixel-art action game, in exactly the same pixel style, palette and level of detail as the attached images. A monsoon Indian cyberpunk megacity at night: a magenta and purple storm sky, heavy rain, a pale pink moon, dense chawl buildings with warm amber windows, neon signs in pink, cyan and orange with Devanagari letters. In the centre distance, Trinetra Tower rises above everything: a colossal dark temple-shaped spire with glowing amber edges and a huge red eye near its top, staring down over the city.';
+const INAYRA_KEYS = [
+  ['kneeling', 1670, 941, 'Kneeling', 'Ekva kneels on a wet rooftop ledge, the tower and a blood-red moon behind him.',
+    'In the foreground, on the edge of a wet rooftop, the hooded swordsman kneels on one knee, his torn violet cloak spread out behind him in the wind, his curved sword held low and glowing magenta along the stone. Composition: cinematic and wide, the swordsman in the lower right third, the tower in the upper left. 16:9. No text, no logo, no watermark.'],
+  ['sitting', 1670, 942, 'Waiting', 'He rests on a ledge above a flooded street, the sword leaning beside a red trishul.',
+    'In the foreground, the hooded swordsman sits alone on a stone ledge above a flooded street, knees drawn up, his glowing sword leaning against the wall beside a red trishul painted on it. A giant hologram of a woman’s face glows over the rooftops. 16:9. No text, no logo, no watermark.'],
+  ['crowd', 1670, 942, 'In the crowd', 'He stands still in a street of people hurrying past, the only sharp thing in the frame.',
+    'At street level, the hooded swordsman stands perfectly still in the middle of a crowded lane while people in shawls and turbans hurry past him, blurred with motion. Only his white visor slit and his magenta blade are sharp. A shrine glows on the left, the tower watches from the back. 16:9. No text, no logo, no watermark.'],
+  ['sword', 1670, 941, 'The sword', 'No character, only his blade planted in the rubble under the Trinetra sign.',
+    'No character in the frame: only his curved sword, planted point-down in rubble in the foreground, its blade glowing magenta. Behind it, the storm, a maglev crossing a bridge and the Trinetra eye glowing on the tower. 16:9. No text, no logo, no watermark.'],
+  ['rooftop', 1086, 1448, 'The card', 'The portrait piece made for the portfolio card.',
+    'Ekva, the hooded cyborg assassin, stands alone on a rain-soaked rooftop ledge at night, seen from a low angle so he towers over the frame. His torn violet cloak with orange embroidered borders whips sideways in the wind. He holds his curved talwar low at his side, its blade glowing hot pink. Behind him the Trinetra tower rises with one glowing red eye, and a huge blood-red moon hangs above it. Keep the top 20% and the bottom 15% calm and dark for text. 3:4. No text, no logos, no watermark.'],
+  ['decimal', 1086, 1448, 'Decimal', 'Trinetra’s enforcer under the great red eye of the Core.',
+    'Using the first attached image as the character reference and the second as the style and mood reference, create a vertical portrait illustration (3:4) in the same detailed pixel-art style, palette and lighting. Keep his design exactly: Decimal, a tall cyborg enforcer in a long white coat with crimson lining and red circuit lines, a smooth white mask with one red dot, dark armoured gauntlets, and a glowing red ring blade. He stands on the edge of a rain-soaked rooftop at night, seen from a low angle so he towers over the frame, holding the ring blade low at his side, its red light reflecting in the puddles at his feet. His coat whips in the wind. Behind him, slightly blurred, the Trinetra tower rises with one glowing red eye, under a huge blood-red moon. Pink and cyan neon signs in Devanagari glow out of focus. Heavy monsoon rain. Mood: cold, calm, amused. Strong silhouette, deep shadows, red and magenta rim light. No text, no letters, no logos, no watermark.'],
+  ['architect', 1086, 1448, 'The Architect', 'The founder of Trinetra, floating in his hall above the storm.',
+    'Using the first attached image as the character reference and the second as the style and mood reference, create a vertical portrait illustration (3:4) in the same detailed pixel-art style, palette and lighting. Keep his design exactly: the Architect, a tall, thin figure in flowing ivory-white and gold robes with crimson inner lining, a dark faceless head with one glowing red eye, gold-clawed hands, and a golden spiked halo behind his head. He floats a little above the marble floor of a vast hall at the top of the Trinetra tower, seen from a low angle, one hand raised. Behind him, tall arched windows show a storm over a neon city, with red lightning. Red holographic panels with the three-eyed Trinetra symbol hang in the air. Mood: divine, cold, all-seeing. Strong symmetry, deep shadows, gold and red rim light. No text, no letters, no logos, no watermark.']];
+function inayraPage(p) {
+  const src = f => caseSrc('inayra/' + f);
+  const zoom = (f, w, h, alt, cap, cls = '') => `<button class="wd-zoom ${cls}" data-zoom="${esc(cap || alt)}" aria-label="View larger: ${esc(alt)}"><img src="${src(f)}" width="${w}" height="${h}" alt="${esc(alt)}" loading="lazy" decoding="async"></button>`;
+  const head = (n, k, h, lead) => `<header class="cs-head"><p class="cs-k">${String(n).padStart(2, '0')} · ${k}</p><h2 class="cs-h">${h}</h2>${lead ? `<p class="cs-lead">${lead}</p>` : ''}</header>`;
+  const loop = (f, alt, label, cls = '') => `<figure class="in-loop ${cls}"><img src="${src('anim/' + f + '.webp')}" alt="${esc(alt)}" loading="lazy" decoding="async"><figcaption>${label}</figcaption></figure>`;
+  const nice = t => t.replace(/([A-Z])/g, ' $1').toLowerCase();
+
+  const moves = [['ekva-idle', 'Idle'], ['ekva-run', 'Run'], ['ekva-slash', 'Slash'], ['ekva-upper', 'Upper slash'], ['ekva-jumpAttack', 'Jump attack'], ['ekva-dash', 'Dash'], ['ekva-deflect', 'Deflect']];
+  const enemies = [
+    ['grunt', 'idle', ['run', 'attack', 'death'], 'Grunt', 'Bazaar Bridge, Maglev Line, Temple Courtyard',
+      'Trinetra’s cheapest soldier: matte armour, a red visor and a glowing machete. Grunts come in numbers and teach the basic rhythm of the fight: close the gap, slash, keep moving.'],
+    ['gunner', 'idle', ['walk', 'aim', 'death'], 'Gunner', 'Bazaar Bridge, Temple Courtyard',
+      'Holds back and lines up a charged shot. A thin red line gives you a moment to dash in or deflect before the shot lands.'],
+    ['leaper', 'idle', ['run', 'leap', 'attack', 'death'], 'Leaper', 'Maglev Line, Temple Courtyard',
+      'Crouches low, then throws itself across the gap to land on you. It punishes standing still on the roof of the train.'],
+    ['drone', 'hover', ['fire', 'death'], 'Drone', 'Maglev Line',
+      'Hovers above sword reach and fires down at you. You have to go up to meet it with a jump attack or an upper slash.'],
+    ['firewall', 'idle', ['walk', 'bash', 'baton', 'block', 'death'], 'Firewall', 'Naraknet: Grid',
+      'A guard made of living code inside the network. It blocks behind a lattice shield, so you have to break its guard or get round it.'],
+    ['phaser', 'idle', ['run', 'blinkOut', 'blinkIn', 'slash', 'death'], 'Phaser', 'Naraknet: Grid',
+      'A glitch with blades for arms. It blinks out of sight and reappears behind you, slashing as it lands.']];
+  const bosses = [
+    ['decimal', 'idle', ['taunt', 'walk', 'throw', 'combo', 'portal', 'crack', 'defeat'], 'Decimal', 'Naraknet: Core',
+      'Trinetra’s enforcer, in a white coat with a ring blade he throws and catches. He is the one who carried out the order on Inayra, and he taunts Ekva through every space before they finally meet in the Core.'],
+    ['architect', 'idle', ['glide', 'glitch', 'summon', 'slam', 'blast', 'sweep', 'ascend', 'defeat'], 'The Architect', 'Tower Summit',
+      'The founder of Trinetra, robed in white and gold with a halo of light, who watches the city through a third eye. He glides, summons and slams through the final fight at the top of the tower.']];
+  const spaces = [
+    ['bridge', 'Bazaar Bridge', 'Mumbai', 'Grunt, Gunner', 'The story starts on a footbridge over a monsoon market. Shrines, awnings and a neon Om sit under Trinetra’s tower on the skyline. Grunts and gunners come in three waves while Decimal watches from a distance and laughs.'],
+    ['maglev', 'Maglev Line', 'Jaipur', 'Grunt, Drone, Leaper', 'A fight on the roof of a maglev racing through Jaipur. Billboards, a neon Ganesh and the pink city scroll past in the rain while drones fire from above and leapers jump between the carriages.'],
+    ['grid', 'Naraknet: Grid', 'Inside the network', 'Firewall, Phaser', 'Deleted from the world, Ekva wakes up inside Trinetra’s network. The data is drawn as a temple of light: floating shrines, jali screens, mandalas, falling Devanagari code and a red eye that never stops watching.'],
+    ['temple', 'Temple Courtyard', 'Varanasi', 'Grunt, Gunner, Leaper', 'Thrown back out of the network onto a ghat in Varanasi. Diyas, carved pillars and a glowing shrine on one side, the tower burning red over the river on the other. The last wave before the climb.'],
+    ['core', 'Naraknet: Core', 'Beneath Trinetra Prime', 'Decimal', 'Under the tower, a cathedral of cables wrapped around a giant red eye. No crowds, no waves: a one-on-one duel with Decimal.'],
+    ['summit', 'Tower Summit', 'Trinetra Prime, Delhi', 'The Architect', 'The Architect’s hall at the very top: white marble, gold and red light, and lightning over Delhi through the glass. The final fight.']];
+  const shots = [['bridge', 'Bazaar Bridge · a grunt wave'], ['maglev', 'Maglev Line · on the train roof'], ['grid', 'Naraknet: Grid · phasers and firewalls'], ['temple', 'Temple Courtyard · the last wave'],
+    ['core', 'Naraknet: Core · the duel with Decimal'], ['summit', 'Tower Summit · the Architect'], ['titlecard', 'A space’s title card as it begins'], ['death', 'The death screen · Inayra reaches out']];
+  const scenes = [['opening-01', 'Opening'], ['opening-05', 'Opening'], ['opening-11', 'Opening'], ['opening-15', 'Opening'], ['deleted-03', 'Deleted'], ['breach-01', 'Breach'],
+    ['arrival-02', 'Arrival'], ['tower-04', 'Tower'], ['tower-07', 'Tower'], ['escape-03', 'Escape'], ['eye-01', 'The eye'], ['eye-03', 'The eye'],
+    ['finale-01', 'The cost'], ['finale-02', 'The cost'], ['finale-03', 'The cost'], ['reach', 'Death screen']];
+  const flow = [['Brief', 'I decide what the moment needs: a character, a space, a panel, a piece of UI.'],
+    ['Base prompt', 'One locked description of the subject, one slot that changes, and fixed rules at the end.'],
+    ['Generate', 'GPT makes the image. I pick, reject, or change one line of the prompt and run it again.'],
+    ['Cut and wire', 'Claude Code cuts the art out, measures it and builds it into the game.'],
+    ['Playtest', 'I play the moment, in the game, the way a player would.'],
+    ['Iterate', 'What feels wrong goes back to step one. Many pieces went round more than once.']];
+  const stats = [['6', 'spaces'], ['2', 'bosses'], ['6', 'enemy types'], ['46', 'cutscene panels'], ['7', 'music tracks'], ['60+', 'GPT prompts']];
+  const uiDecisions = [
+    ['Health', 'Five thin cells instead of a bar. A lost cell splits and falls away, so you feel every hit.'],
+    ['Last hit point', 'The edges of the screen breathe red instead of the bar flashing, so your eyes stay on the fight.'],
+    ['Kills and combo', 'A bare number that flashes when it goes up. The combo only appears from two hits and fades when it ends.'],
+    ['Quiet when calm', 'The whole HUD dims to 40% when nothing is happening and comes straight back when a fight starts.'],
+    ['Pause', 'The game blurs behind one clean column of options.'],
+    ['Menus', 'The option you point at glitches in pink and cyan, the same glitch the story uses.']];
+
+  const bossCard = ([d, idle, rest, n, where, t]) => `<article class="in-boss2 cs-rv">
+      <p class="cs-k">Boss</p><h3>${n}</h3><p class="in-where">${where}</p><p class="in-boss-t">${t}</p>
+      <div class="in-hero-char">
+        <button class="wd-zoom in-render" data-zoom="${esc(n)} · ${INAYRA_RENDERS[d] ? 'high-fidelity render' : 'design'}" aria-label="View larger: ${esc(n)}"><img src="${src('cast/' + (INAYRA_RENDERS[d] || d) + '.webp')}" alt="${esc(n)}, ${INAYRA_RENDERS[d] ? 'high-fidelity render' : 'character design'}" loading="lazy" decoding="async"></button>
+        <div class="in-moves">${[idle, ...rest].map(a => loop(d + '-' + a, n + ', ' + nice(a), nice(a))).join('')}</div>
+      </div>
+    </article>`;
+  const foe = ([d, idle, rest, n, where, t], boss) => `<article class="in-foe${boss ? ' in-boss' : ''} cs-rv">
+      <div class="in-foe-main">${boss ? `<button class="wd-zoom in-boss-render${INAYRA_RENDERS[d] ? ' has-render' : ''}" data-zoom="${esc(n)} · ${INAYRA_RENDERS[d] ? 'render' : 'design'}" aria-label="View larger: ${esc(n)}"><img src="${src('cast/' + (INAYRA_RENDERS[d] || d) + '.webp')}" alt="${esc(n)}, ${INAYRA_RENDERS[d] ? 'high-fidelity render' : 'character design'}" loading="lazy" decoding="async"></button>` : ''}${loop(d + '-' + idle, n + ', idle', idle === 'hover' ? 'Hover' : 'Idle', 'in-idle')}</div>
+      <div class="in-foe-text">${boss ? '<p class="cs-k">Boss</p>' : ''}<h3>${n}</h3><p class="in-where">${where}</p><p>${t}</p>
+        <div class="in-foe-moves">${rest.map(a => loop(d + '-' + a, n + ', ' + nice(a), nice(a), 'in-small')).join('')}</div></div>
+    </article>`;
+
+  return `<button class="x" aria-label="Close project">&times;</button>
+  <div class="ad-page in-page">
+  <header class="in-cover">
+    <img class="in-cover-art" src="${src('key/kneeling.webp')}" width="1670" height="941" alt="" decoding="async">
+    <div class="col inner">
+      <h1 id="case-title" class="in-title">INAYRA <span lang="hi">इनायरा</span></h1>
+      <p class="sum">An Indian inspired cyberpunk hack and slash game that I built solo. GPT made the art and Claude Code built it for me.</p>
+      <div class="links in-cover-links"><a class="chip in-play" href="#cs-in-play">Playtest it here</a></div>
+      <div class="cs-tags"><span>GAME DESIGN</span><span>AI ART DIRECTION</span><span>PROMPT ENGINEERING</span><span>GAME UI</span><span>PLAYTESTING</span></div>
+    </div>
+  </header>
+
+  <div class="cs">
+    <nav class="cs-nav" aria-label="Project sections">${INAYRA_SECTIONS.map(([id, t]) => `<a href="#${id}">${t}</a>`).join('')}</nav>
+    <div class="cs-main">
+
+      <section class="cs-sec" id="cs-in-overview">
+        ${head(1, 'Overview', 'One designer, two AIs, one finished game.', 'INAYRA is a side-scrolling sword game about a brother hunting the company that took his sister. I wanted to see how far I could take a game on my own if I treated AI as my art team and my engineer, and kept the direction for myself.')}
+        <div class="ad-facts cs-rv">
+          <div><b>MY ROLE</b><span>Game design, story and dialogue, art direction, prompt engineering, playtesting. A little Figma.</span></div>
+          <div><b>GPT</b><span>Every image: characters, animation sheets, backgrounds, cutscene panels, key art, UI pieces.</span></div>
+          <div><b>CLAUDE CODE</b><span>Built the game in the browser (HTML canvas and JavaScript), cut out and placed the art, and tested every scene.</span></div>
+        </div>
+        <ul class="in-stats cs-rv">${stats.map(([n, l]) => `<li><b>${n}</b><span>${l}</span></li>`).join('')}</ul>
+      </section>
+
+      <section class="cs-sec" id="cs-in-play">
+        ${head(2, 'Playtest', 'Play it right here.', 'A desktop with a keyboard and mouse works best: A and D to run, Space to jump, click to slash, Shift to dash, Q to deflect, Esc to pause.')}
+        <div class="in-game cs-rv">
+          <img class="in-game-poster" src="${src('key/sitting.webp')}" width="1670" height="942" alt="" loading="lazy" decoding="async">
+          <button class="in-playtest" data-playtest><svg class="in-pt-icon" viewBox="0 0 64 40" aria-hidden="true"><path d="M18 4h28c8 0 12 5 14 13l3 12c1 6-3 10-8 10-4 0-6-2-9-6l-3-3H21l-3 3c-3 4-5 6-9 6-5 0-9-4-8-10l3-12C6 9 10 4 18 4z" fill="#ff4fd8"/><path d="M16 14v10M11 19h10" stroke="#16061a" stroke-width="3.5" stroke-linecap="round"/><circle cx="44" cy="16" r="2.8" fill="#16061a"/><circle cx="50" cy="22" r="2.8" fill="#16061a"/></svg><span>Playtest</span><em>Starts the game and the music</em></button>
+        </div>
+        <div class="in-fs-row"><a class="chip in-fs" href="${INAYRA_GAME}" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Play Fullscreen</a></div>
+      </section>
+
+      <section class="cs-sec" id="cs-in-story">
+        ${head(3, 'Story', 'The eye took everything.', 'In a future India, one company, Trinetra, runs the cities from a tower with a third eye. Ekva’s sister Inayra was deleted for refusing it. He cuts his way from the markets of Mumbai to the top of the tower in Delhi, and finds out what his own cyberware was built for.')}
+        <div class="in-two cs-rv">${zoom('vn/opening-01.webp', 1280, 720, 'Opening cutscene panel', 'Opening')}${zoom('vn/reach.webp', 1280, 721, 'Inayra reaching out on the death screen', 'Death screen: “You can do this brother, get up.”')}</div>
+      </section>
+
+      <section class="cs-sec" id="cs-in-ekva">
+        ${head(4, 'Ekva', 'From a key art render to a sprite you can follow in a crowd.', 'Ekva had to read at two sizes: a detailed render for the story and the key art, and a small sprite you can follow in a crowded fight. A hood, one slit of light and a magenta sword keep him readable at both.')}
+        <div class="in-hero-char cs-rv">
+          ${zoom('key/rooftop.webp', 1086, 1448, 'Ekva on a rooftop in the rain, high-fidelity render', 'Ekva · high-fidelity render', 'in-render')}
+          <div class="in-moves">${moves.map(([f, l]) => loop(f, 'Ekva, ' + l + ' animation', l)).join('')}</div>
+        </div>
+        <p class="in-note cs-rv">Every move is a looped animation straight from the game’s sprite sheets, made in GPT one row at a time.</p>
+      </section>
+
+      <section class="cs-sec" id="cs-in-cast">
+        ${head(5, 'Cast', 'Trinetra’s army, and the two at the top.', 'Each enemy asks the player for a different answer, and each was designed from the same base prompt so they all look like they belong to one company.')}
+        <div class="in-foes">${enemies.map(e => foe(e, false)).join('')}</div>
+        <div class="in-bosses">${bosses.map(bossCard).join('')}</div>
+      </section>
+
+      <section class="cs-sec" id="cs-in-spaces">
+        ${head(6, 'Spaces', 'Six places, from a Mumbai market to a tower in Delhi.', 'Every space has its own palette, music and enemies, and gets darker and stranger the closer you get to Trinetra. These are the backgrounds running live, straight from the game.')}
+        ${spaces.map(([f, n, pl, foes, t], i) => `<article class="in-space cs-rv">
+          <div class="in-space-vid"><video src="${src('spaces/' + f + '.mp4')}" poster="${src('spaces/' + f + '.webp')}" autoplay muted loop playsinline preload="metadata" aria-label="${esc(n)}, animated background"></video></div>
+          <div class="in-space-text"><p class="cs-k">${String(i + 1).padStart(2, '0')} · ${pl}</p><h3>${n}</h3><p>${t}</p>
+            <dl><div><dt>Enemies</dt><dd>${foes}</dd></div></dl>
+            <div class="in-ost" data-ost="${INAYRA_GAME}/audio/${INAYRA_OST[f][0]}.mp3"><button class="in-ost-btn" data-ost-btn aria-label="Play the ${esc(n)} track"><i aria-hidden="true"></i></button><div class="in-ost-info"><b>OST · ${INAYRA_OST[f][1]}</b><span class="in-ost-bar"><i></i></span></div><span class="in-ost-time">0:00</span>${INAYRA_YT[f] ? `<a class="in-ost-yt" href="${INAYRA_YT[f]}" target="_blank" rel="noopener">YouTube &nearr;</a>` : ''}</div></div>
+        </article>`).join('')}
+      </section>
+
+      <section class="cs-sec" id="cs-in-shots">
+        ${head(7, 'Screenshots', 'Some in game screenshots.', 'Straight from the game, at its own resolution.')}
+        <div class="in-shots cs-rv">${shots.map(([f, c], i) => `<figure class="${i < 2 ? 'in-shot-big' : ''}">${zoom('shots/' + f + '.webp', 1280, 720, c, 'Screenshot · ' + c)}<figcaption>${c}</figcaption></figure>`).join('')}</div>
+      </section>
+
+      <section class="cs-sec" id="cs-in-key">
+        ${head(8, 'Key art', 'Every piece, and the prompt behind it.', 'Made to sell the mood before anyone plays: rain, neon Devanagari, a red eye on the skyline, and one figure who does not belong to the crowd. The four landscape pieces share one base prompt; only the shot changes.')}
+        <p class="in-base cs-rv"><b>Base prompt</b>${esc(KEYART_BASE)}</p>
+        ${INAYRA_KEYS.map(([f, w, h, n, cap, shot], i) => `<article class="in-key cs-rv${w < h ? ' in-key-tall' : ''}">
+          ${zoom('key/' + f + '.webp', w, h, n + ': ' + cap, 'Key art · ' + n)}
+          <div class="in-key-text"><p class="cs-k">${String(i + 1).padStart(2, '0')} · ${n}</p><p class="in-key-cap">${cap}</p><p class="in-key-prompt"><b>${w < h ? 'Prompt' : 'Shot'}</b>${esc(shot)}</p></div>
+        </article>`).join('')}
+      </section>
+
+      <section class="cs-sec" id="cs-in-scenes">
+        ${head(9, 'Cutscenes', 'Forty-six panels, told one image at a time.', 'The story plays between fights as visual-novel panels. GPT struggled with two characters in one frame, so every panel has a single subject, and the drama comes from code: glitches, cuts, screen shake, a HUD laid over first-person shots, and an eye that opens in the dark.')}
+        <div class="in-panels">${scenes.map(([f, s]) => `<figure class="cs-rv">${zoom('vn/' + f + '.webp', 1280, 720, s + ' panel', 'Cutscene · ' + s)}<figcaption>${s}</figcaption></figure>`).join('')}</div>
+      </section>
+
+      <section class="cs-sec" id="cs-in-ui">
+        ${head(10, 'UI', 'Out of the way until it matters.', 'The game is about the art and the fight, so the interface stays thin, quiet and fast, and only gets loud for the bosses.')}
+        <div class="in-ui-shots cs-rv">${zoom('ui/clean-lowhp.webp', 1032, 581, 'The in-game HUD on the last hit point', 'UI · the last hit point')}${zoom('ui/clean-pause.webp', 1032, 581, 'The pause screen', 'UI · pause')}</div>
+        <ul class="in-decisions cs-rv">${uiDecisions.map(([h, t]) => `<li><h3>${h}</h3><p>${t}</p></li>`).join('')}</ul>
+        <div class="in-ui-step cs-rv"><p class="cs-k">Boss bars</p><h3>The one place the ornament came back.</h3><p>Bosses deserve a moment, so their bars are GPT art in Indian and cyberpunk at once. Decimal’s is ten slots that burst into ones and zeros. The Architect’s drains inward toward his third eye, which opens as he weakens. Both shatter when the last phase begins.</p>
+          <div class="in-boss-ui">${zoom('ui/boss-ingame.webp', 1032, 466, 'Both boss bars in the game', 'UI · boss bars in the game')}${zoom('ui/boss-break.webp', 1032, 930, 'The Architect’s bar draining and breaking', 'UI · the phase break')}</div>
+          <div class="in-two">${zoom('ui/boss-decimal-sheet.webp', 1400, 788, 'Decimal boss bar art', 'UI · Decimal’s bar from GPT')}${zoom('ui/boss-architect-sheet.webp', 1400, 788, 'Architect boss bar art', 'UI · the Architect’s bar from GPT')}</div></div>
+        <div class="in-explore cs-rv">
+          <p class="cs-k">Exploration · not used</p><h3>A full ornate kit.</h3>
+          <div class="in-why"><b>Why I didn’t use it</b><p>It was beautiful on its own sheet and wrong in the game. At 640 by 360 the brass frames ate the screen and pulled attention away from the fight, and the lotus and jali read as decoration rather than as a cyberpunk city. It was too Indian for the world I was building, so I went back to a thin HUD in code and saved the ornament for the bosses.</p></div>
+          <div class="in-three">${zoom('ui/kit-hud.webp', 1400, 788, 'Unused HUD kit', 'Exploration · HUD kit')}${zoom('ui/kit-menus.webp', 1400, 788, 'Unused menu kit', 'Exploration · menu kit')}${zoom('ui/kit-ingame.webp', 1032, 581, 'The unused kit in the game', 'Exploration · in the game')}</div>
+        </div>
+      </section>
+
+      <section class="cs-sec" id="cs-in-type">
+        ${head(11, 'Type and colour', 'Rajdhani, with Devanagari beside it.', 'Rajdhani is narrow and sharp, and it was drawn for both Latin and Devanagari, so the interface and the city’s signs share one voice.')}
+        <div class="in-type cs-rv">
+          <div class="in-spec"><span class="in-aa">Aa</span><p class="in-face">Rajdhani</p><p class="in-glyphs">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz<br>0123456789</p><p class="in-weights"><span style="font-weight:500">Medium</span><span style="font-weight:600">Semibold</span><span style="font-weight:700">Bold</span></p></div>
+          <div class="in-spec"><span class="in-aa" lang="hi">इ</span><p class="in-face" lang="hi">इनायरा · त्रिनेत्र</p><p class="in-glyphs" lang="hi">अ आ इ ई उ ऊ ए ऐ ओ औ<br>क ख ग घ च छ ज झ ट ठ</p><p class="in-weights"><span>Inayra · Trinetra, on signs, panels and the title screen</span></p></div>
+        </div>
+        <div class="in-sample cs-rv"><span>WAVE 3</span><span class="in-s-pink">COMBO 12</span><span>PAUSED</span><span class="in-s-red">PHASE II</span></div>
+        <ul class="in-swatches cs-rv">${[['#4fe8ff', 'Cyan', 'Ekva, health, focus'], ['#ff4fd8', 'Magenta', 'His sword, glitches'], ['#ff4060', 'Red', 'Trinetra, danger'], ['#f2eefa', 'Ink', 'Text'], ['#0a0612', 'Night', 'Background']].map(([c, n, u]) => `<li><i style="background:${c}"></i><b>${n}</b><span>${c.toUpperCase()}</span><em>${u}</em></li>`).join('')}</ul>
+      </section>
+
+      <section class="cs-sec" id="cs-in-process">
+        ${head(12, 'Process', 'One base prompt, rewritten one line at a time.', 'I did not write a new prompt for every image. Each kind of asset has one base prompt: a locked description that never changes, one slot that does, and the same rules at the end. Changing a single line gave me a new animation, enemy or panel that still matched everything before it.')}
+        <div class="in-prompt cs-rv">
+          <p class="cs-k">The base prompt for Ekva’s animations</p>
+          <p class="in-pt"><span class="in-fixed">Pixel-art animation sprite sheet of the hooded swordsman in the attached image.</span> <span class="in-lock">Keep his design exactly: dark violet-black hooded cloak torn at the hem with orange embroidered edges, dark armour with a few orange lights, the glowing white curved slit in the hood, a long curved talwar with a cyan edge.</span></p>
+          <p class="in-pt"><span class="in-slot">One row of [N] frames of the [ANIMATION] animation, facing right.</span></p>
+          <p class="in-pt"><span class="in-fixed">Every frame the same size, evenly spaced, feet on the same ground line, the whole body always inside its frame. Same pixel-art style and detail as the reference, crisp square pixels, no blur. Flat solid bright green background. No text, no labels, no watermark.</span></p>
+          <ul class="in-legend"><li><i class="in-lock"></i>Locked: the character never drifts</li><li><i class="in-slot"></i>Slot: the only line that changes</li><li><i class="in-fixed"></i>Rules: the same for every sheet</li></ul>
+        </div>
+        <div class="in-slots cs-rv">${[['6 frames of a powerful forward slash', 'ekva-slash', 'Slash'], ['5 frames of a lightning-fast forward dash', 'ekva-dash', 'Dash'], ['8 frames of a run cycle', 'ekva-run', 'Run']].map(([s, a, l]) => `<div><p class="in-pt"><span class="in-slot">${s}</span></p>${loop(a, 'Ekva ' + l, l)}</div>`).join('')}</div>
+        <ol class="wd-flow cs-rv">${flow.map(([h, t], i) => `<li><b>${String(i + 1).padStart(2, '0')}</b><h3>${h}</h3><p>${t}</p></li>`).join('')}</ol>
+        <div class="in-who cs-rv">
+          <div><p class="cs-k">Me</p><p>The idea, the story and every line of dialogue. What each scene should feel like. Which images stayed and which went. Playing every build and saying what was wrong.</p></div>
+          <div><p class="cs-k">GPT</p><p>Every picture in the game, from sprite sheets to cutscene panels, made from my prompts and references.</p></div>
+          <div><p class="cs-k">Claude Code</p><p>The game engine, combat, cutscenes and music timing in JavaScript. Cutting out and placing the art. Testing scenes frame by frame.</p></div>
+        </div>
+      </section>
+
+      <section class="cs-sec" id="cs-in-then">
+        ${head(13, 'Then and now', 'Where it started.', 'The first version was one bridge, one enemy and a sprite I could barely read. Everything after it came from playing it and asking what was missing.')}
+        <figure class="in-then cs-rv">${zoom('v1/combat.webp', 960, 540, 'The first version of the game', 'Then · the first version')}<figcaption>Then · the first version</figcaption></figure>
+        <figure class="in-then cs-rv">${zoom('shots/bridge.webp', 1280, 720, 'The same bridge now', 'Now · Bazaar Bridge')}<figcaption>Now · the same bridge</figcaption></figure>
+      </section>
+
+      <section class="cs-sec" id="cs-in-reflect">
+        ${head(14, 'Reflections', 'What directing AI taught me.', '')}
+        <div class="in-who cs-rv">
+          <div><p class="cs-k">Worked</p><p>Base prompts with a locked description kept every character on model across dozens of images.</p></div>
+          <div><p class="cs-k">Hard</p><p>Two characters in one image. I worked around it with single-subject panels and let code do the drama.</p></div>
+          <div><p class="cs-k">Next</p><p>Bosses for the first three spaces, and a controller layout.</p></div>
+        </div>
+      </section>
+
+      <div class="cs-cta cs-rv in-cta">
+        <div><p class="cs-k" style="margin:0">Your turn</p><h3>Play INAYRA</h3><p>Free in the browser, from the first cutscene to the last.</p></div>
+        <div class="links"><a class="chip in-play" href="${INAYRA_GAME}" target="_blank" rel="noopener">Play &nearr;</a></div>
+      </div>
+      ${nextBlock(p)}
+    </div>
+  </div>
+  <div class="lb" hidden role="dialog" aria-modal="true" aria-label="Image viewer">
+    <button class="lb-x" aria-label="Close image viewer">&times;</button>
+    <button class="lb-prev" aria-label="Previous image">&lsaquo;</button>
+    <figure><img alt=""><figcaption></figcaption></figure>
+    <button class="lb-next" aria-label="Next image">&rsaquo;</button>
+  </div>
+  </div>`;
+}
+/* OST players on the Spaces cards: one shared audio element, one track at a time. */
+let inOst = null, inOstEl = null;
+const inFmt = t => isFinite(t) ? Math.floor(t / 60) + ':' + String(Math.floor(t % 60)).padStart(2, '0') : '0:00';
+function inOstStop() { if (inOst) inOst.pause(); if (inOstEl) inOstEl.classList.remove('playing'); }
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-ost-btn]'); if (!b) return;
+  e.preventDefault(); e.stopPropagation();
+  const box = b.closest('.in-ost'), url = box.dataset.ost;
+  if (inOstEl === box && inOst && !inOst.paused) { inOstStop(); return; }
+  inOstStop();
+  if (!inOst) {
+    inOst = new Audio(); inOst.preload = 'none';
+    inOst.addEventListener('timeupdate', () => {
+      if (!inOstEl || !document.contains(inOstEl)) { inOst.pause(); return; }   // the page was closed
+      inOstEl.querySelector('.in-ost-bar i').style.width = (inOst.currentTime / (inOst.duration || 1) * 100) + '%';
+      inOstEl.querySelector('.in-ost-time').textContent = inFmt(inOst.currentTime) + ' / ' + inFmt(inOst.duration);
+    });
+    inOst.addEventListener('ended', () => inOstStop());
+  }
+  if (inOst.src !== url) inOst.src = url;
+  inOstEl = box; box.classList.add('playing'); inOst.play().catch(() => box.classList.remove('playing'));
+}, true);
+document.addEventListener('click', e => {   // clicking along the bar jumps there
+  const bar = e.target.closest('.in-ost-bar'); if (!bar || !inOst || inOstEl !== bar.closest('.in-ost') || !inOst.duration) return;
+  const r = bar.getBoundingClientRect(); inOst.currentTime = (e.clientX - r.left) / r.width * inOst.duration;
+});
+/* Playtest: the game only loads when asked, then takes the keyboard. ?embed lets it start the music
+   straight away (the click here counts as the visitor's go-ahead in browsers that pass it on). */
+function inStartGame(box) {
+  if (box.classList.contains('live')) return box.querySelector('iframe');
+  const f = document.createElement('iframe');
+  f.src = INAYRA_GAME + '/scene.html?embed=1'; f.title = 'INAYRA, playable'; f.allow = 'autoplay; fullscreen';
+  f.addEventListener('load', () => f.focus());
+  box.appendChild(f); box.classList.add('live'); box.querySelector('[data-playtest]')?.remove(); f.focus();
+  return f;
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-playtest]'); if (!b) return;
+  e.preventDefault(); inStartGame(b.closest('.in-game'));
+});
 function caseHTML(p) {
+  if (p.id === 'inayra') return inayraPage(p);
   if (p.id === 'nook') return nookPage(p);
   if (p.id === 'cue') return cuePage(p);
   if (p.id === 'aranyo') return aranyoPage(p);
