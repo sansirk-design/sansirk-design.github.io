@@ -843,6 +843,9 @@ img.adp{height:auto}
 .tk-gh:hover{border-color:#fff}
 .tk-gh svg{width:12px;height:12px}
 .tk-metric h3{font-size:44px;line-height:1.05;letter-spacing:-.03em;margin:6px 0 8px}
+.tk-dec .cs-ba > div + div{background:#1b1a18;border-left-color:#1b1a18}
+.case .tk-dec .cs-ba > div + div p{color:#ecebe8}
+.tk-dec .lbl.after{color:#7ee0a6}
 .tk-see{display:flex;justify-content:center;margin-top:56px}
 .tk-see button{display:inline-flex;align-items:center;gap:12px;border:0;cursor:pointer;font:600 17px "Instrument Sans",system-ui;padding:16px 26px 16px 18px;border-radius:999px;background:#fff;color:#111;box-shadow:0 0 0 6px rgba(255,255,255,.12),0 18px 40px -12px rgba(0,0,0,.6);transition:transform .25s var(--out)}
 .tk-see button:hover{transform:translateY(-2px) scale(1.02)}
@@ -1792,7 +1795,7 @@ function tuckPage(p) {
 
       <section class="cs-sec" id="cs-decisions">
         ${head('06', 'Decisions', 'Decisions that changed and defined the product', 'Each one cut something I had already built.')}
-        <div class="cs-dec">
+        <div class="cs-dec tk-dec">
           <div class="cs-card cs-rv"><h3>Opening: deliberate, not automatic</h3>
             <div class="cs-ba"><div><span class="lbl before">BEFORE</span><p>Hovering, scrolling or swiping on the notch opened the island.</p></div>
             <div><span class="lbl after">AFTER</span><p>Hovering only peeks. A click, a tap, a middle or side mouse button, or ⌃⌥N opens it. Scrolling moves between pages instead.</p></div></div>
