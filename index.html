@@ -1698,8 +1698,8 @@ function nookPage(p) {
    TUCK CASE STUDY (Nook layout, with videos; install guide last)
    Videos and stills live in assets/tuck/ and were cut from screen recordings.
 ===================================================================== */
-const TUCK_SECTIONS = [['cs-overview', 'Overview'], ['cs-problem', 'Problem'], ['cs-principles', 'Principles'], ['cs-process', 'Process'],
-  ['cs-decisions', 'Decisions'], ['cs-walkthrough', 'Walkthrough + Features'], ['cs-motion', 'Motion'], ['cs-nonotch', 'No notch'],
+const TUCK_SECTIONS = [['cs-overview', 'Overview'], ['cs-problem', 'Problem'], ['cs-walkthrough', 'Walkthrough + Features'], ['cs-principles', 'Principles'],
+  ['cs-process', 'Process'], ['cs-decisions', 'Decisions'], ['cs-motion', 'Motion'], ['cs-nonotch', 'No notch'],
   ['cs-build', 'Build and test'], ['cs-reflections', 'Reflections'], ['cs-install', 'Install']];
 function tuckPage(p) {
   const A = 'assets/tuck/';
@@ -1754,8 +1754,19 @@ function tuckPage(p) {
         </div>
       </section>
 
+      <section class="cs-dark tk-walk" id="cs-walkthrough">
+        ${head('03', 'Walkthrough + Features', 'From a peek to a finished file')}
+        ${row('peek', 'Tuck peeking from the notch: a slim bar with the album art and a playing indicator', 'Peek', 'Bring the cursor to the notch and the island peeks instantly: album art on one side, a live sound indicator on the other. Move away and it tucks back. Nothing opens until you click.')}
+        ${row('music', 'Tuck music player: album art, title, controls, progress, volume and the current lyric line', 'Control your music', 'Large artwork, title and artist, previous, play and next, with ten seconds back, loop and ten seconds forward beneath. Synced lyrics run line by line under the progress bar and keep up even when you scrub.', true)}
+        ${row('color', 'Tuck color page with a swatch, HEX, RGB, HSL and OKLCH values, recent colors and the magnifying loupe', 'Color picker', 'Pick any pixel on screen with a loupe, or press ⌃⌥C from anywhere. The value is copied straight away in HEX, RGB, HSL or OKLCH, and the last 12 colors stay one click away.')}
+        ${row('drop', 'Dragging an image onto the notch shows a two by two grid: AirDrop, Make PDF, Remove background and Convert image', 'Drop things into Tuck', 'Drag any file toward the notch and a 2×2 grid opens: AirDrop, Make PDF, Remove background and Convert image. The target lights up as you hover it, so you always know what will happen before you let go.', true)}
+        ${row('pdf', 'Tuck PDF tray: three image thumbnails, Drop more to add, and a Ready to convert button', 'Need PDF conversion?', 'Dropped files wait in a small tray that stays open. Keep adding, then press “Ready to convert?” and one PDF lands on your Desktop.')}
+        ${row('cutout', 'Tuck showing Background removed after a photo was dropped on it, with the cut-out file in Finder', 'Remove the background', 'Drop a photo and the subject is cut out on your Mac, no upload. The cut-out is saved next to the original, and a small pill confirms it.', true)}
+        <div class="tk-see cs-rv"><button type="button" data-tk-hero><span aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg></span>Wanna see Tuck in use?</button></div>
+      </section>
+
       <section class="cs-sec" id="cs-principles">
-        ${head('03', 'Principles', 'What Tuck was designed against', 'Three rules every feature had to pass.')}
+        ${head('04', 'Principles', 'What Tuck was designed against', 'Three rules every feature had to pass.')}
         <div class="cs-grid3">
           <div class="cs-card cs-rv"><div class="tk-viz" aria-hidden="true"><div class="nt tk-morph"><i></i></div></div><p class="cs-k">01</p><h3>Motion first</h3><p>The island is the interface. How it grows, settles and tucks away carries as much of the design as any screen inside it.</p></div>
           <div class="cs-card cs-rv"><div class="tk-viz" aria-hidden="true"><div class="tk-two"><div><span class="nt pk"></span><svg class="cur" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 8-6 1.5L10 19z" fill="#fff" stroke="#000" stroke-width="1.4" stroke-linejoin="round"/></svg><b>HOVER · PEEK</b></div><div><span class="nt op"></span><span class="ring"></span><svg class="cur" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 8-6 1.5L10 19z" fill="#fff" stroke="#000" stroke-width="1.4" stroke-linejoin="round"/></svg><b>CLICK · OPEN</b></div></div></div><p class="cs-k">02</p><h3>Never by accident</h3><p>Hovering only peeks. Only a deliberate click, tap or shortcut opens it. Nothing takes over your screen uninvited.</p></div>
@@ -1764,7 +1775,7 @@ function tuckPage(p) {
       </section>
 
       <section class="cs-sec" id="cs-process">
-        ${head('04', 'Process', 'Built in milestones', 'Eight milestones, from a bare island in the notch to a packaged app. After each one I used it for real on my own Mac before moving on.')}
+        ${head('05', 'Process', 'Built in milestones', 'Eight milestones, from a bare island in the notch to a packaged app. After each one I used it for real on my own Mac before moving on.')}
         <div class="cs-rv">
           <h3 class="cs-h3">Information architecture</h3>
           <p class="cs-p">One island, a few pages. Scroll inside the island to move between them; drag a file onto it and the drop zone appears on its own.</p>
@@ -1780,7 +1791,7 @@ function tuckPage(p) {
       </section>
 
       <section class="cs-sec" id="cs-decisions">
-        ${head('05', 'Decisions', 'Decisions that changed and defined the product', 'Each one cut something I had already built.')}
+        ${head('06', 'Decisions', 'Decisions that changed and defined the product', 'Each one cut something I had already built.')}
         <div class="cs-dec">
           <div class="cs-card cs-rv"><h3>Opening: deliberate, not automatic</h3>
             <div class="cs-ba"><div><span class="lbl before">BEFORE</span><p>Hovering, scrolling or swiping on the notch opened the island.</p></div>
@@ -1794,17 +1805,6 @@ function tuckPage(p) {
             <div class="cs-ba"><div><span class="lbl before">BEFORE</span><p>A screenshot catcher and a file shelf, alongside the rest.</p></div>
             <div><span class="lbl after">AFTER</span><p>Both removed. What stayed are simple tools a designer reaches for daily: a color picker, files to PDF, background removal, image conversion and AirDrop.</p></div></div></div>
         </div>
-      </section>
-
-      <section class="cs-dark tk-walk" id="cs-walkthrough">
-        ${head('06', 'Walkthrough + Features', 'From a peek to a finished file')}
-        ${row('peek', 'Tuck peeking from the notch: a slim bar with the album art and a playing indicator', 'Peek', 'Bring the cursor to the notch and the island peeks instantly: album art on one side, a live sound indicator on the other. Move away and it tucks back. Nothing opens until you click.')}
-        ${row('music', 'Tuck music player: album art, title, controls, progress, volume and the current lyric line', 'Control your music', 'Large artwork, title and artist, previous, play and next, with ten seconds back, loop and ten seconds forward beneath. Synced lyrics run line by line under the progress bar and keep up even when you scrub.', true)}
-        ${row('color', 'Tuck color page with a swatch, HEX, RGB, HSL and OKLCH values, recent colors and the magnifying loupe', 'Color picker', 'Pick any pixel on screen with a loupe, or press ⌃⌥C from anywhere. The value is copied straight away in HEX, RGB, HSL or OKLCH, and the last 12 colors stay one click away.')}
-        ${row('drop', 'Dragging an image onto the notch shows a two by two grid: AirDrop, Make PDF, Remove background and Convert image', 'Drop things into Tuck', 'Drag any file toward the notch and a 2×2 grid opens: AirDrop, Make PDF, Remove background and Convert image. The target lights up as you hover it, so you always know what will happen before you let go.', true)}
-        ${row('pdf', 'Tuck PDF tray: three image thumbnails, Drop more to add, and a Ready to convert button', 'Need PDF conversion?', 'Dropped files wait in a small tray that stays open. Keep adding, then press “Ready to convert?” and one PDF lands on your Desktop.')}
-        ${row('cutout', 'Tuck showing Background removed after a photo was dropped on it, with the cut-out file in Finder', 'Remove the background', 'Drop a photo and the subject is cut out on your Mac, no upload. The cut-out is saved next to the original, and a small pill confirms it.', true)}
-        <div class="tk-see cs-rv"><button type="button" data-tk-hero><span aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg></span>Wanna see Tuck in use?</button></div>
       </section>
 
       <section class="cs-sec" id="cs-motion">
