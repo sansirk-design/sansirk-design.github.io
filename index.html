@@ -781,6 +781,72 @@ img.adp{height:auto}
 .in-space:nth-of-type(even) .in-space-vid{order:2}
 .in-space-vid{border-radius:18px;overflow:hidden;border:1px solid var(--edge);aspect-ratio:16/9;background:#000;box-shadow:0 30px 70px -40px rgba(0,0,0,.8)}
 .in-space-vid video{display:block;width:100%;height:100%;object-fit:cover}
+/* Tuck */
+.tk-vid{display:block;width:100%;height:auto;border-radius:12px;background:#000}
+.tk-small{max-width:957px;margin:32px auto 0;border-radius:18px;overflow:hidden;border:1px solid var(--edge);background:#000;box-shadow:0 30px 70px -40px rgba(0,0,0,.8)}
+.tk-small video{display:block;width:100%;height:auto}
+.tk-cap{max-width:957px;margin:14px auto 0;text-align:center;font-size:.92rem;opacity:.75}
+.tk-fix code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.82em;background:rgba(127,127,127,.14);padding:2px 6px;border-radius:6px;word-break:break-all}
+.tk-fix ol{margin:10px 0 0;padding-left:20px}.tk-fix li{margin:4px 0}
+.tk-title{display:flex;align-items:center;gap:.16em}
+.tk-icon{width:.92em;height:.92em;flex:none;filter:drop-shadow(0 .08em .14em rgba(0,0,0,.5)) drop-shadow(0 0 .3em rgba(160,90,255,.2))}
+.cs-hero.tk-big{width:min(120%,calc(100vw - 32px));position:relative;left:50%;transform:translateX(-50%)}
+.tk-ov .cs-card{background:#0f0f11;color:#fff;border-color:#0f0f11;padding:30px 28px}
+.case .tk-ov .cs-card p{color:#ecebe8;font-size:18px;line-height:1.55}
+.tk-ov .cs-card .cs-k{color:#f5b971}
+.tk-face{display:inline-block;width:30px;height:30px;vertical-align:-6px;margin-left:8px}
+.tk-people{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.tk-people span{display:inline-flex;align-items:center;gap:8px;padding:9px 16px 9px 12px;border-radius:999px;background:#fff;border:1px solid var(--edge);font-weight:500}
+.tk-people svg{width:20px;height:20px}
+.tk-viz{position:relative;height:132px;border-radius:14px;margin:0 0 20px;overflow:hidden;background:linear-gradient(135deg,#ffd6e6,#f6a7c8 55%,#ffe9a8)}
+.tk-viz .nt{position:absolute;top:0;left:50%;transform:translateX(-50%);background:#000;border-radius:0 0 14px 14px}
+.tk-morph{width:64px;height:18px;animation:tkMorph 3.2s cubic-bezier(.5,0,.2,1) infinite}
+@keyframes tkMorph{0%,12%{width:64px;height:18px;border-radius:0 0 9px 9px}40%,66%{width:190px;height:70px;border-radius:0 0 22px 22px}92%,100%{width:64px;height:18px;border-radius:0 0 9px 9px}}
+.tk-morph i{position:absolute;inset:auto 16px 14px;height:6px;border-radius:3px;background:#fff;opacity:0;animation:tkFade 3.2s infinite}
+@keyframes tkFade{0%,30%{opacity:0}44%,62%{opacity:.85}72%,100%{opacity:0}}
+.tk-two{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr}
+.tk-two > div{position:relative;border-right:1px dashed rgba(0,0,0,.18)}
+.tk-two > div:last-child{border:0}
+.tk-two .nt.pk{width:84px;height:20px}
+.tk-two .nt.op{width:118px;height:58px;border-radius:0 0 16px 16px}
+.tk-two svg.cur{position:absolute;width:18px;height:18px;left:55%;top:24px}
+.tk-two .op ~ svg.cur{top:44px}
+.tk-two .ring{position:absolute;left:calc(55% - 9px);top:35px;width:20px;height:20px;border:2px solid #fff;border-radius:50%;animation:tkRing 1.6s ease-out infinite}
+@keyframes tkRing{0%{transform:scale(.4);opacity:1}100%{transform:scale(1.6);opacity:0}}
+.tk-two b{position:absolute;bottom:12px;left:0;right:0;text-align:center;font:500 11px/1 "JetBrains Mono";letter-spacing:.08em;color:#3a1a2a}
+.tk-light{display:grid;place-items:center;background:linear-gradient(135deg,#1b1b1f,#0c0c0e)}
+.tk-light svg{width:64px;height:64px}
+.tk-light .flat{position:absolute;left:18px;right:18px;bottom:22px;height:2px;background:linear-gradient(90deg,transparent,#7ee0a6 20%,#7ee0a6 80%,transparent)}
+.tk-light b{position:absolute;bottom:30px;right:22px;font:500 11px/1 "JetBrains Mono";color:#7ee0a6;letter-spacing:.08em}
+.rm .tk-morph,.rm .tk-morph i,.rm .tk-two .ring{animation:none}
+.tk-motion{background:#111;padding:0}.tk-motion video{display:block;width:100%;height:auto}
+.tk-motion figcaption{padding:14px 20px;color:#d2cec6;font-size:15px}
+.tk-callout{max-width:957px;margin:18px auto 0;display:flex;gap:16px;align-items:center;background:#0f0f11;color:#fff;border-radius:18px;padding:18px 22px;font-size:17px;line-height:1.5;font-weight:500}
+.tk-callout svg{flex:none;width:44px;height:44px}
+.tk-ico{display:grid;place-items:center;width:52px;height:52px;border-radius:14px;margin-bottom:16px;background:var(--tc,#fff3e1)}
+.tk-ico svg{width:28px;height:28px}
+.shot video{display:block;width:100%;height:auto}
+.tk-walk .cs-row{margin-top:67px;grid-template-columns:1.3fr 1fr}
+.tk-walk .cs-row.flip{grid-template-columns:1fr 1.3fr}
+@media (max-width:760px){.tk-walk .cs-row,.tk-walk .cs-row.flip{grid-template-columns:1fr;margin-top:43px}.tk-dl .links{width:100%;align-items:flex-start}}
+.cs-cta.tk-dl{background:#0f0f11;border-color:#0f0f11;padding:36px;box-shadow:0 24px 50px -24px rgba(0,0,0,.6)}
+.cs-cta.tk-dl h3{color:#fff;font-size:32px;margin:0}
+.tk-spec{margin:18px 0 0;display:grid;gap:10px}
+.tk-spec div{display:flex;gap:14px;align-items:baseline}
+.tk-spec dt{font:500 11px/1 "JetBrains Mono";letter-spacing:.09em;text-transform:uppercase;color:#8d8a93;width:116px;flex:none}
+.tk-spec dd{margin:0;color:#f2f0ec;font-size:16px}
+.tk-dl .links{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.tk-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#fff;color:#0f0f11;font:600 15px "Instrument Sans",system-ui;padding:12px 24px;border-radius:999px;text-decoration:none;transition:transform .3s var(--spring),box-shadow .3s}
+.tk-btn:hover{transform:translateY(-2px);box-shadow:0 0 0 6px rgba(255,255,255,.14)}
+.tk-btn svg{width:15px;height:15px}
+.tk-gh{display:inline-flex;align-items:center;justify-content:center;gap:6px;color:#fff;border:1px solid rgba(255,255,255,.28);padding:6px 12px;border-radius:999px;text-decoration:none;font-weight:500;font-size:12px;transition:border-color .2s}
+.tk-gh:hover{border-color:#fff}
+.tk-gh svg{width:12px;height:12px}
+.tk-metric h3{font-size:44px;line-height:1.05;letter-spacing:-.03em;margin:6px 0 8px}
+.tk-see{display:flex;justify-content:center;margin-top:56px}
+.tk-see button{display:inline-flex;align-items:center;gap:12px;border:0;cursor:pointer;font:600 17px "Instrument Sans",system-ui;padding:16px 26px 16px 18px;border-radius:999px;background:#fff;color:#111;box-shadow:0 0 0 6px rgba(255,255,255,.12),0 18px 40px -12px rgba(0,0,0,.6);transition:transform .25s var(--out)}
+.tk-see button:hover{transform:translateY(-2px) scale(1.02)}
+.tk-see button span{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#f0a640;color:#111}
 .in-space h3{margin:0 0 12px;font:600 clamp(30px,2.6vw,42px)/1.05 "Instrument Sans";letter-spacing:-.03em;color:#fff}
 .in-space-text>p:not(.cs-k){font-size:17px;line-height:1.6;margin:0}
 .in-space dl{margin:18px 0 0;display:grid;gap:8px}
@@ -1054,6 +1120,12 @@ const FRAMER = id => `https://framerusercontent.com/images/${id}.png?scale-down-
 const ON_SERVER = /^https?:$/.test(location.protocol);
 const PROJECTS = [
   {
+    id: "tuck", ux: true,
+    title: "Tuck", line: "An app that makes your notch more useful.",
+    caps: ["Product design", "Shipped app"], cta: "Check it out", category: "Product design", year: "2026",
+    color: "linear-gradient(160deg,#3a3a40,#0b0b0d)", cover: "assets/tuck/card.webp", art: "dark"
+  },
+  {
     id: "inayra",
     title: "INAYRA", line: "A pixel hack and slash game I made solo by directing AI. It is playable in the browser.",
     caps: ["Game", "AI art direction", "Game UI"], cta: "Play and read", category: "Game · AI art direction", year: "2026",
@@ -1071,7 +1143,7 @@ const PROJECTS = [
   {
     id: "nook", ux: true,
     title: "Nook", line: "A desktop companion that brings tasks, notes and ideas into one focused workspace.",
-    caps: ["Case study", "Shipped product"], cta: "Read case study", category: "UX case study", year: "2026",
+    caps: ["Product design", "Shipped product"], cta: "Read case study", category: "UX case study", year: "2026",
     color: "linear-gradient(160deg,#f0a640,#c95c17)", cover: FRAMER("kyQhnntCGxwmP4AlAGTmPt32Wg0"), art: "dark",
     summary: "A desktop companion for my day, my notes and my reference images. Designed end to end, then built and shipped for Linux and macOS.",
     facts: [["ROLE", "Designer and developer"], ["TIMELINE", "2026"], ["TOOLS", "Figma, HTML/CSS/JS, Electron"]],
@@ -1168,7 +1240,7 @@ $('count').textContent = `${String(PROJECTS.length).padStart(2,'0')} projects / 
 const cardEls = [...cardsEl.children], dotEls = [...dotsEl.children];
 const faces = cardEls.map(c => c.querySelector('.face'));
 
-/* hero teaser stack: first three projects fanned out, Nook on top */
+/* hero teaser stack: first three projects fanned out, the first project (Tuck) on top */
 const FAN = [{ i: 1, x: -56, r: -10, lift: 4 }, { i: 2, x: 56, r: 10, lift: 4 }, { i: 0, x: 0, r: 0, lift: -12 }];
 $('stack').insertAdjacentHTML('afterbegin', `<span class="fan" id="fan" style="position:absolute;inset:0;display:block;will-change:transform">${
   FAN.map(f => { const p = PROJECTS[f.i]; return `<span class="mini" style="--bgc:${p.color};--x:${f.x}px;--r:${f.r}deg;--lift:${f.lift}px" aria-hidden="true"><b>${esc(p.title)}</b><span class="cov">${coverImg(p, true)}</span><span class="mono" style="opacity:.85">${esc(p.caps[0])}</span></span>`; }).join('')
@@ -1614,6 +1686,189 @@ function nookPage(p) {
           <div class="links">
             <a class="chip dark" href="https://github.com/SmixyBoi/Nook-by-Sanjan/releases/latest" target="_blank" rel="noopener">Download Nook &nearr;</a>
             <a class="chip" href="https://www.behance.net/gallery/253241023/Nook-A-Personal-Desktop-Companion" target="_blank" rel="noopener">See it on Behance &nearr;</a>
+          </div>
+        </div>
+      </section>
+
+      ${nextBlock(p)}
+    </div>
+  </div>`;
+}
+/* =====================================================================
+   TUCK CASE STUDY (Nook layout, with videos; install guide last)
+   Videos and stills live in assets/tuck/ and were cut from screen recordings.
+===================================================================== */
+const TUCK_SECTIONS = [['cs-overview', 'Overview'], ['cs-problem', 'Problem'], ['cs-principles', 'Principles'], ['cs-process', 'Process'],
+  ['cs-decisions', 'Decisions'], ['cs-walkthrough', 'Walkthrough + Features'], ['cs-motion', 'Motion'], ['cs-nonotch', 'No notch'],
+  ['cs-build', 'Build and test'], ['cs-reflections', 'Reflections'], ['cs-install', 'Install']];
+function tuckPage(p) {
+  const A = 'assets/tuck/';
+  const img = (f, w, h, alt) => `<img src="${A}${f}" width="${w}" height="${h}" alt="${alt}" loading="lazy" decoding="async">`;
+  const head = (n, k, h, lead) => `<header class="cs-head"><p class="cs-k">${n} · ${k}</p><h2 class="cs-h">${h}</h2>${lead ? `<p class="cs-lead">${lead}</p>` : ''}</header>`;
+  const vid = (f, label) => `<video src="${A}${f}.mp4" poster="${A}${f}.jpg" autoplay muted loop playsinline preload="metadata" aria-label="${label}"></video>`;
+  const row = (f, alt, h, text, flip) => `<div class="cs-row${flip ? ' flip' : ''} cs-rv"><span class="shot"><video src="${A}features/${f}.mp4" poster="${A}features/${f}.jpg" width="960" height="540" autoplay muted loop playsinline preload="metadata" aria-label="${alt}"></video></span><div><h3>${h}</h3><p>${text}</p></div></div>`;
+  return `<button class="x" aria-label="Close case study">&times;</button>
+  <header class="cs-cover" style="--bgc:${p.color}">
+    <div class="col inner">
+      <p class="mono kick">Product design · Shipped app · 2026</p>
+      <h1 id="case-title" class="tk-title"><img class="tk-icon" src="${A}icon.png" width="512" height="512" alt="">Tuck</h1>
+      <p class="sum">The notch on your Mac that's ready to assist when you need.</p>
+      <div class="cs-tags"><span>MACOS APP</span><span>SWIFTUI</span><span>MOTION DESIGN</span></div>
+      <div class="cs-hero tk-big" id="tk-hero"><video class="tk-vid" src="${A}hero.mp4" poster="${A}hero.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Tuck in use: the notch greets you, opens into a music player with live lyrics, then a color picker, a PDF maker and background removal"></video></div>
+    </div>
+  </header>
+
+  <div class="cs">
+    <nav class="cs-nav" aria-label="Case study sections">${TUCK_SECTIONS.map(([id, t]) => `<a href="#${id}">${t}</a>`).join('')}</nav>
+    <div class="cs-main">
+      <div class="cs-facts">
+        <div><b>ROLE</b><span>Solo designer and builder</span></div>
+        <div><b>TOOLS</b><span>Claude Code, SwiftUI &amp; AppKit</span></div>
+        <div><b>PLATFORM</b><span>macOS 14+, Apple Silicon</span></div>
+        <div><b>STATUS</b><span>v1.0<br>Free download</span></div>
+      </div>
+
+      <section class="cs-sec" id="cs-overview">
+        ${head('01', 'Overview', 'Small, fast, and never in the way')}
+        <div class="cs-grid3 tk-ov">
+          <div class="cs-card cs-rv"><p class="cs-k">The idea</p><p>The notch is dead space on every new MacBook. Tuck turns it into a small island that opens when you click it and tucks away when you leave.</p></div>
+          <div class="cs-card cs-rv"><p class="cs-k">What I did</p><p>Designed the interaction, motion and every screen, then built it as a native macOS app, one milestone at a time, testing each on my own Mac.</p></div>
+          <div class="cs-card cs-rv"><p class="cs-k">Outcome</p><p>A native app that idles at about 14 MB of memory and 0% CPU, shipped as a free 1.2 MB download.</p></div>
+        </div>
+      </section>
+
+      <section class="cs-sec" id="cs-problem">
+        ${head('02', 'Problem', 'Dead space, and help that gets in the way')}
+        <div class="cs-two cs-rv">
+          <div><h3 class="cs-h3">The notch does nothing<svg class="tk-face" viewBox="0 0 32 32" fill="none" stroke-width="2" stroke-linecap="round" aria-label="sad face" role="img"><circle cx="16" cy="16" r="13" fill="#ffe08a" stroke="#1b1a18"/><circle cx="11.5" cy="13" r="1.4" fill="#1b1a18"/><circle cx="20.5" cy="13" r="1.4" fill="#1b1a18"/><path d="M10.5 22.5c3-3.2 8-3.2 11 0" stroke="#1b1a18"/></svg></h3><p class="cs-p">The notch sits at the top of every new MacBook screen, right where your eyes and cursor go all day. Meanwhile the small things I do constantly, checking a song, grabbing a color, turning a few images into a PDF, each need their own app or a trip through menus.</p></div>
+          <div><h3 class="cs-h3">Helpers that open by accident<svg class="tk-face" viewBox="0 0 32 32" fill="none" stroke-width="2" stroke-linecap="round" aria-label="angry face" role="img"><circle cx="16" cy="16" r="13" fill="#ff8a6b" stroke="#1b1a18"/><path d="M9 10.5l5 2.5M23 10.5l-5 2.5" stroke="#1b1a18"/><circle cx="12" cy="15" r="1.4" fill="#1b1a18"/><circle cx="20" cy="15" r="1.4" fill="#1b1a18"/><path d="M11 23c3-2.2 7-2.2 10 0" stroke="#1b1a18"/></svg></h3><p class="cs-p">My first version opened when the cursor touched the notch, or when I scrolled or swiped near it. It kept opening every time I reached for the menu bar. A helper that interrupts you more than it helps isn't a helper.</p></div>
+        </div>
+        <div class="cs-sub cs-rv">
+          <h3 class="cs-h3">Asking around first</h3>
+          <p class="cs-p">Before deciding on features, I surveyed 8 to 10 people around me who use a Mac regularly, from students to hobbyist laptop users to office workers. Features were decided by what was core for them, and anything that wasn't got left out.</p>
+          <div class="tk-people">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="#1b1a18" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2.5 9 2.5 12 0v-5"/></svg>Students</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="#1b1a18" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19h20"/></svg>Hobbyist laptop users</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="#1b1a18" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></svg>Office workers</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="cs-sec" id="cs-principles">
+        ${head('03', 'Principles', 'What Tuck was designed against', 'Three rules every feature had to pass.')}
+        <div class="cs-grid3">
+          <div class="cs-card cs-rv"><div class="tk-viz" aria-hidden="true"><div class="nt tk-morph"><i></i></div></div><p class="cs-k">01</p><h3>Motion first</h3><p>The island is the interface. How it grows, settles and tucks away carries as much of the design as any screen inside it.</p></div>
+          <div class="cs-card cs-rv"><div class="tk-viz" aria-hidden="true"><div class="tk-two"><div><span class="nt pk"></span><svg class="cur" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 8-6 1.5L10 19z" fill="#fff" stroke="#000" stroke-width="1.4" stroke-linejoin="round"/></svg><b>HOVER · PEEK</b></div><div><span class="nt op"></span><span class="ring"></span><svg class="cur" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 8-6 1.5L10 19z" fill="#fff" stroke="#000" stroke-width="1.4" stroke-linejoin="round"/></svg><b>CLICK · OPEN</b></div></div></div><p class="cs-k">02</p><h3>Never by accident</h3><p>Hovering only peeks. Only a deliberate click, tap or shortcut opens it. Nothing takes over your screen uninvited.</p></div>
+          <div class="cs-card cs-rv"><div class="tk-viz tk-light" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke="#f2f0ec" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M50 10C30 10 16 24 16 44v8"/><path d="M50 10c0 18-12 32-32 34"/><path d="M16 52l18-22"/><path d="M27 37h12M33 27h10"/></svg><span class="flat"></span><b>CPU 0%</b></div><p class="cs-k">03</p><h3>Light enough to forget</h3><p>Always on, so it has to cost nothing. No Dock icon, no background work at rest, nothing that bloats memory.</p></div>
+        </div>
+      </section>
+
+      <section class="cs-sec" id="cs-process">
+        ${head('04', 'Process', 'Built in milestones', 'Eight milestones, from a bare island in the notch to a packaged app. After each one I used it for real on my own Mac before moving on.')}
+        <div class="cs-rv">
+          <h3 class="cs-h3">Information architecture</h3>
+          <p class="cs-p">One island, a few pages. Scroll inside the island to move between them; drag a file onto it and the drop zone appears on its own.</p>
+          <div class="cs-ia" role="img" aria-label="Tuck has three pages at one level: Music, Color and the Drop zone">
+            <span class="root">Tuck</span><span class="stem"></span>
+            <div class="kids">
+              <div class="kid"><b>Music</b><span>Player and live lyrics</span></div>
+              <div class="kid"><b>Color</b><span>Picker and 12 recents</span></div>
+              <div class="kid"><b>Drop zone</b><span>AirDrop, PDF, cut-out, convert</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cs-sec" id="cs-decisions">
+        ${head('05', 'Decisions', 'Decisions that changed and defined the product', 'Each one cut something I had already built.')}
+        <div class="cs-dec">
+          <div class="cs-card cs-rv"><h3>Opening: deliberate, not automatic</h3>
+            <div class="cs-ba"><div><span class="lbl before">BEFORE</span><p>Hovering, scrolling or swiping on the notch opened the island.</p></div>
+            <div><span class="lbl after">AFTER</span><p>Hovering only peeks. A click, a tap, a middle or side mouse button, or ⌃⌥N opens it. Scrolling moves between pages instead.</p></div></div>
+            <p class="cs-note"><b>Tradeoff:</b> one click to open, in exchange for never opening when you didn't mean it.</p></div>
+          <div class="cs-card cs-rv"><h3>Music: one track you can trust</h3>
+            <div class="cs-ba"><div><span class="lbl before">BEFORE</span><p>Tuck followed two players at once, side by side, so a video and a song could both be controlled.</p></div>
+            <div><span class="lbl after">AFTER</span><p>One track: whatever Control Center shows as Now Playing. The same source macOS uses, so it is always right.</p></div></div>
+            <p class="cs-note"><b>Why:</b> the dual player kept picking the wrong source. A music player that is wrong some of the time is worse than one that does less.</p></div>
+          <div class="cs-card cs-rv"><h3>Features: only what is worth keeping</h3>
+            <div class="cs-ba"><div><span class="lbl before">BEFORE</span><p>A screenshot catcher and a file shelf, alongside the rest.</p></div>
+            <div><span class="lbl after">AFTER</span><p>Both removed. What stayed are simple tools a designer reaches for daily: a color picker, files to PDF, background removal, image conversion and AirDrop.</p></div></div></div>
+        </div>
+      </section>
+
+      <section class="cs-dark tk-walk" id="cs-walkthrough">
+        ${head('06', 'Walkthrough + Features', 'From a peek to a finished file')}
+        ${row('peek', 'Tuck peeking from the notch: a slim bar with the album art and a playing indicator', 'Peek', 'Bring the cursor to the notch and the island peeks instantly: album art on one side, a live sound indicator on the other. Move away and it tucks back. Nothing opens until you click.')}
+        ${row('music', 'Tuck music player: album art, title, controls, progress, volume and the current lyric line', 'Control your music', 'Large artwork, title and artist, previous, play and next, with ten seconds back, loop and ten seconds forward beneath. Synced lyrics run line by line under the progress bar and keep up even when you scrub.', true)}
+        ${row('color', 'Tuck color page with a swatch, HEX, RGB, HSL and OKLCH values, recent colors and the magnifying loupe', 'Color picker', 'Pick any pixel on screen with a loupe, or press ⌃⌥C from anywhere. The value is copied straight away in HEX, RGB, HSL or OKLCH, and the last 12 colors stay one click away.')}
+        ${row('drop', 'Dragging an image onto the notch shows a two by two grid: AirDrop, Make PDF, Remove background and Convert image', 'Drop things into Tuck', 'Drag any file toward the notch and a 2×2 grid opens: AirDrop, Make PDF, Remove background and Convert image. The target lights up as you hover it, so you always know what will happen before you let go.', true)}
+        ${row('pdf', 'Tuck PDF tray: three image thumbnails, Drop more to add, and a Ready to convert button', 'Need PDF conversion?', 'Dropped files wait in a small tray that stays open. Keep adding, then press “Ready to convert?” and one PDF lands on your Desktop.')}
+        ${row('cutout', 'Tuck showing Background removed after a photo was dropped on it, with the cut-out file in Finder', 'Remove the background', 'Drop a photo and the subject is cut out on your Mac, no upload. The cut-out is saved next to the original, and a small pill confirms it.', true)}
+        <div class="tk-see cs-rv"><button type="button" data-tk-hero><span aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg></span>Wanna see Tuck in use?</button></div>
+      </section>
+
+      <section class="cs-sec" id="cs-motion">
+        ${head('07', 'Motion', 'The island has to feel alive, not animated')}
+        <div class="cs-grid2">
+          <div class="cs-card cs-rv"><h3>Closing is opening in reverse</h3><p>The island tucks away along exactly the path it opened on. An exit that doesn't mirror the entrance reads as a glitch.</p></div>
+          <div class="cs-card cs-rv"><h3>Width and height move on their own springs</h3><p>The island widens a beat before it drops, so it grows out of the notch instead of scaling up like a window.</p></div>
+          <div class="cs-card cs-rv"><h3>Content blurs, never squeezes</h3><p>On close, the content softly blurs and fades while the shape shrinks, so text never gets crushed into the corners.</p></div>
+          <div class="cs-card cs-rv"><h3>A greeting worth reading</h3><p>On first launch the notch says hello, one line at a time, each held for three seconds before it moves on.</p></div>
+        </div>
+        <figure class="cs-figure tk-motion cs-rv" style="margin-top:28px"><video src="${A}motion.mp4" poster="${A}motion.jpg" autoplay muted loop playsinline preload="metadata" aria-label="The cursor touches the notch and Tuck peeks, leaves and it tucks back, peeks again, a click opens the music player, then it closes"></video><figcaption>Hover peeks, moving away tucks it back, a click opens, and it closes along the same path.</figcaption></figure>
+      </section>
+
+      <section class="cs-sec" id="cs-nonotch">
+        ${head('08', 'No notch', 'No notch? Tuck still has a home.', 'On a screen without a notch cutout, like an external monitor or an older Mac, Tuck shows a small punch-hole circle at the top of the screen. It peeks when you get close and opens like a droplet, with every feature intact. Every screen gets its own island.')}
+        <div class="tk-small cs-rv">${vid('no-notch', 'Tuck on an external monitor: a small circle at the top of the screen peeks, opens like a droplet into the music player, then pages to the color picker and AirDrop')}</div>
+        <p class="tk-cap cs-rv">An external 1080p monitor. That's a feature, not a workaround.</p>
+        <div class="tk-callout cs-rv"><svg viewBox="0 0 44 44" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="9" width="22" height="15" rx="2"/><rect x="10.5" y="9" width="5" height="2.2" rx="1" fill="#fff"/><path d="M9 29h8M13 24v5"/><rect x="21" y="15" width="21" height="14" rx="2" fill="#0f0f11"/><circle cx="31.5" cy="17.6" r="1.2" fill="#fff"/><path d="M28 34h7M31.5 29v5"/></svg><span>Tuck can even detect dual displays and adjust depending on whether a notch cutout is present or not.</span></div>
+      </section>
+
+      <section class="cs-sec" id="cs-build">
+        ${head('09', 'Build and test', 'Native, and built to stay out of the way')}
+        <div class="cs-two cs-rv">
+          <div><h3 class="cs-h3">Built natively</h3><p class="cs-p">Tuck is written in Swift with SwiftUI and AppKit, so it looks and moves like part of macOS. I designed and directed it; Claude Code wrote and tested the code with me. It reads Now Playing the same way Control Center does and removes backgrounds with Apple's on-device Vision.</p></div>
+          <div><h3 class="cs-h3">Tested by trying to break it</h3><p class="cs-p">Each milestone ended with me trying to break it: drag files from everywhere, scrub songs fast, open it on two screens. That's how lyrics that lagged, a progress bar that froze and drops that went nowhere got caught and fixed before release.</p></div>
+        </div>
+        <div class="cs-grid3 cs-sub tk-metric">
+          <div class="cs-card cs-rv"><span class="tk-ico" style="--tc:#e5e3ff"><svg viewBox="0 0 24 24" fill="none" stroke="#1b1a18" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx=".8"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg></span><p class="cs-k">Memory at rest</p><h3>~14 MB</h3><p>About the size of a single photo.</p></div>
+          <div class="cs-card cs-rv"><span class="tk-ico" style="--tc:#d9f5e3"><svg viewBox="0 0 24 24" fill="none" stroke="#1b1a18" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17a8 8 0 1 1 16 0"/><path d="M12 17L7 13"/><circle cx="12" cy="17" r="1.4" fill="#1b1a18"/></svg></span><p class="cs-k">CPU at rest</p><h3>0%</h3><p>No timers, no wake-ups while you aren't using it.</p></div>
+          <div class="cs-card cs-rv"><span class="tk-ico" style="--tc:#ffe9cf"><svg viewBox="0 0 24 24" fill="none" stroke="#1b1a18" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5"/><path d="M4 17v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-2"/></svg></span><p class="cs-k">Download</p><h3>1.2 MB</h3><p>One app, no installers or updaters.</p></div>
+        </div>
+      </section>
+
+      <section class="cs-sec" id="cs-reflections">
+        ${head('10', 'Reflections', 'What I would do with more time')}
+        <div class="cs-grid2">
+          <div class="cs-card cs-rv"><h3>A smoother first install</h3><p>Without a paid Apple developer account, macOS warns people the first time. Signing and notarizing would remove that, so I wrote a fix for each warning instead.</p></div>
+          <div class="cs-card cs-rv"><h3>More testers</h3><p>Tuck has been shaped mostly by my own daily use and a few friends' Macs. More people, and more kinds of setups, would make it sturdier.</p></div>
+          <div class="cs-card cs-rv"><h3>Wider support</h3><p>It runs on Apple Silicon only. Intel Macs, and maybe a version for Windows, would bring it to more people.</p></div>
+          <div class="cs-card cs-rv"><h3>What's next</h3><p>Lyrics that drift beside the notch while music plays, and a few more small tools, as long as each passes the three principles.</p></div>
+        </div>
+      </section>
+
+      <section class="cs-sec" id="cs-install">
+        ${head('11', 'Install', 'Download and open', 'Needs a Mac with Apple Silicon (M1 or newer) and macOS 14 Sonoma or later. Open the DMG, drag Tuck into Applications and open it. Tuck has no Dock icon: click the notch to open it, scroll inside it to switch features and right-click it for settings.')}
+        <h3 class="cs-h3 cs-rv">Facing difficulty? Don't worry, here's some help.</h3>
+        <p class="cs-p cs-rv">Tuck is free and isn't signed through a paid Apple developer account, so macOS may block it the first time. These steps are only needed once.</p>
+        <div class="cs-grid2 tk-fix">
+          <div class="cs-card cs-rv"><h3>“Apple could not verify Tuck is free of malware”</h3><ol><li>Click <b>Done</b>, not Move to Trash.</li><li>Open <b>System Settings → Privacy &amp; Security</b>.</li><li>Under Security, next to “Tuck was blocked”, click <b>Open Anyway</b>.</li><li>Enter your Mac password, then click <b>Open Anyway</b> again.</li></ol></div>
+          <div class="cs-card cs-rv"><h3>“Tuck is damaged and can't be opened”</h3><p>It isn't damaged. This is the same block with scarier wording.</p><ol><li>Click <b>Cancel</b>, not Move to Trash.</li><li>Open <b>Terminal</b> (Applications → Utilities).</li><li>Paste this and press Return:<br><code>xattr -dr com.apple.quarantine /Applications/Tuck.app &amp;&amp; open /Applications/Tuck.app</code></li></ol></div>
+          <div class="cs-card cs-rv"><h3>“From an unidentified developer”</h3><ol><li>Click <b>OK</b>.</li><li>In Applications, <b>right-click Tuck → Open</b>, then click <b>Open</b>.</li></ol><p>No Open button? Use the System Settings steps.</p></div>
+          <div class="cs-card cs-rv"><h3>“Isn't supported on this type of Mac” or nothing happens</h3><p>Tuck needs an Apple Silicon Mac; it doesn't run on Intel Macs. If it opened but you can't see it, move your mouse to the notch, or the small dot at the top of an external screen, and click.</p></div>
+        </div>
+        <div class="cs-cta tk-dl cs-rv">
+          <div><h3>Get Tuck for your Mac</h3>
+            <dl class="tk-spec">
+              <div><dt>Version</dt><dd>1.0</dd></div>
+              <div><dt>Size</dt><dd>~1.2 MB</dd></div>
+              <div><dt>Requirements</dt><dd>Apple Silicon (M series chips)</dd></div>
+            </dl>
+          </div>
+          <div class="links">
+            <a class="tk-btn" href="https://github.com/sansirk-design/Tuck/releases/latest/download/Tuck.dmg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5"/><path d="M4 18v1.5A1.5 1.5 0 0 0 5.5 21h13a1.5 1.5 0 0 0 1.5-1.5V18"/></svg>Download Tuck</a>
+            <a class="tk-gh" href="https://github.com/sansirk-design/Tuck" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>View on GitHub</a>
           </div>
         </div>
       </section>
@@ -2671,9 +2926,17 @@ document.addEventListener('click', e => {
   const b = e.target.closest('[data-playtest]'); if (!b) return;
   e.preventDefault(); inStartGame(b.closest('.in-game'));
 });
+/* Tuck: "Wanna see Tuck in use?" goes back up to the hero video and plays it from the start */
+document.addEventListener('click', e => {
+  if (!e.target.closest('[data-tk-hero]')) return;
+  const hero = document.getElementById('tk-hero'); if (!hero) return;
+  hero.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+  const v = hero.querySelector('video'); if (v) { v.currentTime = 0; v.play().catch(() => {}); }
+});
 function caseHTML(p) {
   if (p.id === 'inayra') return inayraPage(p);
   if (p.id === 'nook') return nookPage(p);
+  if (p.id === 'tuck') return tuckPage(p);
   if (p.id === 'cue') return cuePage(p);
   if (p.id === 'aranyo') return aranyoPage(p);
   if (p.id === 'adverts') return adsPage(p);
