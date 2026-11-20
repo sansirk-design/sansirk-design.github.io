@@ -164,7 +164,6 @@ a{color:inherit}
   .fwin-dim{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(28,24,20,.42)}
 }
 html.fw-open{overflow:hidden}
-.fold.gone .f-ico{transform:scale(.96)}
 
 /* the open folder: a window with the folder's projects as cards */
 .fwin-dim{position:fixed;inset:0;z-index:54;background:rgba(28,24,20,.28);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
@@ -304,23 +303,10 @@ html.fw-open{overflow:hidden}
 .case{position:fixed;inset:0;z-index:60;background:var(--bg);overflow-y:auto;overscroll-behavior:contain;opacity:0;transition:opacity .3s}
 .case.show{opacity:1}
 .case[hidden]{display:none}
-.case .cover{background:var(--bgc);color:#fff;padding:96px 0 56px}
-.case .cover .col{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,380px);gap:48px;align-items:center}
 .case .kick{opacity:.85;margin:0 0 14px}
-.case .cover h1{margin:0;font:600 clamp(44px,7vw,84px)/1 "Instrument Sans";letter-spacing:-.04em}
-.case .cover p.sum{font-size:19px;max-width:30em;opacity:.9;margin:18px 0 0}
-.case .cover .cov{aspect-ratio:1145/1374;border-radius:18px;box-shadow:0 30px 60px rgba(0,0,0,.3)}
-.case .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:18px;padding:32px 0;border-bottom:1px solid var(--line)}
-.case .facts b{display:block;font:500 11px "JetBrains Mono";color:var(--dim);margin-bottom:4px;letter-spacing:.04em}
-.case .gsec{padding:32px 0;border-bottom:1px solid var(--line)}
-.case .gsec h2{margin:0 0 12px;font:600 22px "Instrument Sans";letter-spacing:-.02em}
-.case .gsec h2 .n{font:500 12px "JetBrains Mono";color:var(--dim);margin-right:10px}
-.case .gsec p,.case .gsec li{color:#2b2926}
-.case .ph{border:1px dashed #c9c4bb;border-radius:14px;padding:60px 20px;text-align:center;color:var(--dim)}
 .case .inner{opacity:0;transform:translateY(18px);transition:opacity .5s .1s,transform .7s var(--out) .1s}
 .case.show .inner{opacity:1;transform:none}
 .case .x{position:fixed;top:16px;right:16px;z-index:2;width:44px;height:44px;border-radius:50%;border:0;background:rgba(0,0,0,.75);color:#fff;font-size:20px;cursor:pointer}
-.case .end{padding:48px 0 80px;justify-content:center}
 
 /* ---------- case study page (Nook is the full template) ----------
    Hierarchy: cover title (h1) > numbered section heading (h2) > subheading (h3) > body.
@@ -633,8 +619,6 @@ img.adp{height:auto}
   .bio{grid-template-columns:1fr;gap:14px}
   .cv-block{grid-template-columns:1fr;gap:4px}
   .cv-h{padding-top:0;margin-bottom:10px}
-  .case .cover .col{grid-template-columns:1fr;gap:28px}
-  .case .cover .cov{width:min(340px,100%)}
 }
 @media (max-width:640px){
   body{font-size:16px}
@@ -1146,15 +1130,14 @@ if (!/^https?:$/.test(location.protocol)) document.write('<script src="assets/ca
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 <script>
 /* =====================================================================
-   PROJECTS (order = order in the carousel)
-   Every card opens its case study page on this site.
+   PROJECTS: one entry per project. Which folder a project sits in, and its
+   order there, is set in FOLDERS below.
    caps:   the small capsules in the card's top right corner
    cta:    text in the card's bottom right corner
-   cover:  card image (hotlinked from the Framer site for now;
-           copy into the project's assets before launch)
+   cover:  card image (some still load from the old Framer site)
    color:  card background and the color that fills the screen on click
-   sections: the case study write-up. Projects without sections get a
-           holding page until the case study layout is designed.
+   href:   the project on Behance or ArtStation (used by its page's links)
+   external: true means the card opens href instead of a page here
 ===================================================================== */
 const FRAMER = id => `https://framerusercontent.com/images/${id}.png?scale-down-to=1024`;
 /* On a real server images come from assets/. Opened as a plain file (sent to someone, or the
@@ -1173,9 +1156,6 @@ const PROJECTS = [
     title: "INAYRA", line: "A pixel hack and slash game I made solo by directing AI. It is playable in the browser.",
     caps: ["Shipped game", "AI art direction", "Game UI"], cta: "Play and read", category: "Game · AI art direction", year: "2026",
     color: "linear-gradient(160deg,#c2187a,#2a0b3d)", cover: "assets/inayra/card.webp", art: "dark",
-    summary: "A cyberpunk Indian hack-and-slash, playable in the browser. I designed and directed it; GPT made the art and Claude Code built and tested it.",
-    facts: [["ROLE", "Game designer, art director, prompt engineer, playtester"], ["TIMELINE", "2026"], ["TOOLS", "ChatGPT (images), Claude Code (build and test), Figma"]],
-    links: [{ label: "Play INAYRA", href: "https://inayra-game.github.io" }]
   },
   {
     id: "aranyo", ux: true,
@@ -1188,31 +1168,6 @@ const PROJECTS = [
     title: "Nook", line: "A desktop companion that brings tasks, notes and ideas into one focused workspace.",
     caps: ["Product design", "Shipped product"], cta: "Read case study", category: "UX case study", year: "2026",
     color: "linear-gradient(160deg,#f0a640,#c95c17)", cover: FRAMER("kyQhnntCGxwmP4AlAGTmPt32Wg0"), art: "dark",
-    summary: "A desktop companion for my day, my notes and my reference images. Designed end to end, then built and shipped for Linux and macOS.",
-    facts: [["ROLE", "Designer and developer"], ["TIMELINE", "2026"], ["TOOLS", "Figma, HTML/CSS/JS, Electron"]],
-    links: [
-      { label: "Full case study on Behance", href: "https://www.behance.net/gallery/253241023/Nook-A-Personal-Desktop-Companion" },
-      { label: "Download on GitHub", href: "https://github.com/SmixyBoi/Nook-by-Sanjan/releases/latest" }
-    ],
-    sections: [
-      { heading: "Why I built it", body: [
-        "Nook started as a tool for my own work: one calm window for tasks, notes and reference boards instead of several separate apps.",
-        "Since it was built for one person, I skipped invented user research and compared it against the tools I was replacing, PureRef and Notion."
-      ]},
-      { heading: "Three tabs", list: [
-        "Home: greeting, clock and tasks on the left, with calendar, goals and a focus timer on the right.",
-        "Notes: an infinite canvas of draggable sticky notes in five muted colors.",
-        "Board: an infinite canvas for pasting reference images with Ctrl+V, inspired by PureRef."
-      ]},
-      { heading: "Visual language", body: [
-        "Dark charcoal with an amber gold accent, chamfered corners and Sora for type. It ships with six themes: Dark, Light, Sakura Pink, Construction Yellow, Midnight Blue and Sea Green."
-      ]},
-      { heading: "Screens", placeholder: "Theme and tab screenshots go here" },
-      { heading: "Shipping it", body: [
-        "The HTML prototype was wrapped in Electron and packaged as an AppImage for Linux and a DMG for macOS. Version 1.0.0 is on GitHub.",
-        "I still use it daily. Its sticky notes are where I plan my other case studies."
-      ]}
-    ]
   },
   {
     id: "cue", ux: true,
@@ -1732,7 +1687,7 @@ function nookPage(p) {
         <div class="cs-cta cs-rv">
           <div><p class="cs-k" style="margin:0">Open source</p><h3>Nook is on GitHub</h3><p>Source, releases and downloadable builds.</p></div>
           <div class="links">
-            <a class="chip dark" href="https://github.com/SmixyBoi/Nook-by-Sanjan/releases/latest" target="_blank" rel="noopener">Download Nook &nearr;</a>
+            <a class="chip dark" href="https://github.com/sansirk-design/Nook-by-Sanjan/releases/latest" target="_blank" rel="noopener">Download Nook &nearr;</a>
             <a class="chip" href="https://www.behance.net/gallery/253241023/Nook-A-Personal-Desktop-Companion" target="_blank" rel="noopener">See it on Behance &nearr;</a>
           </div>
         </div>
@@ -2988,35 +2943,10 @@ function caseHTML(p) {
   if (p.id === 'adverts') return adsPage(p);
   if (p.series) return postersPage(p);
   if (p.id === 'worlds') return worldsPage(p);
-  const sections = p.sections || [{ heading: "Case study", placeholder: "The full case study is on its way. This page layout is still being designed." }];
-  const secs = sections.map((s, n) => {
-    const head = `<h2><span class="n">${String(n + 1).padStart(2,'0')}</span>${esc(s.heading)}</h2>`;
-    if (s.placeholder) return `<section class="gsec">${head}<div class="ph mono">${esc(s.placeholder)}</div></section>`;
-    if (s.list) return `<section class="gsec">${head}<ul>${s.list.map(x => `<li>${esc(x)}</li>`).join('')}</ul></section>`;
-    return `<section class="gsec">${head}${s.body.map(x => `<p>${esc(x)}</p>`).join('')}</section>`;
-  }).join('');
-  const facts = p.facts || [["TYPE", p.category], ["YEAR", p.year]];
-  const links = p.links || (p.href ? [{ label: "See it on Behance", href: p.href }] : []);
-  return `<button class="x" aria-label="Close case study">&times;</button>
-    <div class="cover" style="--bgc:${p.color}"><div class="col">
-      <div class="inner">
-        <p class="mono kick">${p.caps.map(esc).join(' · ')} · ${esc(p.year)}</p>
-        <h1 id="case-title">${esc(p.title)}</h1><p class="sum">${esc(p.summary || p.line)}</p>
-      </div>
-      <div class="cov inner" aria-hidden="true">${coverImg(p, true)}</div>
-    </div></div>
-    <div class="col inner">
-      <div class="facts">${facts.map(([k, v]) => `<div><b>${esc(k)}</b>${esc(v)}</div>`).join('')}</div>
-      ${secs}
-      <div class="end links">
-        ${links.map(l => `<a class="chip" href="${l.href}" target="_blank" rel="noopener">${esc(l.label)} &nearr;</a>`).join('')}
-        <a class="chip dark" href="#" data-close>Back to all work</a>
-      </div>
-      ${nextBlock(p)}
-    </div>`;
+  return '';
 }
 function openCase(p, card, opts = {}) {
-  if (openId) return;
+  if (openId || !caseHTML(p)) return;
   openId = p.id; lastCard = card || null;
   caseEl.innerHTML = caseHTML(p);
   if (lenis) lenis.stop();
