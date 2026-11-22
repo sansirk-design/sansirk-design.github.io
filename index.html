@@ -1026,23 +1026,23 @@ span.in-fixed{color:#9890a8}
         <span class="swap" id="swap" aria-hidden="true"><span>UX designer</span></span>
         <span class="sr-only">UX designer, product designer, visual designer and 3D artist</span>
       </p>
-      <p class="lede rv" style="--d:.28s">I design digital experiences that balance functionality and visual craft. With a background in <a href="https://www.artstation.com/smixy" target="_blank" rel="noopener">3D and game development</a>, I'm naturally curious about technology and love experimenting with new tools and ideas.</p>
+      <p class="lede rv" style="--d:.28s">I design digital experiences that balance functionality and visual craft. With a background in <a href="https://www.artstation.com/smixy" target="_blank" rel="noopener">game and visual design</a>, I'm naturally curious about technology and love experimenting with new tools and ideas.</p>
       <div class="links rv" style="--d:.4s">
         <a class="chip dark" href="#work">See the work</a>
         <a class="chip" href="https://www.behance.net/sanjansirkar" target="_blank" rel="noopener">Behance &nearr;</a>
         <a class="chip" href="https://www.linkedin.com/in/sanjan-sirkar-5b081b266" target="_blank" rel="noopener">LinkedIn &nearr;</a>
       </div>
     </div>
-    <a class="stack rv" style="--d:.5s" href="#work" id="stack" aria-label="Jump to selected work"><span class="tag mono">See all work &darr;</span></a>
+    <a class="stack rv" style="--d:.5s" href="#work" id="stack" aria-label="Jump to my work"><span class="tag mono">See all work &darr;</span></a>
   </section>
 
   <!-- WORK -->
   <section class="work" id="work" data-label="Work" aria-labelledby="work-h">
     <div class="work-head col">
-      <h2 id="work-h" class="rv">Selected <span class="serif">work</span></h2>
+      <h2 id="work-h" class="rv">My <span class="serif">work</span></h2>
       <span class="mono rv" id="count"></span>
     </div>
-    <p class="fold-hint mono rv col" id="foldHint"><b>Three folders.</b> Hover to peek, click to open.</p>
+    <p class="fold-hint mono rv col" id="foldHint">Segregated into three folders</p>
     <div class="folders col" id="folders"></div>
   </section>
 
@@ -1272,7 +1272,6 @@ foldersEl.innerHTML = FOLDERS.map(f => {
   </button>`;
 }).join('');
 $('count').textContent = `${String(PROJECTS.length).padStart(2, '0')} projects / ${FOLDERS.length} folders`;
-if (!hoverable) $('foldHint').innerHTML = '<b>Three folders.</b> Tap one to open it.';
 const unpeek = keep => foldersEl.querySelectorAll('.fold.peek').forEach(x => x !== keep && x.classList.remove('peek'));
 foldersEl.addEventListener('click', e => {
   const b = e.target.closest('.fold'); if (!b) return;
