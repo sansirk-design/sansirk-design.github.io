@@ -45,6 +45,11 @@
 html,body{margin:0;background:var(--bg);color:var(--ink)}
 html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
+.lenis.lenis-stopped{overflow:hidden}
+.lenis.lenis-smooth iframe{pointer-events:none}
+/* while the page is moving, hover effects wait (a folder sliding under a still cursor shouldn't pop open) */
+html.scrolling .fold,html.scrolling .card,html.scrolling .stack{pointer-events:none}
 body{font:400 17px/1.55 "Instrument Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip}
 a{color:inherit}
 .mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:12px;letter-spacing:.02em}
@@ -81,7 +86,9 @@ a{color:inherit}
 .pill.open nav{max-height:240px;opacity:1;padding:8px 4px 4px}
 
 /* ---------- reveal (blur-in) ---------- */
-.js .rv{opacity:0;filter:blur(10px);transform:translateY(12px);transition:opacity .9s var(--out),filter .9s var(--out),transform .9s var(--out);transition-delay:var(--d,0s)}
+/* reveals fade and rise; only the hero, which plays once on load, also un-blurs (blur on scroll costs paint and flickers in Safari) */
+.js .rv{opacity:0;transform:translateY(12px);transition:opacity .9s var(--out),transform .9s var(--out);transition-delay:var(--d,0s)}
+.js .hero .rv{filter:blur(10px);transition:opacity .9s var(--out),filter .9s var(--out),transform .9s var(--out);transition-delay:var(--d,0s)}
 .js .rv.on{opacity:1;filter:none;transform:none}
 .rm .rv{opacity:1!important;filter:none!important;transform:none!important}
 
@@ -174,6 +181,15 @@ html.fw-open{overflow:hidden}
   box-shadow:0 0 0 1px rgba(0,0,0,.06),0 40px 100px -20px rgba(20,15,10,.45)}
 .fwin.hold{visibility:hidden}
 .fwin[hidden],.fwin-dim[hidden],.genie[hidden]{display:none}
+/* The Divine Library: one big gold button into the library, centred */
+.dl-enter{display:flex;justify-content:center;margin-top:34px}
+.dl-enter a{display:inline-flex;align-items:center;gap:12px;padding:19px 38px;border-radius:999px;text-decoration:none;
+  background:#e2c27c;color:#1c130a;font:600 19px/1 "Instrument Sans";letter-spacing:-.01em;
+  box-shadow:0 14px 34px -10px rgba(226,194,124,.55);transition:transform .35s var(--spring),box-shadow .3s}
+.dl-enter a:hover{transform:translateY(-2px);box-shadow:0 18px 40px -10px rgba(226,194,124,.7)}
+.dl-enter a:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.dl-cta{flex-direction:column;justify-content:center;text-align:center}
+.dl-cta .dl-enter{margin-top:6px}
 .fwin-bar{flex:none;display:flex;align-items:center;gap:12px;padding:14px 14px 14px 22px;border-bottom:1px solid var(--line);background:#fbfaf8}
 .fwin-ic{flex:none;position:relative;width:22px;height:17px;border-radius:3px;background:var(--fb,#ddd8d0);margin-top:2px}
 .fwin-ic::before{content:"";position:absolute;left:0;top:-3px;width:9px;height:4px;border-radius:2px 3px 0 0;background:var(--fb,#ddd8d0)}
@@ -184,7 +200,7 @@ html.fw-open{overflow:hidden}
   display:grid;place-items:center;transition:transform .35s var(--spring)}
 .fwin-x:hover{transform:scale(1.08)}
 .fwin-body{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:28px}
-.fwin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:22px}
+.fwin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(212px,1fr));gap:19px;width:85%;margin:0 auto}
 .card{position:relative;display:block;width:100%;aspect-ratio:20/27;padding:0;border:0;background:none;color:#fff;font:inherit;text-align:left;
   text-decoration:none;cursor:pointer;transition:transform .45s var(--spring)}
 .card:hover{transform:translateY(-4px)}
@@ -631,7 +647,7 @@ img.adp{height:auto}
   .fwin-body{padding:16px}
   .fwin-bar{padding-left:16px}
   .fwin-bar .mono{display:none}
-  .fwin-grid{grid-template-columns:1fr;gap:16px}
+  .fwin-grid{grid-template-columns:1fr;gap:14px}
   .face{padding:20px;border-radius:22px}
   .face .desc{font-size:14px;margin-top:12px}
   .face .cov{margin:14px 0 12px}
@@ -1028,9 +1044,9 @@ span.in-fixed{color:#9890a8}
       </p>
       <p class="lede rv" style="--d:.28s">I design digital experiences that balance functionality and visual craft. With a background in <a href="https://www.artstation.com/smixy" target="_blank" rel="noopener">game and visual design</a>, I'm naturally curious about technology and love experimenting with new tools and ideas.</p>
       <div class="links rv" style="--d:.4s">
-        <a class="chip dark" href="#work">See the work</a>
+        <a class="chip dark" href="https://www.linkedin.com/in/sanjan-sirkar-5b081b266" target="_blank" rel="noopener">LinkedIn &nearr;</a>
         <a class="chip" href="https://www.behance.net/sanjansirkar" target="_blank" rel="noopener">Behance &nearr;</a>
-        <a class="chip" href="https://www.linkedin.com/in/sanjan-sirkar-5b081b266" target="_blank" rel="noopener">LinkedIn &nearr;</a>
+        <a class="chip" href="https://drive.google.com/file/d/1Sq__WlddD7Sw6AhUbzeBakZGh2_kiFuM/view?usp=sharing" target="_blank" rel="noopener">Resume &nearr;</a>
       </div>
     </div>
     <a class="stack rv" style="--d:.5s" href="#work" id="stack" aria-label="Jump to my work"><span class="tag mono">See all work &darr;</span></a>
@@ -1057,7 +1073,7 @@ span.in-fixed{color:#9890a8}
     <h2 class="cv-h rv" id="about-h">About</h2>
     <div class="bio">
       <p class="rv">I'm a designer drawn to the space between how things look, how they work, and how people experience them.</p>
-      <p class="rv" style="--d:.08s">I bring together UI/UX and visual design to create digital experiences that feel intuitive, thoughtful, and a little unexpected. Naturally curious, I enjoy dabbling in technology, exploring new tools, and experimenting with ideas beyond design.</p>
+      <p class="rv" style="--d:.08s">I bring together UX, visual design and smooth motions to create digital experiences that feel intuitive, thoughtful, and a little unexpected. Naturally curious, I enjoy dabbling in technology, exploring new tools, and experimenting with ideas beyond design.</p>
     </div>
     </div>
   </section>
@@ -1170,6 +1186,13 @@ const PROJECTS = [
     color: "linear-gradient(160deg,#f0a640,#c95c17)", cover: FRAMER("kyQhnntCGxwmP4AlAGTmPt32Wg0"), art: "dark",
   },
   {
+    id: "divine", ux: true,
+    title: "The Divine Library", line: "A private, endless 3D library of every book you have finished, with a diary to write about them.",
+    caps: ["Product design", "3D web app"], cta: "Read case study", category: "Product design", year: "2026",
+    color: "linear-gradient(160deg,#6b4521,#120b06)", cover: "assets/divine/card.jpg", art: "dark",
+    href: "https://the-divine-library.github.io"
+  },
+  {
     id: "cue", ux: true,
     title: "Cue", line: "A transit app that makes route planning and the daily commute easier to handle.",
     caps: ["UX UI"], cta: "Read case study", category: "UX case study", year: "2026",
@@ -1217,14 +1240,14 @@ const PROJECTS = [
    FOLDERS: how the work is grouped on the page.
    items:  project ids, in the order they show inside the folder.
            { alias: "id" } also shows a project that lives in another folder
-           (INAYRA sits in Product until more products ship).
+           (INAYRA sits in Product until more products ship; The Divine Library also sits in Game & 3D Art).
    The first three items are the papers that peek out on hover.
    tint:   [back panel, front flap top, front flap bottom]
 ===================================================================== */
 const FOLDERS = [
-  { id: "product", name: "Product Design & UX", tint: ["#5d7cc4", "#8fa9e0", "#7b97d6"], items: ["tuck", "nook", "aranyo", "cue", { alias: "inayra" }] },
+  { id: "product", name: "Product Design & UX", tint: ["#5d7cc4", "#8fa9e0", "#7b97d6"], items: ["tuck", { alias: "inayra" }, "divine", "nook", "aranyo", "cue"] },
   { id: "graphic", name: "Graphic Design", tint: ["#e5602c", "#ff9466", "#f57a45"], items: ["adverts", "persona", "moto"] },
-  { id: "games", name: "Game & 3D Art", tint: ["#6c4fa6", "#9d84cf", "#8869c0"], items: ["inayra", "worlds", "models"] }
+  { id: "games", name: "Game & 3D Art", tint: ["#6c4fa6", "#9d84cf", "#8869c0"], items: ["inayra", { alias: "divine" }, "worlds", "models"] }
 ];
 const byId = id => PROJECTS.find(p => p.id === id);
 /* #case-<id> links: old links to the single Posters page land on Persona */
@@ -1694,6 +1717,105 @@ function nookPage(p) {
 
       ${nextBlock(p)}
     </div>
+  </div>`;
+}
+/* =====================================================================
+   THE DIVINE LIBRARY CASE STUDY (Tuck layout)
+   The live site: the-divine-library.github.io (its own GitHub organisation).
+   Images in assets/divine/: title.jpg and hall.jpg are frames grabbed from the
+   3D canvas; search, shelve and diary are screenshots of the panels.
+   Copy is a first draft for Sanjan to rewrite.
+===================================================================== */
+const DIVINE_URL = 'https://the-divine-library.github.io';
+const DIVINE_SECTIONS = [['cs-overview', 'Overview'], ['cs-walkthrough', 'Walkthrough'], ['cs-decisions', 'Decisions'],
+  ['cs-atmosphere', 'Atmosphere'], ['cs-build', 'Build'], ['cs-reflections', 'Reflections']];
+function divinePage(p) {
+  const A = 'assets/divine/';
+  const img = (f, w, h, alt) => `<img src="${A}${f}" width="${w}" height="${h}" alt="${alt}" loading="lazy" decoding="async">`;
+  const head = (n, k, h, lead) => `<header class="cs-head"><p class="cs-k">${n} · ${k}</p><h2 class="cs-h">${h}</h2>${lead ? `<p class="cs-lead">${lead}</p>` : ''}</header>`;
+  const row = (f, w, h, alt, title, text, flip) => `<div class="cs-row${flip ? ' flip' : ''} cs-rv"><span class="shot">${img(f, w, h, alt)}</span><div><h3>${title}</h3><p>${text}</p></div></div>`;
+  return `<button class="x" aria-label="Close case study">&times;</button>
+  <div style="--acc:#c9a45c;--acc-ink:#8a6420;--hero-bg:#0d0906;--dark-bg:#15100b">
+  <header class="cs-cover" style="--bgc:${p.color}">
+    <div class="col inner">
+      <p class="mono kick">Product design · 3D web app · 2026</p>
+      <h1 id="case-title">The Divine Library</h1>
+      <p class="sum">A private, endless library of every book you have finished. Walk its halls, shelve your books and keep a diary.</p>
+      <div class="cs-tags"><span>3D WEB APP</span><span>THREE.JS</span><span>PRIVATE BY DESIGN</span></div>
+      <div class="cs-hero">${img('title.jpg', 1600, 1000, 'The Divine Library title screen: The Divine Library in gold script over a candlelit hall of tall bookshelves')}</div>
+      <div class="dl-enter"><a href="${DIVINE_URL}" target="_blank" rel="noopener">Enter the library <span aria-hidden="true">&nearr;</span></a></div>
+    </div>
+  </header>
+
+  <div class="cs">
+    <nav class="cs-nav" aria-label="Case study sections">${DIVINE_SECTIONS.map(([id, t]) => `<a href="#${id}">${t}</a>`).join('')}</nav>
+    <div class="cs-main">
+      <div class="cs-facts">
+        <div><b>ROLE</b><span>Solo designer and builder</span></div>
+        <div><b>TOOLS</b><span>Claude Code, three.js, Open Library</span></div>
+        <div><b>PLATFORM</b><span>Desktop browsers, keyboard and mouse</span></div>
+        <div><b>STATUS</b><span>Live<br>Free to use</span></div>
+      </div>
+
+      <section class="cs-sec" id="cs-overview">
+        ${head('01', 'Overview', 'A reading log you can walk through')}
+        <div class="cs-grid3">
+          <div class="cs-card cs-rv"><p class="cs-k">The idea</p><p>Reading trackers are lists with covers. Finishing a book should feel like adding to something, so every book you finish becomes a volume on a shelf in a library that keeps growing.</p></div>
+          <div class="cs-card cs-rv"><p class="cs-k">What I did</p><p>Designed the space, the flows and every panel, from the title screen to the diary, and built it as a website that runs in the browser.</p></div>
+          <div class="cs-card cs-rv"><p class="cs-k">Outcome</p><p>A live site anyone can open: an endless hall of shelves, a shelving flow that finds the book for you, and a diary, all kept privately on your own computer.</p></div>
+        </div>
+      </section>
+
+      <section class="cs-dark tk-walk" id="cs-walkthrough">
+        ${head('02', 'Walkthrough', 'From a finished book to a volume on the shelf')}
+        ${row('search.jpg', 800, 552, 'Shelve a book panel: typing The Name of the Wind shows three matches from Open Library with covers, authors, years and page counts', 'Find the book, not the form', 'Press E and start typing a title. Matches arrive from Open Library with the cover, author, year and page count, so shelving a book is mostly one pick.')}
+        ${row('shelve.jpg', 800, 552, 'Shelve a book panel filled in: cover, author Patrick Rothfuss, 736 pages, five stars, a note, and a spine width of 6.5 cm', 'Every book has a body', 'The page count sets how thick the spine is, so a 736 page book sits 6.5 cm wide. Pick a spine colour, rate it, write what stayed with you, and attach a PDF to read on the lectern.', true)}
+        ${row('hall.jpg', 1600, 1000, 'The library hall: a long reading table with a lit candle between towering shelves', 'Then it is on the shelf', 'The book takes the next free place in the hall and the library tells you where it went: The Name of the Wind now rests on the left shelf of hall 1. Click any book later to take it down, edit it or read it.')}
+        ${row('diary.jpg', 800, 552, 'The diary: an entry titled On finishing The Name of the Wind, written on lined parchment, with the list of entries on the left', 'A diary by candlelight', 'Press J to write about what you read. Entries can be tied to a book, and the whole diary exports as a PDF or plain text.', true)}
+      </section>
+
+      <section class="cs-sec" id="cs-decisions">
+        ${head('03', 'Decisions', 'The choices that shaped it')}
+        <div class="cs-grid3">
+          <div class="cs-card cs-rv"><h3>Private by design</h3><p>No account and no server. Every book, cover, PDF and diary entry stays in the browser it was added in, and nobody else can see it.</p>
+            <p><b>Tradeoff:</b> the library lives on one computer, so it has Save a backup and Restore from a backup, and the first screen says so before you start.</p></div>
+          <div class="cs-card cs-rv"><h3>Honest about phones</h3><p>The library is walked with a keyboard and mouse. On a phone it says so and asks you to open it on a computer, with a Look anyway link, instead of offering controls that fight the screen.</p></div>
+          <div class="cs-card cs-rv"><h3>Two graphics modes</h3><p>Smooth for older laptops and Detailed for everything else, chosen on the title screen, so the halls stay walkable on any computer.</p></div>
+        </div>
+      </section>
+
+      <section class="cs-sec" id="cs-atmosphere">
+        ${head('04', 'Atmosphere', 'A place, not a database')}
+        <div class="cs-grid2">
+          <div class="cs-card cs-rv"><h3>Light that carries the mood</h3><p>Candles and wall lamps glow softly, shadows pool between the shelves, and dust drifts in the air. The hall is dark enough to feel late at night and bright enough to read the spines.</p></div>
+          <div class="cs-card cs-rv"><h3>A voice of its own</h3><p>Gold script for the title, old style serifs for everything else, and copy that talks back: “I remember things you don’t want to.” “So. You found me.”</p></div>
+        </div>
+        <figure class="cs-figure cs-rv" style="margin-top:28px">${img('hall.jpg', 1600, 1000, 'Looking down the reading table at the end of the hall, with a book and a candle on it')}</figure>
+      </section>
+
+      <section class="cs-sec" id="cs-build">
+        ${head('05', 'Build', 'Built for the browser')}
+        <div class="cs-two cs-rv">
+          <div><h3 class="cs-h3">The space</h3><p class="cs-p">Built with three.js. Ambient occlusion and bloom give the hall its depth and glow, and the endless shelves are drawn in batches so walking stays smooth.</p></div>
+          <div><h3 class="cs-h3">The library itself</h3><p class="cs-p">Books, covers and PDFs are stored in the browser's own database. Open Library supplies the search and covers, PDFs open on the lectern, and the diary exports straight to PDF.</p></div>
+        </div>
+      </section>
+
+      <section class="cs-sec" id="cs-reflections">
+        ${head('06', 'Reflections', 'What I would do with more time')}
+        <div class="cs-grid2">
+          <div class="cs-card cs-rv"><h3>Phones and tablets</h3><p>Touch controls designed for the space, so the library could be walked from the sofa as well as the desk.</p></div>
+          <div class="cs-card cs-rv"><h3>One library, many devices</h3><p>An optional way to carry a library between computers, without giving up the privacy that makes it feel like yours.</p></div>
+        </div>
+      </section>
+
+      <div class="cs-cta dl-cta cs-rv">
+        <div><p class="cs-k" style="margin:0">Your turn</p><h3>Enter the library</h3><p>Free in the browser. Open it on a computer with a keyboard and mouse.</p></div>
+        <div class="dl-enter"><a href="${DIVINE_URL}" target="_blank" rel="noopener">Enter the library <span aria-hidden="true">&nearr;</span></a></div>
+      </div>
+      ${nextBlock(p)}
+    </div>
+  </div>
   </div>`;
 }
 /* =====================================================================
@@ -2937,6 +3059,7 @@ function caseHTML(p) {
   if (p.id === 'inayra') return inayraPage(p);
   if (p.id === 'nook') return nookPage(p);
   if (p.id === 'tuck') return tuckPage(p);
+  if (p.id === 'divine') return divinePage(p);
   if (p.id === 'cue') return cuePage(p);
   if (p.id === 'aranyo') return aranyoPage(p);
   if (p.id === 'adverts') return adsPage(p);
@@ -3074,7 +3197,13 @@ function blueprint(then) {
 
 /* ---------- loop ---------- */
 onScroll();
-addEventListener('scroll', onScroll, { passive: true });
+/* scroll work runs once per frame, not once per scroll event */
+let scrollQueued = false, scrollIdle = 0;
+addEventListener('scroll', () => {
+  if (!scrollQueued) { scrollQueued = true; requestAnimationFrame(() => { scrollQueued = false; onScroll(); }); }
+  document.documentElement.classList.add('scrolling');
+  clearTimeout(scrollIdle); scrollIdle = setTimeout(() => document.documentElement.classList.remove('scrolling'), 160);
+}, { passive: true });
 addEventListener('resize', onScroll);
 function frame(t) { lenis.raf(t); requestAnimationFrame(frame); }
 if (lenis) requestAnimationFrame(frame);
